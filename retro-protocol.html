@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КЛЮЧ — Протокол ретрокаталогізації</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper: #f7f3ec;
+    --pk-ink: #1a1410;
+    --pk-gold: #b8860b;
+    --pk-gold-light: #faf5e4;
+    --pk-rust: #8b3a1a;
+    --pk-rust-light: #fdf3f0;
+    --pk-steel: #2e4a6b;
+    --pk-steel-light: #eef2f7;
+    --pk-sage: #3d5c3d;
+    --pk-sage-light: #f0f5f0;
+    --pk-muted: #6b5f52;
+    --pk-border: #d4c9b8;
+    --pk-paper-dark: #ede8df;
+
+    --phase1: #3d5c3d;
+    --phase2: #2e4a6b;
+    --phase3: #6b3a00;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    background: var(--pk-paper);
+    color: var(--pk-ink);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page { max-width: 1060px; margin: 0 auto; }
+
+  /* HEADER */
+  header {
+    border-bottom: 2px solid var(--pk-gold);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+
+  .logo-line {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h1 em { font-style: italic; color: var(--pk-gold); }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--pk-muted);
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 48px; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--pk-ink);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .section-title .num {
+    font-family: 'Geologica', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* STEPS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    align-items: start;
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 16px 18px 16px 12px;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--pk-ink);
+    color: var(--pk-paper);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-body h3 {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--pk-ink);
+  }
+
+  .step-body p {
+    font-size: 13px;
+    color: var(--pk-ink);
+    line-height: 1.5;
+  }
+
+  .step-body .note {
+    font-size: 11px;
+    color: var(--pk-muted);
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin-bottom: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    background: var(--pk-paper-dark);
+    border-bottom: 2px solid var(--pk-border);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--pk-border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(184,134,11,0.04); }
+
+  td {
+    padding: 12px 14px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td.label {
+    font-weight: 600;
+    font-size: 12px;
+    background: var(--pk-paper-dark);
+    border-right: 1px solid var(--pk-border);
+    white-space: nowrap;
+    min-width: 130px;
+  }
+
+  .check { color: var(--pk-sage); font-weight: 700; }
+  .cross { color: var(--pk-rust); font-weight: 700; }
+
+  /* PROMPT BOX */
+  .prompt-box {
+    background: #1a1410;
+    color: #e8d48a;
+    border-radius: 6px;
+    padding: 24px 28px;
+    font-family: 'Geologica', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .prompt-box .prompt-label {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b5f52;
+  }
+
+  .prompt-box .section-marker {
+    color: #b8860b;
+    font-weight: 600;
+  }
+
+  .prompt-box .placeholder {
+    color: #8fbc8f;
+    font-style: italic;
+  }
+
+  /* PHASE CARDS */
+  .phase-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .phase-card {
+    border-radius: 4px;
+    border-left: 5px solid;
+    padding: 18px 22px;
+  }
+
+  .phase-card.p1 {
+    background: var(--pk-sage-light);
+    border-color: var(--phase1);
+  }
+  .phase-card.p2 {
+    background: var(--pk-steel-light);
+    border-color: var(--phase2);
+  }
+  .phase-card.p3 {
+    background: #faf3e8;
+    border-color: var(--phase3);
+  }
+
+  .phase-card .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .phase-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .p1 .phase-badge { background: var(--phase1); }
+  .p2 .phase-badge { background: var(--phase2); }
+  .p3 .phase-badge { background: var(--phase3); }
+
+  .phase-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .p1 h3 { color: var(--phase1); }
+  .p2 h3 { color: var(--phase2); }
+  .p3 h3 { color: var(--phase3); }
+
+  .phase-card .when {
+    font-size: 11px;
+    color: var(--pk-muted);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .phase-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase-card ul li {
+    font-size: 13px;
+    padding: 3px 0 3px 18px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .p1 ul li::before { content: '→'; position: absolute; left: 0; color: var(--phase1); }
+  .p2 ul li::before { content: '→'; position: absolute; left: 0; color: var(--phase2); }
+  .p3 ul li::before { content: '→'; position: absolute; left: 0; color: var(--phase3); }
+
+  .phase-card .blocker {
+    margin-top: 10px;
+    font-size: 11px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 3px;
+    padding: 6px 10px;
+    color: var(--pk-muted);
+  }
+
+  .phase-card .blocker strong { color: var(--pk-ink); }
+
+  /* CHECKLIST */
+  .checklist {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+
+  .checklist h3 {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: var(--pk-ink);
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--pk-border);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: #fff;
+  }
+
+  /* MARK */
+  .mark-processed {
+    background: var(--pk-sage-light);
+    border: 1px solid var(--pk-sage);
+    border-radius: 4px;
+    padding: 14px 18px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  .mark-processed strong { color: var(--pk-sage); }
+
+  code {
+    background: rgba(0,0,0,0.07);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--pk-border);
+    font-size: 11px;
+    color: var(--pk-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .step { grid-template-columns: 28px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="logo-line">КЛЮЧ · Операційна модель · Документ v1.0</div>
+    <h1>Протокол<br><em>ретрокаталогізації</em></h1>
+    <p class="subtitle">Як читати архівний матеріал, виявляти приховані зв'язки і збагачувати граф знань — червень 2026</p>
+  </header>
+
+
+  <!-- 1. ЩО ТАКЕ РЕТРОКАТАЛОГІЗАЦІЯ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Концепт</span>
+      Що таке ретрокаталогізація і чому вона інша
+    </div>
+    <p style="font-size:14px; max-width:720px; line-height:1.7; margin-bottom:16px">
+      Ретрокаталогізація — це не редагування опублікованих матеріалів. Це <strong>виявлення прихованих зв'язків</strong> між уже наявними матеріалами і вже наявними картками сутностей. Матеріал в архіві залишається незмінним. Змінюються картки: діяч отримує нову подію в таймлайні, твір — цікавинку, PDF-картка — питання для дискусії.
+    </p>
+    <p style="font-size:13px; color:var(--pk-muted); max-width:720px; line-height:1.6">
+      Аналогія: бібліотекар переглядає старий картковий каталог і проставляє предметні рубрики, яких раніше не було. Самі картки не переписуються — вони збагачуються.
+    </p>
+  </div>
+
+
+  <!-- 2. ПОКРОКОВИЙ ПРОТОКОЛ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Розділ 1</span>
+      Покроковий протокол сесії
+    </div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Обрати матеріал для обробки</h3>
+          <p>Відкрити таблицю стану міграцій. Взяти перший матеріал зі статусом <code>не оброблено</code>. Пріоритет: ювілейні есе → рецензії → дослідницькі статті → решта.</p>
+          <p class="note">Не обирати матеріали довільно — рухатись за таблицею щоб не було «білих плям» і повторів.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Прочитати матеріал цілком, не вносити ще нічого</h3>
+          <p>Перше читання — аналітичне. Тримати в голові питання: які сутності згадуються? Які факти прив'язані до дат? Які книги рекомендуються? Де є пряма мова автора?</p>
+          <p class="note">Фіксувати олівцем (або в нотатках) — але не відкривати адмінку до кінця читання.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Заповнити протокол виявлення</h3>
+          <p>Відкрити таблицю протоколу (див. розділ 2). По кожній знахідці: тип → що саме → куди вносити. Один рядок — одна знахідка.</p>
+          <p class="note">Якщо знахідок немає — це теж результат. Позначити «перевірено, нових зв'язків не виявлено».</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Для питань дискусії — запустити ШІ-асистент (Фаза 1)</h3>
+          <p>Якщо матеріал достатньо глибокий (біографія, контекст творчості, теми) — скопіювати текст у NotebookLM або Gemini з стандартним промптом (див. розділ 3). Отримати список питань. Відредагувати.</p>
+          <p class="note">ШІ — пропозиція, не результат. Редактор перевіряє кожне питання перед внесенням.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Внести знахідки в адмінку</h3>
+          <p>По кожному рядку протоколу — відкрити відповідну картку і внести. У полі «Службові коментарі» завжди фіксувати: <em>звідки взято, дата внесення, хто вніс</em>.</p>
+          <p class="note">Архівні поля (посада, місто, дата публікації) — не чіпати. Лише нові поля.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Позначити матеріал як «оброблено»</h3>
+          <p>У таблиці стану міграцій змінити статус на <code>оброблено</code>, вписати дату і ім'я виконавця. Якщо деякі знахідки не вдалось внести (немає картки, потрібна верифікація) — статус <code>частково</code> + примітка.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 3. ПРОТОКОЛ ВИЯВЛЕННЯ — ТАБЛИЦЯ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Розділ 2</span>
+      Протокол виявлення знахідок
+    </div>
+    <p style="font-size:13px; color:var(--pk-muted); margin-bottom:16px">Шаблон рядка для заповнення по кожному матеріалу. Один рядок = одна знахідка.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Тип знахідки</th>
+            <th>Ознака в тексті</th>
+            <th>Куди вносити в адмінці</th>
+            <th>Поле «Службові коментарі»</th>
+            <th style="color:var(--pk-rust)">Що не чіпати</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">Факт біографії</td>
+            <td>«У 1978 р. переїхав до…», «навчався у…», «працював редактором у…»</td>
+            <td>Картка діяча → Таймлайн (новий <code>PersonLifeEvent</code>)</td>
+            <td><code>[Ретро] Джерело: [назва матеріалу], [дата внесення]</code></td>
+            <td>Дати народження/смерті, місце народження</td>
+          </tr>
+          <tr>
+            <td class="label">Цікавинка про твір</td>
+            <td>«Книга писалась 10 років», «назву запропонував редактор», «заборонена в СРСР»</td>
+            <td>Картка книги → Таймлайн або «Службові коментарі»</td>
+            <td><code>[Ретро] Факт з: [назва статті]</code></td>
+            <td>Рік першого видання, ISBN, видавництво</td>
+          </tr>
+          <tr>
+            <td class="label">Нова книга в базі</td>
+            <td>Назва у лапках, якої немає в каталозі</td>
+            <td>Новий <code>BookPage</code> — але спочатку перевірити дублі пошуком</td>
+            <td><code>[Ретро] Виявлено в: [назва матеріалу]</code></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="label">Нова особа в базі</td>
+            <td>Ім'я, якого немає в каталозі діячів</td>
+            <td>Новий <code>Person</code> — перевірити псевдоніми і рос. форми</td>
+            <td><code>[Ретро] Виявлено в: [назва матеріалу]</code></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="label">Рекомендація книги</td>
+            <td>«Автор радить», «10 книжок які…», пряма мова з назвами</td>
+            <td>Публікація → вкладка «Письменник радить» + «Пов'язані книги»</td>
+            <td>Не потрібно — зв'язок видимий у структурі</td>
+            <td>Текст оригіналу — не переформулювати</td>
+          </tr>
+          <tr>
+            <td class="label">Питання для дискусії</td>
+            <td>Матеріал глибокий: біографія, теми, контекст, рецепція</td>
+            <td>Картка діяча або твору → поле «Питання для дискусії»</td>
+            <td><code>[Ретро] Питання згенеровано на основі: [назва], відредаговано [дата]</code></td>
+            <td>Не дублювати універсальні 5 питань</td>
+          </tr>
+          <tr>
+            <td class="label">Псевдонім / варіант імені</td>
+            <td>«Також відомий як», підпис рос. формою, дівоче прізвище</td>
+            <td>Картка діяча → вкладка «Псевдоніми та варіанти» → <code>PersonAlias</code></td>
+            <td><code>[Ретро] Виявлено в: [назва матеріалу]</code></td>
+            <td>Основна картка — лише укр. офіційна форма</td>
+          </tr>
+          <tr>
+            <td class="label">Пам'ятне місце</td>
+            <td>«Вулиця імені…», «меморіальна дошка на…», «школа носить ім'я»</td>
+            <td>Картка діяча → «Кар'єра» → <code>PersonMemorial</code></td>
+            <td><code>[Ретро] Джерело: [назва матеріалу або реєстру]</code></td>
+            <td>Текст напису — дослівно, не виправляти орфографію</td>
+          </tr>
+          <tr>
+            <td class="label">Зв'язок публікація ↔ сутність</td>
+            <td>Стаття згадує книгу або діяча без прямого посилання в базі</td>
+            <td>Публікація → вкладка «Зв'язки з книгами» або «Зв'язки з діячами»</td>
+            <td>Не потрібно — зв'язок видимий у структурі</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mark-processed">
+      <strong>Формат позначки «оброблено»</strong> у таблиці стану міграцій:<br>
+      <code>оброблено | 2026-06-10 | ТЯ | знахідок: 3 (таймлайн ×1, питання ×5, alias ×1)</code><br>
+      <span style="font-size:12px; color:var(--pk-muted)">або: <code>перевірено, нових зв'язків не виявлено | 2026-06-10 | ТЯ</code></span>
+    </div>
+  </div>
+
+
+  <!-- 4. ПРОМПТ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Розділ 3</span>
+      Стандартний промпт для генерації питань дискусії
+    </div>
+    <p style="font-size:13px; color:var(--pk-muted); margin-bottom:14px">
+      Використовується в <strong>NotebookLM</strong> (завантажити матеріали про автора/твір як джерела) або в <strong>Gemini</strong> (вставити текст матеріалу напряму). Результат редагується перед внесенням у картку.
+    </p>
+
+    <div class="prompt-box">
+      <span class="prompt-label">Промпт v1.0</span>
+Ти — бібліотекар-методист, що готує матеріал для читацького обговорення.<br>
+На основі наданих матеріалів про <span class="placeholder">[ім'я автора / назва твору]</span> склади список питань для дискусії з читачами.<br><br>
+<span class="section-marker">Вимоги до питань:</span><br>
+– Мінімум 6, максимум 10 питань<br>
+– Питання різного рівня: фактичні (1–2), інтерпретаційні (2–3), особистісно-рефлексивні (2–3)<br>
+– Кожне питання — одне речення, без підказки відповіді<br>
+– Уникати питань із відповіддю «так/ні»<br>
+– Формулювати для аудиторії: <span class="placeholder">[вік / тип аудиторії: бібліотекарі / школярі 10–14 / загальна]</span><br><br>
+<span class="section-marker">Формат відповіді:</span><br>
+Пронумерований список. Після списку — 1–2 речення: на яких темах акцентують ці питання.<br><br>
+<span class="section-marker">Матеріали:</span><br>
+<span class="placeholder">[вставити текст або вказати джерела в NotebookLM]</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Тип аудиторії</th>
+            <th>Рівень питань</th>
+            <th>Особливість формулювання</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">Бібліотекарі / педагоги</td>
+            <td>Переважно інтерпретаційні та методичні</td>
+            <td>«Як використати цей текст у роботі з…», «Що в біографії автора пояснює…»</td>
+          </tr>
+          <tr>
+            <td class="label">Школярі 10–14 років</td>
+            <td>Фактичні + особистісно-рефлексивні</td>
+            <td>«Що б ти зробив на місці героя…», «Чи змінила тебе ця книга…»</td>
+          </tr>
+          <tr>
+            <td class="label">Дорослі читачі</td>
+            <td>Інтерпретаційні + контекстуальні</td>
+            <td>«Як час написання вплинув на…», «Що залишається актуальним сьогодні…»</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 5. ФАЗИ ШІ-ІНТЕГРАЦІЇ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Розділ 4 · Дорожня карта</span>
+      Три фази ШІ-інтеграції в ретрокаталогізацію
+    </div>
+    <p style="font-size:13px; color:var(--pk-muted); margin-bottom:16px; max-width:700px">
+      Поточний протокол розрахований на Фазу 1. Фази 2 і 3 — зафіксовані тут як орієнтири, щоб не переробляти архітектуру потім.
+    </p>
+
+    <div class="phase-stack">
+
+      <div class="phase-card p1">
+        <div class="phase-header">
+          <span class="phase-badge">Фаза 1 · Зараз</span>
+          <h3>Ручний процес + NotebookLM / Gemini</h3>
+        </div>
+        <div class="when">Червень 2026 → до запуску Apps Script інтеграції</div>
+        <ul>
+          <li>Виконавець вручну читає матеріал і заповнює протокол виявлення</li>
+          <li>Для питань дискусії: копіює текст у NotebookLM (корпус матеріалів про автора) або Gemini (окремий матеріал)</li>
+          <li>Промпт стандартизований (розділ 3 цього документа)</li>
+          <li>Результат редагується вручну перед внесенням у картку</li>
+          <li>Статуси «оброблено» ведуться в Google Sheets (спільний доступ через Workspace)</li>
+        </ul>
+        <div class="blocker"><strong>Інструменти:</strong> NotebookLM (Google Workspace for Nonprofit), Gemini, Wagtail admin, Google Sheets для таблиці статусів</div>
+      </div>
+
+      <div class="phase-card p2">
+        <div class="phase-header">
+          <span class="phase-badge">Фаза 2 · Середньострокова</span>
+          <h3>Google Apps Script + Gemini API — напівавтоматизація</h3>
+        </div>
+        <div class="when">Після стабілізації ядра порталу і UX-аудиту · орієнтовно осінь 2026</div>
+        <ul>
+          <li>Apps Script отримує URL матеріалу з КЛЮЧА або текст з Google Drive</li>
+          <li>Викликає Gemini API зі стандартним промптом (версія промпту з розділу 3)</li>
+          <li>Повертає структурований протокол виявлення у Google Sheet або Google Doc</li>
+          <li>Редактор перевіряє → вручну вносить у адмінку</li>
+          <li>Таблиця статусів оновлюється автоматично після підтвердження</li>
+        </ul>
+        <div class="blocker">
+          <strong>Що потрібно для запуску:</strong> Gemini API ключ в Workspace (або через Google AI Studio), скрипт-шаблон Apps Script (є досвід SMM-автоматизації — та сама модель). Підключення до живої БД КЛЮЧА <em>не потрібне</em> на цьому етапі.
+        </div>
+      </div>
+
+      <div class="phase-card p3">
+        <div class="phase-header">
+          <span class="phase-badge">Фаза 3 · Перспектива</span>
+          <h3>Вбудований асистент у кабінеті бібліотекаря</h3>
+        </div>
+        <div class="when">Після запуску кабінету користувача і публічного API · 2027</div>
+        <ul>
+          <li>Бібліотекар відкриває картку автора або твору на порталі</li>
+          <li>Натискає «Згенерувати питання для заходу» — обирає тип аудиторії</li>
+          <li>Асистент отримує дані з бази КЛЮЧА (біографія, таймлайн, рецензії, публікації) через внутрішній API</li>
+          <li>Повертає список питань прямо в інтерфейс — бібліотекар редагує і завантажує PDF</li>
+          <li>Масштаб: 15 000+ бібліотекарів мережі без участі контент-менеджера</li>
+        </ul>
+        <div class="blocker">
+          <strong>Блокери для запуску:</strong> кабінет користувача (в беклозі), публічний API або внутрішній endpoint для асистента, рішення про модель (Gemini API / власний LLM). Архітектура API-first вже передбачає цей сценарій — переробки не потрібно.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 6. ЧЕКЛИСТ СЕСІЇ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">Розділ 5</span>
+      Чеклист завершення сесії ретрокаталогізації
+    </div>
+    <div class="checklist">
+      <h3>Перед тим як закрити адмінку — перевірити:</h3>
+      <div class="checklist-item"><div class="box"></div><span>Всі знахідки з протоколу внесено (або позначено причину чому ні)</span></div>
+      <div class="checklist-item"><div class="box"></div><span>Кожна нова сутність перевірена на дублі перед створенням</span></div>
+      <div class="checklist-item"><div class="box"></div><span>У «Службових коментарях» зафіксовано джерело і дату для кожного внесеного поля</span></div>
+      <div class="checklist-item"><div class="box"></div><span>Архівні поля (посада, місто, дата публікації) — не змінені</span></div>
+      <div class="checklist-item"><div class="box"></div><span>Питання для дискусії відредаговані (не пряма копія з ШІ)</span></div>
+      <div class="checklist-item"><div class="box"></div><span>Матеріал у таблиці статусів позначено з датою і ім'ям виконавця</span></div>
+      <div class="checklist-item"><div class="box"></div><span>Якщо виявлена нова книга або особа — заведено картку або зроблена задача для наступної сесії</span></div>
+    </div>
+  </div>
+
+
+  <footer>
+    <span>КЛЮЧ · key.chl.kiev.ua · Протокол ретрокаталогізації v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

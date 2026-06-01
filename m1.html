@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1 · Орієнтація — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  nav .nav-next{margin-left:auto;background:var(--pk-gold);color:var(--pk-ink)!important;font-weight:700!important;padding:10px 18px!important;border-radius:2px;}
+  nav .nav-next:hover{background:#d4a010;}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-header{margin-bottom:48px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--pk-ink);color:var(--pk-gold);}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .module-header .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--pk-gold-light);border-color:var(--pk-gold);color:#7a5900;}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:36px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0;}
+  .concept-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:16px 18px;}
+  .concept-card .icon{font-size:20px;margin-bottom:8px;display:block;}
+  .concept-card h4{font-size:13px;font-weight:600;margin-bottom:4px;}
+  .concept-card p{font-size:12px;color:var(--pk-muted);margin:0;max-width:100%;}
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;}
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--pk-ink);color:var(--pk-gold);font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:2px 0 2px 16px;position:relative;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+  .ladder{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+  .rung{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:4px;border:1px solid var(--pk-border);}
+  .rung.active{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .rung.future{background:var(--pk-paper-dark);}
+  .rung-level{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;min-width:60px;flex-shrink:0;}
+  .rung.active .rung-level{color:#7a5900;}
+  .rung.future .rung-level{color:var(--pk-muted);}
+  .rung-text{font-size:13px;}
+  .rung-text strong{font-weight:600;}
+  .rung-text span{color:var(--pk-muted);font-size:12px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .col-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:16px 18px;}
+  .col-card h4{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .col-card ul{list-style:none;padding:0;}
+  .col-card ul li{font-size:13px;padding:3px 0 3px 14px;position:relative;}
+  .col-card ul li::before{content:'–';position:absolute;left:0;color:var(--pk-muted);}
+  .next-module{background:var(--pk-ink);border-radius:4px;padding:24px 28px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .next-module .nm-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+  .next-module .nm-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:600;}
+  .next-module a{background:var(--pk-gold);color:var(--pk-ink);text-decoration:none;font-size:12px;font-weight:700;padding:10px 20px;border-radius:2px;white-space:nowrap;}
+  .next-module a:hover{background:#d4a010;}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr;}.concept-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#m1" class="active">M1 · Орієнтація</a>
+  <a href="#checklist-m1">Чеклист</a>
+  <a href="m2.html" class="nav-next">M2 · Публікації →</a>
+</nav>
+
+<div class="page">
+
+  <div id="m1" class="anchor module-header">
+    <span class="module-badge">Модуль M1 · Обов'язковий для всіх</span>
+    <h1>Орієнтація:<br><em>як влаштований КЛЮЧ</em></h1>
+    <p class="lead">Перший модуль читають усі, хто працюватиме з порталом — незалежно від ролі. Він не вчить конкретних операцій. Він пояснює логіку системи, щоб усі наступні інструкції ставали зрозумілими.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Редактор-книгознавець</span>
+      <span class="role-tag">Каталогізатор</span>
+      <span class="role-tag">Контент-менеджер</span>
+      <span class="role-tag">Методист</span>
+      <span class="role-tag">Регіональний куратор</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви знаєте</h3>
+    <ul>
+      <li>Що таке КЛЮЧ і чим він відрізняється від звичайного сайту</li>
+      <li>З яких частин складається система і де що знаходиться</li>
+      <li>Що таке сутності, зв'язки і чому порядок дій важливий</li>
+      <li>Що можна робити будь-якому редактору, а що — заборонено завжди</li>
+      <li>Як отримати допомогу якщо щось пішло не так</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>1.1. Що таке КЛЮЧ — і чим він не є</h2>
+    <p>КЛЮЧ — це не новинний сайт і не електронна бібліотека. Це <strong>граф знань</strong> про українську дитячу літературу. Граф — це система, де всі об'єкти пов'язані між собою: книга пов'язана з автором, автор — з видавництвом, видавництво — з нагородою, нагорода — з іншими книгами.</p>
+    <p>Кожен запис у системі — це <strong>сутність</strong>. Сутності не існують ізольовано. Цінність порталу зростає не від кількості записів, а від кількості і якості <strong>зв'язків</strong> між ними.</p>
+    <div class="concept-grid">
+      <div class="concept-card"><span class="icon">📖</span><h4>Книга (твір)</h4><p>Центральна сутність. Має авторів, видання, обкладинки, нагороди, рецензії, таймлайн.</p></div>
+      <div class="concept-card"><span class="icon">👤</span><h4>Діяч (особа)</h4><p>Автор, ілюстратор, перекладач, редактор. Має біографію, таймлайн, фото, афіліації.</p></div>
+      <div class="concept-card"><span class="icon">🏛</span><h4>Установа</h4><p>Видавництво, бібліотека, навчальний заклад. Має власну сторінку з історією назв.</p></div>
+      <div class="concept-card"><span class="icon">📝</span><h4>Публікація</h4><p>Рецензія, стаття, дослідження, есе. Прив'язана до книг і діячів через зв'язки.</p></div>
+      <div class="concept-card"><span class="icon">🏆</span><h4>Нагорода</h4><p>Премія з типом, роками, переможцями. Пов'язана з книгами і діячами.</p></div>
+      <div class="concept-card"><span class="icon">💬</span><h4>Диспут / опитування</h4><p>Редакційний матеріал з питаннями і відповідями учасників. Два режими перегляду.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1.2. Де що знаходиться в адмінці</h2>
+    <p>Адмінка — це адміністративна панель порталу. Адреса: <code>key.chl.kiev.ua/cms/</code>. Увійти можна лише з вашим особистим логіном і паролем.</p>
+    <div class="alert steel">
+      <h4>Два типи об'єктів — два різних місця</h4>
+      <ul>
+        <li><strong>Сторінки (Pages)</strong> — мають власну адресу на сайті. Знаходяться в розділі «Pages» (іконка будинку). Сюди входять: Книга, Установа, Публікація, Новина, Подія, Диспут.</li>
+        <li><strong>Сніппети (Snippets)</strong> — допоміжні записи без власної сторінки. Знаходяться в розділі «Snippets». Сюди входять: Діяч (Person), Нагорода, Серія, Тег, Жанр, Вікова група.</li>
+      </ul>
+    </div>
+    <h3 class="sub">Структура розділу Pages</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Розділ у дереві</th><th>Що тут живе</th><th>Хто заповнює</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Книги</td><td>Картки творів (BookPage)</td><td>Контент-менеджер, каталогізатор</td></tr>
+          <tr><td class="lbl">Установи</td><td>Видавництва, бібліотеки (InstitutionPage)</td><td>Контент-менеджер</td></tr>
+          <tr><td class="lbl">Публікації</td><td>Рецензії, статті, дослідження</td><td>Редактор-книгознавець, контент-менеджер</td></tr>
+          <tr><td class="lbl">Новини</td><td>Власні та зовнішні новини</td><td>Контент-менеджер</td></tr>
+          <tr><td class="lbl">Події</td><td>Заходи, конкурси, програми</td><td>Контент-менеджер, методист</td></tr>
+          <tr><td class="lbl">Опитування</td><td>Диспути, відкриті опитування, результати</td><td>Редактор-книгознавець</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1.3. Чому порядок дій має значення</h2>
+    <p>Система побудована на зв'язках. Щоб прив'язати книгу до автора — автор вже має існувати в базі. Щоб прив'язати книгу до видавництва — установа вже має бути створена. Якщо почати з книги і «доліпити» інше потім — виходять помилки і дублі.</p>
+    <div class="alert gold">
+      <h4>Правило трьох рівнів</h4>
+      <ul>
+        <li><strong>Рівень 1 — спочатку:</strong> Діяч, Установа, Серія, Нагорода</li>
+        <li><strong>Рівень 2 — потім:</strong> Книга (з прив'язкою до вже готових рівня 1)</li>
+        <li><strong>Рівень 3 — після:</strong> Публікації — виявляють нові зв'язки і прогалини</li>
+      </ul>
+    </div>
+    <p>Для нового контент-менеджера перший тиждень — лише рівень 1. Книги — з другого тижня. Це не обмеження, це захист від помилок.</p>
+  </div>
+
+  <div class="section">
+    <h2>1.4. Базові дії в адмінці</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">①</div><div class="step-body"><h4>Знайти запис перед створенням нового</h4><p>Скористайтесь пошуком у верхньому рядку адмінки. Введіть ім'я або назву. Якщо запис є — відкрийте його, не створюйте новий. Дублі — головна проблема бази.</p><p class="tip">Для діячів: перевіряти також псевдоніми і рос. написання.</p></div></div>
+      <div class="step"><div class="step-n">②</div><div class="step-body"><h4>Зберегти чернетку перш ніж запускати імпорт</h4><p>Для Wikidata-імпорту і MARC-імпорту — спочатку збережіть запис (кнопка «Save draft»), тільки потім запускайте автоімпорт. Фото і дані прив'язуються лише до вже існуючого запису.</p></div></div>
+      <div class="step"><div class="step-n">③</div><div class="step-body"><h4>Різниця між «Save draft» і «Publish»</h4><p>«Save draft» — зберігає зміни, запис не видно на публічному сайті. «Publish» — публікує, запис з'являється для всіх. Завжди зберігайте чернетку якщо не впевнені що запис готовий.</p></div></div>
+      <div class="step"><div class="step-n">④</div><div class="step-body"><h4>Службові коментарі — для внутрішніх приміток</h4><p>Вкладка ⚙️ «Налаштування» в кожній картці. Поле «Службові коментарі» — для нотаток про джерела, проблемні дані, причину ембарго. На публічному сайті не відображається.</p><p class="tip">При ретрокаталогізації: завжди вказуйте звідки взяли дані і дату внесення.</p></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1.5. Правила, обов'язкові для всіх ролей</h2>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Завжди</h4>
+        <ul>
+          <li>Перевіряти дублі перед створенням нової сутності</li>
+          <li>Зазначати джерело в «Службових коментарях» при ретровнесенні</li>
+          <li>Одна особа — одна картка (скільки б форм імені не було)</li>
+          <li>Регіон — тільки через dropdown, не вільним текстом</li>
+          <li>Текст напису на пам'ятці — дослівно, без виправлень</li>
+          <li>Фото без заповненого rights_status — не публікувати</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Ніколи</h4>
+        <ul>
+          <li>Редагувати архівні поля (посада, місто на момент публікації)</li>
+          <li>Проставляти is_featured масово — лише ручна куратура</li>
+          <li>Видаляти запис самостійно — лише адміністратор</li>
+          <li>Змінювати номери питань диспуту після введення відповідей</li>
+          <li>Торкатися base.html, header, footer, CSS-змінних дизайну</li>
+          <li>Створювати окрему картку Person для рос. написання автора</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1.6. Якщо щось пішло не так</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">?</div><div class="step-body"><h4>Випадково опублікували незавершений запис</h4><p>Відкрийте запис → кнопка «Unpublish» (зняти з публікації) → запис повертається в чернетку. Жодних даних не втрачено.</p></div></div>
+      <div class="step"><div class="step-n">?</div><div class="step-body"><h4>Виявили дублікат після створення</h4><p>Не видаляйте самостійно. Позначте в «Службових коментарях»: «Дублікат запису [назва], потребує злиття». Повідомте адміністратора.</p></div></div>
+      <div class="step"><div class="step-n">?</div><div class="step-body"><h4>Не знаєте як правильно класифікувати</h4><p>Збережіть чернетку. У «Службових коментарях» напишіть питання. Зверніться до контент-менеджера або редактора. Не публікуйте якщо не впевнені.</p></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1.7. Ваш шлях у системі — поступове розширення прав</h2>
+    <p>Кожна роль починає з M1 і отримує наступні модулі в міру освоєння. Права в адмінці розширюються після підтвердження навичок.</p>
+    <div class="ladder">
+      <div class="rung active"><span class="rung-level">Зараз</span><div class="rung-text"><strong>M1 — Орієнтація</strong> <span>· читання, пошук, чернетки</span></div></div>
+      <div class="rung future"><span class="rung-level">Крок 2</span><div class="rung-text"><strong>M2 — Публікації</strong> <span>· створення і редагування PublicationPage</span></div></div>
+      <div class="rung future"><span class="rung-level">Крок 3</span><div class="rung-text"><strong>M3 — Диспути</strong> <span>· SurveyDiscussionPage, учасники, питання</span></div></div>
+      <div class="rung future"><span class="rung-level">Крок 4</span><div class="rung-text"><strong>M4 — Ретрокаталогізація</strong> <span>· протокол виявлення зв'язків, таймлайни</span></div></div>
+      <div class="rung future"><span class="rung-level">Перспектива</span><div class="rung-text"><strong>Редакційна політика</strong> <span>· погодження стандартів, модерація</span></div></div>
+    </div>
+  </div>
+
+  <div id="checklist-m1" class="anchor section">
+    <h2>Чеклист M1 — перш ніж переходити до M2</h2>
+    <div class="checklist">
+      <h3>Перевірте себе</h3>
+      <div class="chk"><div class="box"></div><span>Я розумію різницю між Сторінками і Сніппетами і знаю де їх шукати</span></div>
+      <div class="chk"><div class="box"></div><span>Я знаю правило трьох рівнів: спочатку Діяч і Установа, потім Книга</span></div>
+      <div class="chk"><div class="box"></div><span>Я можу знайти будь-який запис через пошук в адмінці</span></div>
+      <div class="chk"><div class="box"></div><span>Я розумію різницю між «Save draft» і «Publish»</span></div>
+      <div class="chk"><div class="box"></div><span>Я знаю де знаходяться «Службові коментарі» і навіщо вони</span></div>
+      <div class="chk"><div class="box"></div><span>Я пам'ятаю що робити якщо випадково опублікувала незавершений запис</span></div>
+      <div class="chk"><div class="box"></div><span>Я знаю що видаляти записи самостійно — заборонено</span></div>
+    </div>
+  </div>
+
+  <div class="next-module">
+    <div>
+      <div class="nm-label">Наступний модуль</div>
+      <div class="nm-title">M2 · Публікації: рецензії, статті, дослідження</div>
+    </div>
+    <a href="m2.html">Читати M2 →</a>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M1 · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

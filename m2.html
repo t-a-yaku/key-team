@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2 · Публікації — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  nav .nav-prev{color:rgba(255,255,255,0.4)!important;}
+  nav .nav-next{margin-left:auto;background:var(--pk-steel);color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:2px;}
+  nav .nav-next:hover{background:#3d5f87;}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-header{margin-bottom:48px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--pk-steel);color:#fff;}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .module-header .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--pk-steel-light);border-color:var(--pk-steel);color:var(--pk-steel);}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:36px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(184,134,11,0.03);}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;}
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--pk-steel);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:2px 0 2px 16px;position:relative;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert p{font-size:13px;margin:0;max-width:100%;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .col-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:16px 18px;}
+  .col-card h4{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .col-card ul{list-style:none;padding:0;}
+  .col-card ul li{font-size:13px;padding:3px 0 3px 14px;position:relative;}
+  .col-card ul li::before{content:'–';position:absolute;left:0;color:var(--pk-muted);}
+  .next-module{background:var(--pk-ink);border-radius:4px;padding:24px 28px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .next-module .nm-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+  .next-module .nm-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:600;}
+  .next-module a{background:var(--pk-gold);color:var(--pk-ink);text-decoration:none;font-size:12px;font-weight:700;padding:10px 20px;border-radius:2px;letter-spacing:0.05em;white-space:nowrap;}
+  .next-module a:hover{background:#d4a010;}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="m1.html" class="nav-prev">← M1</a>
+  <a href="#m2" class="active">M2 · Публікації</a>
+  <a href="#checklist-m2">Чеклист</a>
+  <a href="m4.html" class="nav-next">M4 · Ретро →</a>
+</nav>
+
+<div class="page">
+
+  <div id="m2" class="anchor module-header">
+    <span class="module-badge">Модуль M2 · Передумова: M1</span>
+    <h1>Публікації:<br><em>рецензії, статті, дослідження</em></h1>
+    <p class="lead">Цей модуль — для тих, хто створює і редагує PublicationPage: рецензії, есе, ювілейні статті, дослідницькі матеріали. Базові навички M1 вважаються засвоєними.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Редактор-книгознавець</span>
+      <span class="role-tag">Контент-менеджер</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Створювати PublicationPage і правильно заповнювати всі вкладки</li>
+      <li>Прив'язувати публікацію до книг і діячів через зв'язки</li>
+      <li>Відрізняти авторський текст від редакційного втручання</li>
+      <li>Додавати рекомендації книг двома способами (блок і вкладка)</li>
+      <li>Розуміти статус публікації і коли її публікувати</li>
+      <li>Виявляти в публікації нові сутності для бази</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>2.1. Що таке PublicationPage і які бувають типи</h2>
+    <p>PublicationPage — це будь-який авторський текстовий матеріал: рецензія, есе, ювілейна стаття, дослідження, інтерв'ю, огляд. Не новина і не подія — а матеріал з авторською позицією і прив'язкою до конкретних книг або діячів.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Тип публікації</th><th>Ознаки</th><th>Типові прив'язки</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Рецензія</td><td>Оцінка конкретної книги, авторська думка</td><td>Книга (обов'язково), Автор рецензії</td></tr>
+          <tr><td class="lbl">Ювілейне есе</td><td>До ювілею діяча, огляд творчості</td><td>Діяч (обов'язково), книги що згадуються</td></tr>
+          <tr><td class="lbl">Дослідницька стаття</td><td>Наукова або методична, з посиланнями</td><td>Кілька книг, кілька діячів</td></tr>
+          <tr><td class="lbl">«Письменник про письменника»</td><td>Авторський текст про колегу</td><td>Автор тексту (діяч) + герой тексту (діяч)</td></tr>
+          <tr><td class="lbl">Добірка / огляд</td><td>Кілька книг об'єднані темою</td><td>Всі книги що згадуються в тексті</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2.2. Покроковий порядок створення публікації</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Перевірити чи публікація вже є в базі</h4><p>Пошук за заголовком або ім'ям автора. Якщо матеріал мігровано зі старого порталу — він вже може існувати як PublicationPage. Не створювати дублікат.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Перевірити чи є всі прив'язки в базі</h4><p>Перед створенням публікації — переконатись що всі згадані в ній діячі і книги вже мають картки. Якщо ні — спочатку їх завести або поставити задачу контент-менеджеру.</p><p class="tip">Виняток: публікацію можна зберегти як чернетку і прив'язки додати пізніше.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Pages → Публікації → «Додати дочірню сторінку»</h4><p>Тип сторінки: «Публікація». Заповнити заголовок — він стане URL-slug автоматично. Slug після публікації не змінювати.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-body"><h4>Заповнити вкладку «Основне»</h4><p>Заголовок, тип публікації, дата (фіксується одноразово — дата першої публікації оригіналу, не дата внесення в базу), автор(и) тексту, короткий анонс (до 300 символів), основний текст (Rich Text).</p><p class="tip">Дата публікації — архівне поле. Не виправляти навіть якщо помилились. Зверніться до адміністратора.</p></div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-body"><h4>Заповнити вкладку «Зв'язки з книгами»</h4><p>Додати всі книги що згадуються або рецензуються в тексті. Без цього кроку публікація не з'явиться на картці книги. Це найчастіша пропущена дія.</p></div></div>
+      <div class="step"><div class="step-n">6</div><div class="step-body"><h4>Заповнити вкладку «Зв'язки з діячами»</h4><p>Додати діячів що є героями або авторами матеріалу. Публікація з'явиться на їхніх картках у відповідному розділі.</p></div></div>
+      <div class="step"><div class="step-n">7</div><div class="step-body"><h4>Вказати джерело (якщо матеріал не оригінальний)</h4><p>Якщо публікація перенесена зі старого порталу або зовнішнього ресурсу — заповнити поле «Джерело» (назва і посилання). Це обов'язково для мігрованих матеріалів.</p></div></div>
+      <div class="step"><div class="step-n">8</div><div class="step-body"><h4>Зберегти чернетку → Preview → опублікувати</h4><p>Кнопка «Preview» показує як сторінка виглядатиме після публікації. Перевірте відображення тексту, зв'язки, наявність обкладинок книг.</p></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2.3. Рекомендація книги від письменника — два способи</h2>
+    <p>Якщо в публікації є пряма рекомендація книги від автора тексту — фіксуйте її окремо, щоб вона з'явилась на картці книги і в профілі письменника.</p>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Спосіб 1 — блок у тексті</h4>
+        <ul>
+          <li>Письменник розгорнуто пише про книгу прямо в матеріалі</li>
+          <li>У редакторі тексту: тип блоку «Письменник радить»</li>
+          <li>Заповнити: Особа, Книга, Текст</li>
+          <li><strong>Обов'язково</strong> також додати книгу у «Зв'язки з книгами»</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Спосіб 2 — вкладка</h4>
+        <ul>
+          <li>Добірка з короткими коментарями (наприклад, «10 книжок»)</li>
+          <li>Окрема вкладка «Письменник радить почитати»</li>
+          <li>Заповнити: Рекомендатор, Книга, Текст коментаря</li>
+          <li>Додатково нічого не потрібно — зв'язок будується автоматично</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert rust">
+      <h4>Важливо</h4>
+      <p>Не використовувати обидва способи для однієї рекомендації в одній публікації — текст з'явиться двічі на картці книги.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2.4. Що не можна змінювати в тексті публікації</h2>
+    <p>Публікації в КЛЮЧІ — це авторські тексти. Редакторське втручання суворо обмежене.</p>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Можна</h4>
+        <ul>
+          <li>Виправляти очевидні технічні помилки (зайві пробіли, обрізаний текст при міграції)</li>
+          <li>Додавати прив'язки до книг і діячів</li>
+          <li>Додавати зображення якщо вони були в оригіналі</li>
+          <li>Заповнювати службові поля (джерело, категорія, теги)</li>
+          <li>Додавати анонс якщо його немає</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Не можна</h4>
+        <ul>
+          <li>Виправляти стиль або формулювання автора</li>
+          <li>Скорочувати або доповнювати текст без погодження з автором</li>
+          <li>Змінювати дату першої публікації</li>
+          <li>Перейменовувати slug після публікації</li>
+          <li>Приписувати авторство іншій особі</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2.5. Публікація як детектор нових сутностей</h2>
+    <p>Читаючи матеріал при внесенні — фіксуйте що в ньому є крім тексту. Публікації часто «виявляють» сутності яких ще немає в базі.</p>
+    <div class="alert gold">
+      <h4>Що шукати в кожній публікації</h4>
+      <ul>
+        <li>Книги що згадуються без карток у базі → завести BookPage або поставити задачу</li>
+        <li>Діячі що згадуються без карток → завести Person або поставити задачу</li>
+        <li>Факти біографії з датами → внести в таймлайн діяча (протокол ретрокаталогізації)</li>
+        <li>Цікавинки про твір → внести в таймлайн книги</li>
+        <li>Рекомендації книг від письменників → зафіксувати одним із двох способів</li>
+      </ul>
+    </div>
+    <p>Якщо в поточній сесії нема часу внести всі знахідки — зафіксуйте їх у «Службових коментарях» публікації з позначкою <code>[потребує обробки]</code>. Це сигнал для наступної сесії.</p>
+  </div>
+
+  <div id="checklist-m2" class="anchor section">
+    <h2>Чеклист M2 — перед публікацією матеріалу</h2>
+    <div class="checklist">
+      <h3>Перевірте перед натисканням «Publish»</h3>
+      <div class="chk"><div class="box"></div><span>Заголовок точно відповідає оригіналу матеріалу</span></div>
+      <div class="chk"><div class="box"></div><span>Тип публікації обрано правильно</span></div>
+      <div class="chk"><div class="box"></div><span>Дата — дата першої публікації оригіналу (не сьогоднішня)</span></div>
+      <div class="chk"><div class="box"></div><span>Автор(и) тексту вказані і прив'язані до карток діячів</span></div>
+      <div class="chk"><div class="box"></div><span>Анонс заповнений (до 300 символів)</span></div>
+      <div class="chk"><div class="box"></div><span>Всі книги що згадуються — додані у «Зв'язки з книгами»</span></div>
+      <div class="chk"><div class="box"></div><span>Всі діячі-герої матеріалу — додані у «Зв'язки з діячами»</span></div>
+      <div class="chk"><div class="box"></div><span>Джерело вказане (якщо матеріал не оригінальний)</span></div>
+      <div class="chk"><div class="box"></div><span>Рекомендації книг зафіксовані одним із двох способів (якщо є)</span></div>
+      <div class="chk"><div class="box"></div><span>Preview переглянула — текст відображається коректно</span></div>
+      <div class="chk"><div class="box"></div><span>Нові сутності (книги, діячі) — зафіксовані для подальшого внесення</span></div>
+    </div>
+  </div>
+
+  <div class="next-module">
+    <div>
+      <div class="nm-label">Наступний модуль</div>
+      <div class="nm-title">M4 · Ретрокаталогізація: від матеріалу до зв'язків</div>
+    </div>
+    <a href="m4.html">Читати M4 →</a>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M2 · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

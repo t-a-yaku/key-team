@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лабораторія — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper: #f7f3ec;
+    --pk-ink: #1a1410;
+    --pk-gold: #b8860b;
+    --pk-gold-light: #faf5e4;
+    --pk-muted: #6b5f52;
+    --pk-border: #d4c9b8;
+    --pk-paper-dark: #ede8df;
+
+    --lab-bg: #0f1a2e;
+    --lab-accent: #4a9eff;
+    --lab-accent-dim: rgba(74,158,255,0.15);
+    --lab-green: #2ecc71;
+    --lab-green-dim: rgba(46,204,113,0.12);
+    --lab-amber: #f39c12;
+    --lab-amber-dim: rgba(243,156,18,0.12);
+    --lab-red: #e74c3c;
+    --lab-red-dim: rgba(231,76,60,0.12);
+    --lab-surface: rgba(255,255,255,0.04);
+    --lab-border: rgba(255,255,255,0.08);
+    --lab-text: rgba(247,243,236,0.85);
+    --lab-muted: rgba(247,243,236,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    background: var(--lab-bg);
+    color: var(--lab-text);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,26,46,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--lab-border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  nav .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--pk-gold);
+    letter-spacing: 0.05em;
+    padding: 14px 20px 14px 0;
+    border-right: 1px solid var(--lab-border);
+    margin-right: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  nav a {
+    color: var(--lab-muted);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 14px;
+    white-space: nowrap;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  nav a:hover { color: var(--lab-text); }
+  nav a.active { color: var(--lab-accent); }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    padding: 80px 48px 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: radial-gradient(ellipse at top right, rgba(74,158,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .lab-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lab-accent);
+    margin-bottom: 20px;
+  }
+
+  .lab-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lab-accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--lab-accent);
+  }
+
+  .hero-lead {
+    font-size: 15px;
+    color: var(--lab-muted);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--lab-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .stat-sep {
+    width: 1px;
+    background: var(--lab-border);
+    align-self: stretch;
+  }
+
+  /* ═══ MAIN ═══ */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 100px;
+  }
+
+  /* ═══ CHANNEL GRID ═══ */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lab-muted);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--lab-border);
+  }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    margin-bottom: 64px;
+    background: var(--lab-border);
+    border: 1px solid var(--lab-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .channel {
+    background: var(--lab-bg);
+    padding: 28px;
+    transition: background 0.2s;
+    position: relative;
+    cursor: default;
+  }
+
+  .channel:hover { background: rgba(255,255,255,0.03); }
+
+  .channel-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .ch-bug .channel-accent { background: var(--lab-red); }
+  .ch-ux .channel-accent { background: var(--lab-accent); }
+  .ch-idea .channel-accent { background: var(--lab-green); }
+  .ch-editorial .channel-accent { background: var(--pk-gold); }
+
+  .ch-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .ch-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .ch-desc {
+    font-size: 12.5px;
+    color: var(--lab-muted);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .ch-examples {
+    list-style: none;
+    padding: 0;
+  }
+
+  .ch-examples li {
+    font-size: 11.5px;
+    color: var(--lab-muted);
+    padding: 4px 0 4px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--lab-border);
+    line-height: 1.4;
+  }
+
+  .ch-examples li:last-child { border-bottom: none; }
+
+  .ch-bug .ch-examples li::before { content:'⚡'; position:absolute;left:0;font-size:10px;top:5px; }
+  .ch-ux .ch-examples li::before { content:'◈'; position:absolute;left:0;font-size:10px;top:5px;color:var(--lab-accent); }
+  .ch-idea .ch-examples li::before { content:'◆'; position:absolute;left:0;font-size:10px;top:5px;color:var(--lab-green); }
+  .ch-editorial .ch-examples li::before { content:'✦'; position:absolute;left:0;font-size:10px;top:5px;color:var(--pk-gold); }
+
+  /* ═══ HOW IT WORKS ═══ */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .flow::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--lab-border), var(--lab-border), transparent);
+    z-index: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--lab-bg);
+    border: 1px solid var(--lab-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--lab-accent);
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+
+  .flow-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .flow-desc {
+    font-size: 11.5px;
+    color: var(--lab-muted);
+    line-height: 1.5;
+  }
+
+  /* ═══ FORM AREA ═══ */
+  .form-area {
+    background: var(--lab-surface);
+    border: 1px solid var(--lab-border);
+    border-radius: 8px;
+    padding: 40px;
+    margin-bottom: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-area::before {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,158,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .form-area h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .form-area h2 em { font-style: italic; color: var(--lab-accent); }
+
+  .form-area .form-lead {
+    font-size: 13px;
+    color: var(--lab-muted);
+    margin-bottom: 32px;
+    max-width: 500px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lab-muted);
+  }
+
+  select, input[type="text"], textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--lab-border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'Geologica', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--lab-text);
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+  }
+
+  select:focus, input:focus, textarea:focus {
+    border-color: var(--lab-accent);
+  }
+
+  select option { background: #1a2a42; color: var(--lab-text); }
+
+  textarea { resize: vertical; min-height: 120px; line-height: 1.55; }
+
+  .type-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .type-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--lab-border);
+    border-radius: 4px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Geologica', sans-serif;
+    color: var(--lab-muted);
+  }
+
+  .type-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--lab-text); }
+
+  .type-btn.selected-bug { background: var(--lab-red-dim); border-color: var(--lab-red); color: var(--lab-red); }
+  .type-btn.selected-ux { background: var(--lab-accent-dim); border-color: var(--lab-accent); color: var(--lab-accent); }
+  .type-btn.selected-idea { background: var(--lab-green-dim); border-color: var(--lab-green); color: var(--lab-green); }
+  .type-btn.selected-edit { background: rgba(184,134,11,0.12); border-color: var(--pk-gold); color: var(--pk-gold); }
+
+  .type-btn .tb-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+  .type-btn .tb-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; display: block; }
+
+  .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--lab-muted);
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  .submit-btn {
+    background: var(--lab-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 28px;
+    font-family: 'Geologica', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .submit-btn:hover { background: #5aaeFF; transform: translateY(-1px); }
+
+  .coming-soon-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15,26,46,0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    z-index: 10;
+  }
+
+  .coming-soon-overlay .cs-icon { font-size: 40px; }
+
+  .coming-soon-overlay h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .coming-soon-overlay p {
+    font-size: 13px;
+    color: var(--lab-muted);
+    text-align: center;
+    max-width: 360px;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .cs-badge {
+    background: var(--lab-amber-dim);
+    border: 1px solid var(--lab-amber);
+    color: var(--lab-amber);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ═══ ROADMAP ═══ */
+  .roadmap {
+    margin-bottom: 64px;
+  }
+
+  .roadmap-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .road-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--lab-surface);
+    border: 1px solid var(--lab-border);
+    border-radius: 4px;
+  }
+
+  .road-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .status-done { background: var(--lab-green); }
+  .status-wip { background: var(--lab-amber); animation: pulse 2s infinite; }
+  .status-todo { background: var(--lab-border); }
+
+  .road-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .done .road-label { color: var(--lab-green); }
+  .wip .road-label { color: var(--lab-amber); }
+  .todo .road-label { color: var(--lab-muted); }
+
+  .road-text {
+    font-size: 13px;
+    color: var(--lab-text);
+    line-height: 1.4;
+  }
+
+  .road-note {
+    font-size: 11px;
+    color: var(--lab-muted);
+    margin-top: 2px;
+  }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 48px 40px;
+    border-top: 1px solid var(--lab-border);
+    font-size: 11px;
+    color: var(--lab-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  footer a { color: var(--pk-gold); text-decoration: none; }
+
+  @media (max-width: 700px) {
+    .hero { padding: 48px 24px 40px; }
+    .main { padding: 0 24px 80px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .type-selector { grid-template-columns: 1fr 1fr; }
+    footer { padding: 20px 24px 40px; }
+    .flow::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#channels">Канали</a>
+  <a href="#how">Як це працює</a>
+  <a href="#form" class="active">Надіслати</a>
+  <a href="#roadmap">Дорожня карта</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="lab-badge">
+    <span class="dot"></span>
+    Підрозділ Майстерні КЛЮЧ
+  </div>
+  <h1>Лабора<em>торія</em></h1>
+  <p class="hero-lead">Місце де досвід користувача стає даними. Баґрепорти, UX-фідбек, ідеї нових функцій і редакційні пропозиції — все тут. Нічого не губиться, все потрапляє в беклог.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">канали фідбеку</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat">
+      <span class="stat-num">key.chl.kiev.ua</span>
+      <span class="stat-label">портал що вивчаємо</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat">
+      <span class="stat-num">⚗️</span>
+      <span class="stat-label">в розробці</span>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+
+  <!-- CHANNELS -->
+  <div id="channels" style="scroll-margin-top:56px; margin-bottom:24px">
+    <p class="section-label">Що тут можна надіслати</p>
+  </div>
+
+  <div class="channels" style="margin-bottom:64px">
+
+    <div class="channel ch-bug">
+      <div class="channel-accent"></div>
+      <span class="ch-icon">⚡</span>
+      <h3 class="ch-title">Баґрепорт</h3>
+      <p class="ch-desc">Щось не працює так як мало б. Технічна помилка, зламаний зв'язок, некоректне відображення.</p>
+      <ul class="ch-examples">
+        <li>Зображення не завантажується після Wikidata-імпорту</li>
+        <li>Пошук не знаходить діяча за псевдонімом</li>
+        <li>PDF генерується без питань для дискусії</li>
+        <li>Посилання на джерело веде на 404</li>
+      </ul>
+    </div>
+
+    <div class="channel ch-ux">
+      <div class="channel-accent"></div>
+      <span class="ch-icon">◈</span>
+      <h3 class="ch-title">UX-фідбек</h3>
+      <p class="ch-desc">Працює, але незручно. Незрозумілий інтерфейс, заплутаний процес, хочу інакше.</p>
+      <ul class="ch-examples">
+        <li>Не зрозуміло де шукати вкладку «Зв'язки з книгами»</li>
+        <li>Форма диспуту занадто довга — хочу згортання блоків</li>
+        <li>Мобільна версія адмінки важко читається</li>
+        <li>Не видно статус публікації в списку</li>
+      </ul>
+    </div>
+
+    <div class="channel ch-idea">
+      <div class="channel-accent"></div>
+      <span class="ch-icon">◆</span>
+      <h3 class="ch-title">Ідея / функція</h3>
+      <p class="ch-desc">Чогось не вистачає. Нова можливість, новий тип контенту, інтеграція з зовнішнім сервісом.</p>
+      <ul class="ch-examples">
+        <li>Хочу фільтр по регіону на сторінці діячів</li>
+        <li>Додати поле «Мова оригіналу» до фільтру каталогу</li>
+        <li>Автоматичне нагадування про ювіляра за 2 тижні</li>
+        <li>Кнопка «Поділитись» на картці книги</li>
+      </ul>
+    </div>
+
+    <div class="channel ch-editorial">
+      <div class="channel-accent"></div>
+      <span class="ch-icon">✦</span>
+      <h3 class="ch-title">Редакційна пропозиція</h3>
+      <p class="ch-desc">Зміна логіки наповнення, нова категорія, перегляд редполітики, питання класифікації.</p>
+      <ul class="ch-examples">
+        <li>Пропоную додати тип «Аудіокнига» до медіа-активів</li>
+        <li>Чи варто заводити окрему сутність для фестивалів?</li>
+        <li>Хочу обговорити критерії для is_featured</li>
+        <li>Пропозиція нового типу публікації — «Методична розробка»</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div id="how" style="scroll-margin-top:56px; margin-bottom:24px">
+    <p class="section-label">Як це працює — задум</p>
+  </div>
+
+  <div class="flow" style="margin-bottom:64px">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-title">Надсилаєш</div>
+      <div class="flow-desc">Заповнюєш форму — тип, опис, скріншот якщо є. Анонімно або з ім'ям.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-title">Потрапляє в беклог</div>
+      <div class="flow-desc">Автоматично фіксується в таблиці з датою, типом і статусом «нове».</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-title">Тріаж</div>
+      <div class="flow-desc">Адміністратор переглядає, присвоює пріоритет, відповідає або відкладає.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-title">Статус оновлюється</div>
+      <div class="flow-desc">Прийнято в роботу / відкладено / закрито — з поясненням. Стає видимим для всіх.</div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div id="form" style="scroll-margin-top:56px; margin-bottom:24px">
+    <p class="section-label">Надіслати фідбек</p>
+  </div>
+
+  <div class="form-area">
+
+    <!-- COMING SOON OVERLAY -->
+    <div class="coming-soon-overlay">
+      <span class="cs-icon">⚗️</span>
+      <span class="cs-badge">В розробці</span>
+      <h3>Форма ще готується</h3>
+      <p>Поки що надсилай фідбек напряму адміністратору або фіксуй у спільній таблиці беклогу. Форма з'явиться тут після підключення Google Forms або власного endpoint.</p>
+    </div>
+
+    <h2>Надіслати <em>зворотній зв'язок</em></h2>
+    <p class="form-lead">Обери тип, опиши проблему або ідею. Ім'я необов'язкове — але допомагає уточнити деталі.</p>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;margin-bottom:10px">Тип звернення</label>
+      <div class="type-selector">
+        <div class="type-btn"><span class="tb-icon">⚡</span><span class="tb-label">Баґ</span></div>
+        <div class="type-btn"><span class="tb-icon">◈</span><span class="tb-label">UX</span></div>
+        <div class="type-btn"><span class="tb-icon">◆</span><span class="tb-label">Ідея</span></div>
+        <div class="type-btn"><span class="tb-icon">✦</span><span class="tb-label">Редполітика</span></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Ім'я (необов'язково)</label>
+        <input type="text" placeholder="Наталя М.">
+      </div>
+      <div class="form-group">
+        <label>Роль у команді</label>
+        <select>
+          <option value="">Оберіть роль</option>
+          <option>Редактор-книгознавець</option>
+          <option>Контент-менеджер</option>
+          <option>Каталогізатор</option>
+          <option>Методист</option>
+          <option>Регіональний куратор</option>
+          <option>Зовнішній користувач</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Опис</label>
+        <textarea placeholder="Опишіть що сталось, де саме, які кроки призвели до проблеми. Або — яку функцію хочете і навіщо вона потрібна."></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Посилання або URL (необов'язково)</label>
+        <input type="text" placeholder="https://key.chl.kiev.ua/...">
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <p class="form-note">Фідбек бачить лише адміністратор порталу. Відповідь надійде особисто або з'явиться в публічному беклозі.</p>
+      <button class="submit-btn">Надіслати →</button>
+    </div>
+
+  </div>
+
+  <!-- ROADMAP -->
+  <div id="roadmap" style="scroll-margin-top:56px; margin-bottom:24px">
+    <p class="section-label">Дорожня карта Лабораторії</p>
+  </div>
+
+  <div class="roadmap">
+    <div class="roadmap-items">
+
+      <div class="road-item done">
+        <div class="road-status status-done"></div>
+        <div>
+          <div class="road-label">Готово</div>
+          <div class="road-text">Концепція чотирьох каналів фідбеку — баґ, UX, ідея, редполітика</div>
+        </div>
+      </div>
+
+      <div class="road-item done">
+        <div class="road-status status-done"></div>
+        <div>
+          <div class="road-label">Готово</div>
+          <div class="road-text">Сторінка Лабораторії як частина міні-сайту Майстерня КЛЮЧ</div>
+        </div>
+      </div>
+
+      <div class="road-item wip">
+        <div class="road-status status-wip"></div>
+        <div>
+          <div class="road-label">В процесі</div>
+          <div class="road-text">Таблиця беклогу в Google Sheets — спільний доступ для команди</div>
+          <div class="road-note">Тимчасове рішення до появи форми</div>
+        </div>
+      </div>
+
+      <div class="road-item todo">
+        <div class="road-status status-todo"></div>
+        <div>
+          <div class="road-label">Заплановано</div>
+          <div class="road-text">Підключення Google Forms → автоматична фіксація в беклозі</div>
+          <div class="road-note">Фаза 1 — без коду, лише конфігурація</div>
+        </div>
+      </div>
+
+      <div class="road-item todo">
+        <div class="road-status status-todo"></div>
+        <div>
+          <div class="road-label">Заплановано</div>
+          <div class="road-text">Публічна сторінка статусів — що прийнято в роботу, що закрито і чому</div>
+          <div class="road-note">Прозорість = довіра команди</div>
+        </div>
+      </div>
+
+      <div class="road-item todo">
+        <div class="road-status status-todo"></div>
+        <div>
+          <div class="road-label">Перспектива</div>
+          <div class="road-text">Власний endpoint для форми з автоматичним email-сповіщенням адміністратора</div>
+          <div class="road-note">Фаза 2 — після стабілізації порталу</div>
+        </div>
+      </div>
+
+      <div class="road-item todo">
+        <div class="road-status status-todo"></div>
+        <div>
+          <div class="road-label">Перспектива</div>
+          <div class="road-text">Фідбек від зовнішніх користувачів порталу (бібліотекарі мережі) — окремий канал з нижчим порогом входу</div>
+          <div class="road-note">Фаза 3 — після запуску кабінету бібліотекаря</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span><a href="index.html">← Майстерня КЛЮЧ</a> · Лабораторія · v0.1</span>
+  <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+</footer>
+
+</body>
+</html>

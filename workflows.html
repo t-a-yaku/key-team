@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КЛЮЧ — Два потоки наповнення</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper: #f7f3ec;
+    --pk-ink: #1a1410;
+    --pk-gold: #b8860b;
+    --pk-gold-light: #e8d48a;
+    --pk-rust: #8b3a1a;
+    --pk-steel: #2e4a6b;
+    --pk-sage: #4a6b4a;
+    --pk-muted: #6b5f52;
+    --pk-border: #d4c9b8;
+    --pk-paper-dark: #ede8df;
+
+    --stream-new: #2e4a6b;
+    --stream-new-light: #eef2f7;
+    --stream-retro: #6b3a00;
+    --stream-retro-light: #faf3e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    background: var(--pk-paper);
+    color: var(--pk-ink);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 2px solid var(--pk-gold);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+
+  .logo-line {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    color: var(--pk-ink);
+    line-height: 1.2;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--pk-gold);
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--pk-muted);
+    font-weight: 400;
+  }
+
+  /* INTRO CONCEPT */
+  .concept-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .concept-card {
+    border-radius: 4px;
+    padding: 20px 24px;
+    border-left: 4px solid;
+  }
+
+  .concept-card.new {
+    background: var(--stream-new-light);
+    border-color: var(--stream-new);
+  }
+
+  .concept-card.retro {
+    background: var(--stream-retro-light);
+    border-color: var(--stream-retro);
+  }
+
+  .concept-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .concept-card.new h2 { color: var(--stream-new); }
+  .concept-card.retro h2 { color: var(--stream-retro); }
+
+  .concept-card p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--pk-ink);
+  }
+
+  .concept-card .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+
+  .concept-card.new .tag { background: var(--stream-new); color: #fff; }
+  .concept-card.retro .tag { background: var(--stream-retro); color: #fff; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--pk-ink);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  /* MAIN TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 48px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'Geologica', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--pk-border);
+    background: var(--pk-paper-dark);
+    color: var(--pk-muted);
+  }
+
+  thead th.col-dim { color: var(--pk-muted); }
+  thead th.col-new { color: var(--stream-new); }
+  thead th.col-retro { color: var(--stream-retro); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: rgba(184, 134, 11, 0.04); }
+
+  td {
+    padding: 14px 16px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td.dim-label {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--pk-ink);
+    white-space: nowrap;
+    background: var(--pk-paper-dark);
+    border-right: 1px solid var(--pk-border);
+    min-width: 140px;
+  }
+
+  td.cell-new {
+    background: rgba(46, 74, 107, 0.03);
+    border-right: 1px solid var(--pk-border);
+  }
+
+  td.cell-retro {
+    background: rgba(107, 58, 0, 0.03);
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+
+  .pill-new { background: var(--stream-new); color: #fff; }
+  .pill-retro { background: var(--stream-retro); color: #fff; }
+
+  ul.cell-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.cell-list li {
+    padding: 2px 0 2px 14px;
+    position: relative;
+    font-size: 13px;
+  }
+
+  ul.cell-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--pk-muted);
+  }
+
+  .note {
+    font-size: 11px;
+    color: var(--pk-muted);
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* RHYTHM TABLE */
+  .rhythm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .rhythm-card {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+
+  .rhythm-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--pk-ink);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .rhythm-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .rhythm-badge {
+    flex-shrink: 0;
+    width: 28px;
+    height: 18px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-new { background: var(--stream-new); color: #fff; }
+  .badge-retro { background: var(--stream-retro); color: #fff; }
+  .badge-both { background: var(--pk-gold); color: #fff; }
+
+  /* ALERT BOXES */
+  .alert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .alert-box {
+    border-radius: 4px;
+    padding: 18px 20px;
+    border: 1px solid;
+  }
+
+  .alert-box.principle {
+    background: #f8f5ee;
+    border-color: var(--pk-gold);
+  }
+
+  .alert-box.warning {
+    background: #fdf3f0;
+    border-color: var(--pk-rust);
+  }
+
+  .alert-box h3 {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .alert-box.principle h3 { color: var(--pk-gold); }
+  .alert-box.warning h3 { color: var(--pk-rust); }
+
+  .alert-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .alert-box ul li {
+    font-size: 13px;
+    padding: 3px 0 3px 18px;
+    position: relative;
+  }
+
+  .alert-box.principle ul li::before { content: '✦'; position: absolute; left: 0; color: var(--pk-gold); font-size: 10px; top: 4px; }
+  .alert-box.warning ul li::before { content: '!'; position: absolute; left: 0; color: var(--pk-rust); font-weight: 700; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--pk-border);
+    font-size: 11px;
+    color: var(--pk-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .concept-block { grid-template-columns: 1fr; }
+    .alert-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="logo-line">КЛЮЧ · Операційна модель · Документ v1.0</div>
+    <h1>Два потоки наповнення<br><em>знаннєвого графу</em></h1>
+    <p class="subtitle">Робочий фреймворк для контент-менеджера, регіонального куратора та редактора — червень 2026</p>
+  </header>
+
+  <!-- CONCEPT INTRO -->
+  <div class="concept-block">
+    <div class="concept-card new">
+      <span class="tag">Потік 1</span>
+      <h2>Новий контент 2026</h2>
+      <p>Лінійний потік: подія або книга з'явилась у світі → фіксуємо в системі → публікуємо. Ритм задає редакційний календар. Виконавець знає, що саме і до якого часу потрібно внести.</p>
+    </div>
+    <div class="concept-card retro">
+      <span class="tag">Потік 2</span>
+      <h2>Ретрокаталогізація</h2>
+      <p>Нелінійний потік: читаєш вже опублікований матеріал → виявляєш приховані зв'язки → збагачуєш існуючі картки. Матеріал «оброблено» позначається. Рухаємося від гарячого до холодного.</p>
+    </div>
+  </div>
+
+  <!-- MAIN COMPARISON TABLE -->
+  <p class="section-title">Порівняльна таблиця двох потоків</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-dim">Виміри</th>
+          <th class="col-new">▲ Потік 1 — Новий контент</th>
+          <th class="col-retro">◆ Потік 2 — Ретрокаталогізація</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="dim-label">Логіка руху</td>
+          <td class="cell-new">Від події у світі → до картки в системі.<br>
+            <span class="note">Книга вийшла → заводимо</span></td>
+          <td class="cell-retro">Від матеріалу в архіві → до зв'язку в графі.<br>
+            <span class="note">Стаття є → виявляємо що в ній приховано</span></td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Тригер роботи</td>
+          <td class="cell-new">
+            <ul class="cell-list">
+              <li>Нова книга вийшла у видавництві</li>
+              <li>Автор отримав нагороду</li>
+              <li>Захід чи конкурс оголошено</li>
+              <li>З'явилась зовнішня новина</li>
+            </ul>
+          </td>
+          <td class="cell-retro">
+            <ul class="cell-list">
+              <li>Ювілейне есе з фактом біографії</li>
+              <li>Рецензія з посиланням на маловідому книгу</li>
+              <li>Стаття, де автор рекомендує твори</li>
+              <li>Матеріал без прив'язок до сутностей</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Порядок дій</td>
+          <td class="cell-new">
+            <ol style="padding-left:16px; font-size:13px; line-height:1.7">
+              <li>Перевірити дублі (Person, Institution)</li>
+              <li>Завести допоміжні сутності якщо їх немає</li>
+              <li>Створити основну сутність (Book / Event)</li>
+              <li>Прив'язати зв'язки</li>
+              <li>Опублікувати</li>
+            </ol>
+          </td>
+          <td class="cell-retro">
+            <ol style="padding-left:16px; font-size:13px; line-height:1.7">
+              <li>Прочитати матеріал цілком</li>
+              <li>Заповнити протокол виявлення (що знайдено)</li>
+              <li>Внести кожну знахідку в потрібне місце картки</li>
+              <li>Позначити матеріал як «оброблено»</li>
+              <li>Зберегти службовий коментар де взяли дані</li>
+            </ol>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Де фіксується результат</td>
+          <td class="cell-new">
+            <ul class="cell-list">
+              <li>Нова сторінка (Book, Event, News)</li>
+              <li>Новий сніппет (Person, Award)</li>
+              <li>Нова сторінка Institution</li>
+            </ul>
+          </td>
+          <td class="cell-retro">
+            <ul class="cell-list">
+              <li>Таймлайн діяча (нова подія в біографії)</li>
+              <li>Таймлайн твору (цікавинка про книгу)</li>
+              <li>Поле «Питання для дискусії» в картці</li>
+              <li>PersonAlias (виявлений псевдонім)</li>
+              <li>Зв'язок Публікація ↔ Книга / Особа</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Хто виконавець</td>
+          <td class="cell-new">Контент-менеджер<br>
+            <span class="note">Регіональний куратор — для місцевого шару</span>
+          </td>
+          <td class="cell-retro">Контент-менеджер або редактор-аналітик<br>
+            <span class="note">Наталя Марченко — для ключових діячів і творів</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Ритм</td>
+          <td class="cell-new">Щоденний / щотижневий (реакція на потік подій)</td>
+          <td class="cell-retro">Блоками: 1–2 сесії на тиждень по 1,5–2 год.</td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Інструменти</td>
+          <td class="cell-new">
+            <ul class="cell-list">
+              <li>Wagtail admin — створення сторінок</li>
+              <li>Wikidata / MARC імпорт</li>
+              <li>«Завантажити метадані» (зовн. новини)</li>
+            </ul>
+          </td>
+          <td class="cell-retro">
+            <ul class="cell-list">
+              <li>Архів КЛЮЧ 1.0 (html-матеріали)</li>
+              <li>Протокол виявлення (таблиця-чеклист)</li>
+              <li>ШІ-асистент для питань дискусії</li>
+              <li>Поле «Службові коментарі» (джерело)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Ризик помилки</td>
+          <td class="cell-new">Дублювання сутностей (Person, Institution)<br>
+            <span class="note">Перевіряти пошуком до створення</span>
+          </td>
+          <td class="cell-retro">Зміна архівних полів (посада, місто, дата)<br>
+            <span class="note">Лише нові поля — ніколи не редагувати первинні</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim-label">Ознака завершення</td>
+          <td class="cell-new">Сторінка опублікована, всі зв'язки прив'язані</td>
+          <td class="cell-retro">Матеріал позначено «оброблено» + службовий коментар із датою і джерелом</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- WHAT TO EXTRACT — RETRO -->
+  <p class="section-title">Що виявляти при ретрокаталогізації — типи знахідок</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-dim" style="width:180px">Тип знахідки</th>
+          <th class="col-dim">Ознака в тексті</th>
+          <th class="col-dim">Куди вносити</th>
+          <th class="col-dim">Що не чіпати</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim-label">Факт біографії</td>
+          <td>«У 1978 році переїхав до…», «закінчив у…», «працював редактором»</td>
+          <td>Таймлайн діяча (новий запис PersonLifeEvent)</td>
+          <td>Архівні дати народження/смерті</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Цікавинка про твір</td>
+          <td>«Книга писалась 10 років», «назву запропонував редактор», «заборонена у СРСР»</td>
+          <td>Таймлайн книги або поле «Службові коментарі»</td>
+          <td>Рік першого видання (лише верифіковані дані)</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Нова книга</td>
+          <td>Назва у лапках без картки в базі</td>
+          <td>Нова BookPage (але спочатку — перевірити дублі)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Нова особа</td>
+          <td>Ім'я, що зустрічається вперше</td>
+          <td>Новий Person (перевірити псевдоніми і дублі)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Рекомендація книги</td>
+          <td>«Письменник радить», добірка «10 книжок»</td>
+          <td>Вкладка «Письменник радить почитати» + Пов'язані книги</td>
+          <td>Текст оригіналу — не переформулювати</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Питання для дискусії</td>
+          <td>Матеріал досить глибокий — є біографія, контекст, теми</td>
+          <td>Поле «Питання для дискусії» в картці діяча або твору</td>
+          <td>Універсальні 5 питань — не дублювати</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Псевдонім / варіант імені</td>
+          <td>«також відомий як», підпис рос. формою</td>
+          <td>PersonAlias із відповідною приміткою</td>
+          <td>Основна картка — лише укр. офіційна форма</td>
+        </tr>
+        <tr>
+          <td class="dim-label">Пам'ятне місце</td>
+          <td>«Вулиця імені…», «меморіальна дошка на…»</td>
+          <td>PersonMemorial (вкладка «Кар'єра» → «Пам'ятні місця»)</td>
+          <td>Текст напису — дослівно, не виправляти</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RHYTHM -->
+  <p class="section-title">Тижневий ритм: як поєднувати обидва потоки</p>
+  <div class="rhythm-grid">
+
+    <div class="rhythm-card">
+      <h3>Щоденно (20–30 хв)</h3>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Зовнішні новини: 1–3 через «Завантажити метадані»</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Перевірити календар подій — актуальні дати</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-both">ОБ</span>
+        <span>Поштова скринька: надходження від регіонів</span>
+      </div>
+    </div>
+
+    <div class="rhythm-card">
+      <h3>2–3 рази на тиждень</h3>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Нові книги: завести Person + Institution → BookPage</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Нагороди: прив'язати до картки книги або діяча</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-retro">РК</span>
+        <span>Сесія ретро: 5–10 матеріалів з архіву 1.0</span>
+      </div>
+    </div>
+
+    <div class="rhythm-card">
+      <h3>Раз на тиждень</h3>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-retro">РК</span>
+        <span>Питання для дискусії: оновити 3–5 карток діячів або творів</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Власна новина або публікація (ексклюзив)</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-both">ОБ</span>
+        <span>Таблиця стану міграцій: оновити статуси</span>
+      </div>
+    </div>
+
+    <div class="rhythm-card">
+      <h3>Раз на місяць</h3>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-both">ОБ</span>
+        <span>Data integrity audit (management command)</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-retro">РК</span>
+        <span>Передати блок оброблених матеріалів редактору</span>
+      </div>
+      <div class="rhythm-row">
+        <span class="rhythm-badge badge-new">НО</span>
+        <span>Ювілярі наступного місяця — перевірити покриття</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LEGEND -->
+  <p style="font-size:12px; color:var(--pk-muted); margin-bottom:48px">
+    <span class="rhythm-badge badge-new" style="display:inline-flex; margin-right:4px">НО</span> Новий контент &nbsp;
+    <span class="rhythm-badge badge-retro" style="display:inline-flex; margin-right:4px">РК</span> Ретрокаталогізація &nbsp;
+    <span class="rhythm-badge badge-both" style="display:inline-flex; margin-right:4px">ОБ</span> Обидва потоки
+  </p>
+
+  <!-- PRINCIPLES + WARNINGS -->
+  <p class="section-title">Принципи і застереження</p>
+  <div class="alert-grid">
+    <div class="alert-box principle">
+      <h3>Принципи якості</h3>
+      <ul>
+        <li>Один виконавець — один режим в одній сесії. Не змішувати потоки в межах однієї роботи.</li>
+        <li>Джерело завжди фіксується в «Службових коментарях» при ретро-внесенні.</li>
+        <li>Перед створенням нової сутності — пошук дублів. Завжди.</li>
+        <li>Питання для дискусії — мінімум 5, максимум 10. Прив'язані до конкретного твору або діяча.</li>
+        <li>Матеріал вважається «обробленим» лише коли всі знахідки внесено, не лише перша.</li>
+      </ul>
+    </div>
+    <div class="alert-box warning">
+      <h3>Заборонені дії</h3>
+      <ul>
+        <li>Редагувати архівні поля (посада, місто, дата на момент публікації).</li>
+        <li>Змінювати номери питань диспуту після введення відповідей.</li>
+        <li>Створювати окрему картку Person для рос. написання того ж автора.</li>
+        <li>Ставити is_featured масово — лише ручна куратура.</li>
+        <li>Використовувати вільний текст у полі регіону — лише dropdown.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span>КЛЮЧ · key.chl.kiev.ua · Операційна модель</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

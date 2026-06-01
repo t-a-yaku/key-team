@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КЛЮЧ — Модуль M4: Ретрокаталогізація</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper: #f7f3ec;
+    --pk-ink: #1a1410;
+    --pk-gold: #b8860b;
+    --pk-gold-light: #faf5e4;
+    --pk-rust: #8b3a1a;
+    --pk-rust-light: #fdf3f0;
+    --pk-steel: #2e4a6b;
+    --pk-steel-light: #eef2f7;
+    --pk-sage: #3d5c3d;
+    --pk-sage-light: #f0f5f0;
+    --pk-amber: #7a4f00;
+    --pk-amber-light: #fdf6e8;
+    --pk-muted: #6b5f52;
+    --pk-border: #d4c9b8;
+    --pk-paper-dark: #ede8df;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    background: var(--pk-paper);
+    color: var(--pk-ink);
+    line-height: 1.65;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--pk-ink);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  nav .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--pk-gold);
+    letter-spacing: 0.05em;
+    padding: 14px 20px 14px 0;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: #fff; }
+  nav a.active { color: var(--pk-gold); }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  /* HEADER */
+  .module-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    background: var(--pk-amber);
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  h1 em { font-style: italic; color: var(--pk-gold); }
+
+  .lead {
+    font-size: 14px;
+    color: var(--pk-muted);
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .for-whom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  .role-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--pk-border);
+    color: var(--pk-muted);
+    background: var(--pk-paper-dark);
+  }
+
+  .role-tag.primary {
+    background: var(--pk-amber-light);
+    border-color: var(--pk-amber);
+    color: var(--pk-amber);
+  }
+
+  /* OUTCOMES */
+  .outcomes {
+    background: var(--pk-sage-light);
+    border-left: 4px solid var(--pk-sage);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    margin-bottom: 40px;
+  }
+
+  .outcomes h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pk-sage);
+    margin-bottom: 10px;
+  }
+
+  .outcomes ul { list-style: none; padding: 0; }
+
+  .outcomes ul li {
+    font-size: 13px;
+    padding: 3px 0 3px 18px;
+    position: relative;
+  }
+
+  .outcomes ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--pk-sage);
+    font-weight: 700;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 44px; }
+
+  .anchor { scroll-margin-top: 56px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  h3.sub {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--pk-ink);
+  }
+
+  p {
+    font-size: 13.5px;
+    line-height: 1.65;
+    margin-bottom: 10px;
+    max-width: 700px;
+  }
+
+  /* DECISION TREE */
+  .decision-tree {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .decision-tree h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 16px;
+  }
+
+  .q-block {
+    margin-bottom: 14px;
+  }
+
+  .q-text {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .q-text::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    color: var(--pk-gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .q-answers {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-left: 20px;
+  }
+
+  .ans {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .ans.yes {
+    background: var(--pk-sage-light);
+    border-color: var(--pk-sage);
+    color: var(--pk-sage);
+  }
+
+  .ans.no {
+    background: var(--pk-rust-light);
+    border-color: var(--pk-rust);
+    color: var(--pk-rust);
+  }
+
+  .ans.maybe {
+    background: var(--pk-gold-light);
+    border-color: var(--pk-gold);
+    color: var(--pk-amber);
+  }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    background: var(--pk-paper-dark);
+    border-bottom: 2px solid var(--pk-border);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--pk-border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(184,134,11,0.03); }
+
+  td {
+    padding: 10px 14px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td.lbl {
+    font-weight: 600;
+    font-size: 12px;
+    background: var(--pk-paper-dark);
+    border-right: 1px solid var(--pk-border);
+    white-space: nowrap;
+  }
+
+  .yes-cell { color: var(--pk-sage); font-weight: 600; }
+  .no-cell  { color: var(--pk-rust); font-weight: 600; }
+  .maybe-cell { color: var(--pk-amber); font-weight: 600; }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 16px 14px 12px;
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+  }
+
+  .step-n {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--pk-amber);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-body h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+
+  .step-body p { font-size: 12.5px; margin: 0; max-width: 100%; }
+
+  .step-body .tip {
+    font-size: 11px;
+    color: var(--pk-muted);
+    font-style: italic;
+    margin-top: 5px;
+  }
+
+  /* ALERT */
+  .alert {
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border: 1px solid;
+  }
+
+  .alert.gold { background: var(--pk-gold-light); border-color: var(--pk-gold); }
+  .alert.rust { background: var(--pk-rust-light); border-color: var(--pk-rust); }
+  .alert.steel { background: var(--pk-steel-light); border-color: var(--pk-steel); }
+  .alert.amber { background: var(--pk-amber-light); border-color: var(--pk-amber); }
+
+  .alert h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .alert.gold h4 { color: var(--pk-amber); }
+  .alert.rust h4 { color: var(--pk-rust); }
+  .alert.steel h4 { color: var(--pk-steel); }
+  .alert.amber h4 { color: var(--pk-amber); }
+
+  .alert ul { list-style: none; padding: 0; }
+
+  .alert ul li {
+    font-size: 13px;
+    padding: 2px 0 2px 16px;
+    position: relative;
+  }
+
+  .alert.gold ul li::before { content:'✦'; position:absolute; left:0; color:var(--pk-gold); font-size:9px; top:5px; }
+  .alert.rust ul li::before { content:'!'; position:absolute; left:0; color:var(--pk-rust); font-weight:700; }
+  .alert.steel ul li::before { content:'→'; position:absolute; left:0; color:var(--pk-steel); }
+  .alert.amber ul li::before { content:'→'; position:absolute; left:0; color:var(--pk-amber); }
+
+  .alert p { font-size: 13px; margin: 0; max-width: 100%; }
+
+  /* PROMPT BOX */
+  .prompt-box {
+    background: #1a1410;
+    color: #e8d48a;
+    border-radius: 6px;
+    padding: 22px 26px;
+    font-family: 'Geologica', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .prompt-box .prompt-label {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b5f52;
+  }
+
+  .prompt-box .marker { color: var(--pk-gold); font-weight: 600; }
+  .prompt-box .ph { color: #8fbc8f; font-style: italic; }
+  .prompt-box .comment { color: #6b7a6b; }
+
+  /* ENTITY CARDS */
+  .entity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .entity-card {
+    border-radius: 4px;
+    border: 1px solid var(--pk-border);
+    padding: 16px 18px;
+    background: var(--pk-paper-dark);
+  }
+
+  .entity-card .e-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .e-icon { font-size: 18px; }
+
+  .e-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .e-badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  .badge-page { background: var(--pk-steel); color: #fff; }
+  .badge-snip { background: var(--pk-muted); color: #fff; }
+  .badge-inline { background: var(--pk-border); color: var(--pk-muted); }
+
+  .entity-card ul { list-style: none; padding: 0; }
+
+  .entity-card ul li {
+    font-size: 12px;
+    padding: 2px 0 2px 14px;
+    position: relative;
+    color: var(--pk-ink);
+    line-height: 1.4;
+  }
+
+  .entity-card ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--pk-muted);
+  }
+
+  .entity-card .e-where {
+    font-size: 11px;
+    color: var(--pk-muted);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--pk-border);
+    font-style: italic;
+  }
+
+  code {
+    background: rgba(0,0,0,0.07);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .checklist h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 12px;
+  }
+
+  .chk {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .chk:last-child { border-bottom: none; }
+
+  .box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--pk-border);
+    border-radius: 2px;
+    background: #fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--pk-border);
+    font-size: 11px;
+    color: var(--pk-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .step { grid-template-columns: 28px 1fr; }
+    .entity-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">КЛЮЧ · M4</span>
+  <a href="#intro" class="active">Що це</a>
+  <a href="#ai-step">ШІ-виявлення</a>
+  <a href="#institutions">Установи</a>
+  <a href="#entities">Всі типи знахідок</a>
+  <a href="#archival">Архівні поля</a>
+  <a href="#checklist-m4">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div id="intro" class="anchor" style="margin-bottom:36px">
+    <span class="module-badge">Модуль M4 · Передумова: M1 + M2</span>
+    <h1>Ретрокаталогізація:<br><em>від матеріалу до зв'язків</em></h1>
+    <p class="lead">Модуль вчить читати архівний матеріал як аналітик: виявляти приховані сутності, приймати рішення що і куди вносити, і зупинятись там де зупинитись.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Контент-менеджер</span>
+      <span class="role-tag">Редактор-книгознавець</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Читати матеріал аналітично — бачити сутності, а не лише текст</li>
+      <li>Використовувати ШІ для первинного виявлення сутностей</li>
+      <li>Приймати рішення: нова сутність чи текстовий запис у таймлайні</li>
+      <li>Вносити кожен тип знахідки в правильне місце бази</li>
+      <li>Відрізняти архівні поля від полів що можна збагачувати</li>
+      <li>Позначати матеріал як оброблений і фіксувати джерело</li>
+    </ul>
+  </div>
+
+
+  <!-- SECTION 1 — ШІ КРОК -->
+  <div id="ai-step" class="anchor section">
+    <h2>4.1. Перший крок — ШІ виявляє, людина вирішує</h2>
+
+    <p>Перед тим як читати матеріал самостійно — запустіть ШІ-асистент. Він зніме механічну роботу: перерахує все що в тексті є. Ваша робота — вирішити що з цим робити.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Скопіюйте текст матеріалу</h4>
+          <p>Повний текст із архіву КЛЮЧ 1.0 (html) або з іншого джерела. Не потрібно форматувати — ШІ читає сирий текст.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Вставте в Gemini або NotebookLM з промптом виявлення</h4>
+          <p>Промпт нижче — стандартний. Не змінюйте його без потреби. Він налаштований на перерахування без оцінки.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h4>Отримайте список сутностей</h4>
+          <p>ШІ поверне структурований перелік: особи, книги, установи, події з датами, географія, фото, пам'ятні місця. По кожному — тип і контекст згадки.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <h4>Для кожної сутності — прийміть рішення</h4>
+          <p>Використайте критерій трьох питань (розділ 4.2) і таблицю рішень для установ (розділ 4.3). Відмітьте рішення в протоколі виявлення перед тим як відкрити адмінку.</p>
+          <p class="tip">Спочатку весь аналіз — потім адмінка. Не чергуйте читання і внесення.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <span class="prompt-label">Промпт виявлення сутностей · v1.0</span>
+Прочитай наведений нижче текст і виділи всі згадані сутності.<br>
+<span class="comment">// Перерахуй — не оцінюй і не скорочуй.</span><br><br>
+<span class="marker">Категорії сутностей:</span><br>
+1. Особи (ім'я, роль у тексті: автор / герой / згадується)<br>
+2. Книги і твори (назва, автор якщо вказано, мова якщо вказано)<br>
+3. Установи (назва, тип: університет / видавництво / школа / інше, рік якщо є)<br>
+4. Події з датами (що сталось, рік або період)<br>
+5. Іншомовні видання або переклади (мова, видавець якщо є)<br>
+6. Екранізації, вистави, інші втілення (тип, рік якщо є)<br>
+7. Видавничі серії (назва серії, видавець)<br>
+8. Фотографії (чи згадуються, чиї, звідки)<br>
+9. Пам'ятні місця (тип: дошка / пам'ятник / вулиця, місто)<br>
+10. Географічні об'єкти (міста, регіони, пов'язані з особою або твором)<br><br>
+<span class="marker">Формат відповіді:</span><br>
+По кожній категорії — нумерований список.<br>
+Якщо категорія порожня — написати «не виявлено».<br>
+Не додавати коментарів і рекомендацій — тільки перелік.<br><br>
+<span class="marker">Текст:</span><br>
+<span class="ph">[вставити текст матеріалу]</span>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2 — КРИТЕРІЙ -->
+  <div class="section">
+    <h2>4.2. Критерій трьох питань — чи створювати нову сутність</h2>
+
+    <p>Після того як ШІ виявив список — по кожній сутності запитайте себе:</p>
+
+    <div class="decision-tree">
+      <h3>Три питання перед створенням нового запису</h3>
+
+      <div class="q-block">
+        <div class="q-text">Чи повернеться до цієї сутності інший матеріал?</div>
+        <div class="q-answers">
+          <span class="ans yes">Так — хороший знак для сутності</span>
+          <span class="ans no">Ні — лише текстовий запис у таймлайні</span>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">Чи має ця сутність власну історію цікаву нашій аудиторії?</div>
+        <div class="q-answers">
+          <span class="ans yes">Так — створювати</span>
+          <span class="ans no">Ні — контекст, не сутність</span>
+          <span class="ans maybe">Можливо — перевірити Wikidata</span>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">Чи має сутність публічну ідентичність — Wikidata, сайт, WorldCat?</div>
+        <div class="q-answers">
+          <span class="ans yes">Так — створювати з посиланням</span>
+          <span class="ans no">Ні — текстовий запис достатній</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert amber">
+      <h4>Пам'ятайте</h4>
+      <p>Критерії не статичні. Звичайна школа може стати партнерською установою — і тоді отримає InstitutionPage. Таймлайн-запис при цьому не втрачається, лише доповнюється прив'язкою. Система для цього архітектурно готова.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3 — УСТАНОВИ -->
+  <div id="institutions" class="anchor section">
+    <h2>4.3. Редакційна політика щодо установ</h2>
+
+    <p>Найчастіше питання при ретрокаталогізації: чи заводити навчальний заклад як окрему InstitutionPage? Відповідь залежить від типу.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Тип установи</th>
+            <th>Рішення</th>
+            <th>Логіка</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lbl">Університет (будь-який)</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Завжди — точка перетину багатьох авторів</td>
+          </tr>
+          <tr>
+            <td class="lbl">Інститут гуманітарного профілю</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Літературний, мистецький, педагогічний, бібліотечний</td>
+          </tr>
+          <tr>
+            <td class="lbl">Інститут негуманітарного профілю</td>
+            <td class="no-cell">❌ Текст у таймлайні</td>
+            <td>Лісотехнічний, будівельний — контекст біографії, не сутність</td>
+          </tr>
+          <tr>
+            <td class="lbl">Профільний заклад 1–2 рівня</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Художня школа, мовний ліцей, музична школа</td>
+          </tr>
+          <tr>
+            <td class="lbl">Загальноосвітня школа</td>
+            <td class="no-cell">❌ Текст у таймлайні</td>
+            <td>«Навчався у ЗОШ № 5» — без окремої сутності</td>
+          </tr>
+          <tr>
+            <td class="lbl">Видавництво</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Завжди — центральна сутність для книг</td>
+          </tr>
+          <tr>
+            <td class="lbl">Бібліотека / культурний центр</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Якщо місце роботи або регулярна взаємодія з порталом</td>
+          </tr>
+          <tr>
+            <td class="lbl">Редакція літературного журналу</td>
+            <td class="yes-cell">✅ InstitutionPage</td>
+            <td>Профільні видання — точка перетину авторів</td>
+          </tr>
+          <tr>
+            <td class="lbl">Партнерська школа (активна)</td>
+            <td class="maybe-cell">⏳ Пізніше</td>
+            <td>Коли з'являється регулярна взаємодія — рецензії, голоси авторів</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert steel">
+      <h4>Як вносити установу якщо вирішили не заводити сторінку</h4>
+      <ul>
+        <li>В таймлайні діяча (<code>PersonLifeEvent</code>): тип «Освіта» або «Робота», текст — назва закладу</li>
+        <li>Поле «Опис» — повна назва як у джерелі, рік початку і завершення</li>
+        <li>Джерело — назва матеріалу звідки взяли дані</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- SECTION 4 — ВСІ ТИПИ ЗНАХІДОК -->
+  <div id="entities" class="anchor section">
+    <h2>4.4. Всі типи знахідок і куди їх вносити</h2>
+
+    <div class="entity-grid">
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">📅</span>
+          <span class="e-title">Факт біографії</span>
+          <span class="e-badge badge-snip">Таймлайн</span>
+        </div>
+        <ul>
+          <li>«У 1978 р. переїхав до Львова»</li>
+          <li>«Закінчив консерваторію у 1965»</li>
+          <li>«Працював редактором у «Веселці»»</li>
+        </ul>
+        <div class="e-where">Картка діяча → вкладка «Таймлайн» → новий <code>PersonLifeEvent</code>. У коментарі — джерело.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">📖</span>
+          <span class="e-title">Цікавинка про твір</span>
+          <span class="e-badge badge-snip">Таймлайн</span>
+        </div>
+        <ul>
+          <li>«Книга писалась 10 років»</li>
+          <li>«Назву запропонував редактор»</li>
+          <li>«Заборонена в СРСР до 1991»</li>
+        </ul>
+        <div class="e-where">Картка книги → вкладка «Таймлайн» → новий запис. Або «Службові коментарі» якщо це не подія а факт.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">🌍</span>
+          <span class="e-title">Іншомовне видання</span>
+          <span class="e-badge badge-snip">Таймлайн</span>
+        </div>
+        <ul>
+          <li>«Переклад польською вийшов у 2003»</li>
+          <li>«Видано в Німеччині видавництвом X»</li>
+        </ul>
+        <div class="e-where">Картка книги → Таймлайн → тип «Переклад/Іншомовне видання». Посилання — WorldCat або каталог бібліотеки країни.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">🎬</span>
+          <span class="e-title">Екранізація / вистава</span>
+          <span class="e-badge badge-snip">Таймлайн</span>
+        </div>
+        <ul>
+          <li>«Екранізовано студією «Укртелефільм» у 1987»</li>
+          <li>«Театральна постановка в НТУ ім. Франка»</li>
+        </ul>
+        <div class="e-where">Картка книги → Таймлайн → тип «Екранізація» або «Театральна постановка». Посилання на базу фільмів або афішу якщо є.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">📚</span>
+          <span class="e-title">Видавнича серія</span>
+          <span class="e-badge badge-snip">BookSeries</span>
+        </div>
+        <ul>
+          <li>«Книга входить до серії «Золота бібліотека»»</li>
+          <li>Кілька книг одного автора в серії</li>
+        </ul>
+        <div class="e-where">Snippets → Серії → перевірити чи є. Якщо немає — створити. Потім прив'язати книгу до серії в картці BookPage. Заводити якщо ≥ 2 книги з бази входять до серії.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">📷</span>
+          <span class="e-title">Фото з матеріалу</span>
+          <span class="e-badge badge-snip">PersonPhoto</span>
+        </div>
+        <ul>
+          <li>Фото з родинного архіву</li>
+          <li>Архівне фото з редакції або видавництва</li>
+          <li>Фото автора на заході</li>
+        </ul>
+        <div class="e-where">Картка діяча → вкладка «Фото» → новий <code>PersonPhoto</code>. Обов'язково: <code>rights_status</code> і <code>consent_note</code> перед публікацією. Рік знімка — коли зроблено, не коли додано.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">🏛</span>
+          <span class="e-title">Пам'ятне місце</span>
+          <span class="e-badge badge-snip">PersonMemorial</span>
+        </div>
+        <ul>
+          <li>«Меморіальна дошка на будинку де жив»</li>
+          <li>«Вулиця імені письменника у Харкові»</li>
+          <li>Фото пам'ятника в тексті статті</li>
+        </ul>
+        <div class="e-where">Картка діяча → вкладка «Кар'єра» → блок «Пам'ятні місця». Текст напису — дослівно. Фото прикріпити якщо є в матеріалі (перевірити права).</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">💬</span>
+          <span class="e-title">Питання для дискусії</span>
+          <span class="e-badge badge-inline">Поле картки</span>
+        </div>
+        <ul>
+          <li>Матеріал глибокий: біографія, теми, контекст</li>
+          <li>Є рецензії, дослідження, есе про автора</li>
+        </ul>
+        <div class="e-where">Картка діяча або твору → поле «Питання для дискусії». Використати промпт з Протоколу ретрокаталогізації (окремий документ). Мінімум 6, максимум 10 питань. Редагувати перед внесенням.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">🔤</span>
+          <span class="e-title">Псевдонім / варіант імені</span>
+          <span class="e-badge badge-snip">PersonAlias</span>
+        </div>
+        <ul>
+          <li>«Також відомий як…»</li>
+          <li>Підпис рос. формою в радянських виданнях</li>
+          <li>Дівоче прізвище</li>
+          <li>Латинська транслітерація</li>
+        </ul>
+        <div class="e-where">Картка діяча → вкладка «Псевдоніми та варіанти». Заповнити <code>is_pseudonym</code> і <code>note</code>. Одна особа — одна картка завжди.</div>
+      </div>
+
+      <div class="entity-card">
+        <div class="e-header">
+          <span class="e-icon">📎</span>
+          <span class="e-title">Зв'язок публікація ↔ сутність</span>
+          <span class="e-badge badge-page">Pages</span>
+        </div>
+        <ul>
+          <li>Стаття про книгу без прив'язки в базі</li>
+          <li>Рецензія без зв'язку з карткою твору</li>
+          <li>Есе про діяча без зв'язку з карткою особи</li>
+        </ul>
+        <div class="e-where">Картка PublicationPage → вкладка «Зв'язки з книгами» або «Зв'язки з діячами». Додати прив'язку. Без цього публікація не з'явиться на картці книги або діяча.</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- SECTION 5 — АРХІВНІ ПОЛЯ -->
+  <div id="archival" class="anchor section">
+    <h2>4.5. Архівні поля — що не можна змінювати</h2>
+
+    <p>Деякі поля фіксують стан на момент публікації оригінального матеріалу. Це навмисне рішення: дослідник повинен бачити що писалось тоді, а не що є зараз. Такі поля — недоторканні.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Поле</th>
+            <th>Де знаходиться</th>
+            <th>Чому не чіпати</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lbl">respondent_role (посада)</td>
+            <td>Диспут → учасник</td>
+            <td>Фіксує посаду на дату публікації; людина могла змінити роботу</td>
+          </tr>
+          <tr>
+            <td class="lbl">respondent_city (місто)</td>
+            <td>Диспут → учасник</td>
+            <td>Критично для учасників зі сходу — місто могло змінитись після 2022</td>
+          </tr>
+          <tr>
+            <td class="lbl">Дата першої публікації</td>
+            <td>PublicationPage → основне</td>
+            <td>Дата оригіналу, не дата внесення в базу</td>
+          </tr>
+          <tr>
+            <td class="lbl">Текст напису (inscription)</td>
+            <td>PersonMemorial</td>
+            <td>Дослівний текст із пам'ятки — не виправляти навіть застарілу орфографію</td>
+          </tr>
+          <tr>
+            <td class="lbl">source_name (назва джерела)</td>
+            <td>Диспут → джерело</td>
+            <td>Назва видання на момент публікації</td>
+          </tr>
+          <tr>
+            <td class="lbl">Рік знімка (PersonPhoto.year)</td>
+            <td>Картка діяча → фото</td>
+            <td>Рік коли знімок зроблено, не рік додавання до бази</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Якщо дані застаріли або невірні</h4>
+      <ul>
+        <li>Не виправляти архівне поле — додати нову подію в таймлайн з актуальними даними</li>
+        <li>Пояснення — у полі «Службові коментарі» на вкладці ⚙️ Налаштування</li>
+        <li>Якщо це помилка (не зміна) — зверніться до адміністратора з поясненням</li>
+      </ul>
+    </div>
+
+    <div class="alert gold">
+      <h4>Як правильно фіксувати джерело при ретровнесенні</h4>
+      <p>У полі «Службові коментарі» завжди писати: <code>[Ретро] Джерело: [назва матеріалу або URL], внесено [дата], [ініціали]</code></p>
+    </div>
+  </div>
+
+
+  <!-- CHECKLIST M4 -->
+  <div id="checklist-m4" class="anchor section">
+    <h2>Чеклист M4 — після завершення сесії</h2>
+    <div class="checklist">
+      <h3>Перевірте перед тим як закрити адмінку</h3>
+      <div class="chk"><div class="box"></div><span>ШІ-промпт запущено, список сутностей отримано</span></div>
+      <div class="chk"><div class="box"></div><span>По кожній установі — прийнято рішення згідно з таблицею редполітики</span></div>
+      <div class="chk"><div class="box"></div><span>Всі знахідки з протоколу внесено (або позначено чому ні)</span></div>
+      <div class="chk"><div class="box"></div><span>Нові сутності перевірені на дублі перед створенням</span></div>
+      <div class="chk"><div class="box"></div><span>Іншомовні видання і екранізації — в таймлайні книги з посиланням</span></div>
+      <div class="chk"><div class="box"></div><span>Фото: rights_status і consent_note заповнені перед публікацією</span></div>
+      <div class="chk"><div class="box"></div><span>Текст напису пам'ятного місця — дослівно, без виправлень</span></div>
+      <div class="chk"><div class="box"></div><span>Архівні поля — не змінені</span></div>
+      <div class="chk"><div class="box"></div><span>У «Службових коментарях» — джерело і дата для кожного нового поля</span></div>
+      <div class="chk"><div class="box"></div><span>Матеріал у таблиці статусів позначено: дата, ініціали, кількість знахідок</span></div>
+    </div>
+  </div>
+
+
+  <footer>
+    <span>КЛЮЧ · key.chl.kiev.ua · Навчальний модуль M4 · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
