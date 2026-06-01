@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M6 · Новини та події — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --m6:#5c3d00;--m6-light:#fdf4e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--m6);color:#fff;}
+  .module-header{margin-bottom:48px;}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--m6-light);border-color:var(--m6);color:var(--m6);}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:36px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(184,134,11,0.03);}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:160px;}
+  td.req{color:var(--pk-sage);font-weight:600;white-space:nowrap;}
+  td.opt{color:var(--pk-muted);white-space:nowrap;}
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.amber{background:var(--m6-light);border-color:var(--m6);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.amber h4{color:var(--m6);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:2px 0 2px 16px;position:relative;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert p{font-size:13px;margin:0;max-width:100%;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .checklist h3.sub-head{margin-top:20px;color:var(--m6);border-top:1px solid var(--pk-border);padding-top:16px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+  .type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:16px 0;}
+  .type-card{border-radius:4px;padding:18px 20px;border:1px solid var(--pk-border);background:var(--pk-paper-dark);position:relative;overflow:hidden;}
+  .type-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .tc-event::before{background:var(--pk-steel);}
+  .tc-contest::before{background:var(--pk-rust);}
+  .tc-program::before{background:var(--pk-sage);}
+  .tc-badge{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:2px 8px;border-radius:2px;color:#fff;display:inline-block;margin-bottom:10px;}
+  .tc-event .tc-badge{background:var(--pk-steel);}
+  .tc-contest .tc-badge{background:var(--pk-rust);}
+  .tc-program .tc-badge{background:var(--pk-sage);}
+  .type-card h3{font-size:14px;font-weight:600;margin-bottom:6px;}
+  .type-card .tc-desc{font-size:12px;color:var(--pk-muted);line-height:1.5;margin-bottom:10px;}
+  .type-card .tc-ex span{display:block;font-size:11.5px;color:var(--pk-muted);padding:2px 0;}
+  .import-flow{background:var(--pk-ink);border-radius:6px;padding:28px 32px;margin:16px 0;}
+  .import-flow h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:20px;}
+  .import-flow h3 em{font-style:italic;color:var(--pk-gold);}
+  .flow-steps{display:flex;flex-direction:column;gap:0;}
+  .flow-step{display:flex;gap:16px;padding:12px 0;position:relative;}
+  .flow-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:44px;bottom:0;width:1px;background:rgba(255,255,255,0.1);}
+  .fs-num{width:32px;height:32px;border-radius:50%;background:rgba(184,134,11,0.15);border:1px solid rgba(184,134,11,0.3);color:var(--pk-gold);font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .fs-body h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
+  .fs-body p{font-size:12px;color:rgba(247,243,236,0.5);margin:0;max-width:100%;}
+  .fs-body .acc{color:var(--pk-gold);}
+  .cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px;}
+  .cat-pill{font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;border:1px solid var(--pk-border);background:var(--pk-paper-dark);color:var(--pk-ink);}
+  .rss-box{background:var(--pk-steel-light);border:1px solid var(--pk-steel);border-radius:4px;padding:16px 20px;margin:16px 0;}
+  .rss-box h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-steel);margin-bottom:10px;}
+  .rss-row{display:flex;gap:12px;align-items:center;padding:4px 0;font-size:12px;}
+  .rss-row span{font-weight:600;color:var(--pk-steel);min-width:60px;}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.type-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#news" class="active">M6 · Новини</a>
+  <a href="#events">Події</a>
+  <a href="#rhythm">Ритм</a>
+  <a href="#checklist-m6">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div id="top" class="anchor module-header">
+    <span class="module-badge">Модуль M6 · Передумова: M1</span>
+    <h1>Новини та події:<br><em>стрічка і календар</em></h1>
+    <p class="lead">Два типи контенту з різною логікою: новини фіксують що сталось у світі дитячої літератури, події — анонсують що відбудеться. Модуль охоплює власні та зовнішні новини, три типи подій і щоденний операційний ритм.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Контент-менеджер</span>
+      <span class="role-tag primary">Методист</span>
+      <span class="role-tag">Редактор-книгознавець</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Розрізняти власну і зовнішню новину і обирати правильний тип</li>
+      <li>Завантажувати зовнішню новину за 2–3 хвилини через імпорт метаданих</li>
+      <li>Правильно обирати категорію новини з закритого словника п'яти значень</li>
+      <li>Розрізняти три типи подій і заповнювати всі їх поля</li>
+      <li>Прив'язувати до події діячів, партнерів і організаторів</li>
+      <li>Розуміти що потрапляє в RSS-стрічку і чому лід — найважливіше поле</li>
+    </ul>
+  </div>
+
+
+  <!-- НОВИНИ -->
+  <div id="news" class="anchor section">
+    <h2>6.1. Два типи новин — різна логіка роботи</h2>
+    <p>Перш ніж створювати новину — визначте її тип. Це визначає де і як вона відображатиметься і скільки часу займе.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ознака</th><th>Власна новина</th><th>Зовнішня новина</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Час створення</td><td>15–30 хв (повна верстка)</td><td>2–3 хв (імпорт)</td></tr>
+          <tr><td class="lbl">Текст</td><td>Пишете самостійно</td><td>Береться з джерела автоматично</td></tr>
+          <tr><td class="lbl">Зображення</td><td>Завантажуєте вручну</td><td>Завантажується автоматично</td></tr>
+          <tr><td class="lbl">Відображення</td><td>Повна сторінка на порталі</td><td>Картка → перехід на оригінал</td></tr>
+          <tr><td class="lbl">Ритм</td><td>1–2 рази на тиждень</td><td>Щодня 1–3 штуки</td></tr>
+          <tr><td class="lbl">Тип у Wagtail</td><td><code>NewsPage</code></td><td><code>ExternalNewsPage</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.2. Власна новина — поля і вимоги</h2>
+    <p><strong>Шлях:</strong> Pages → Новини → Add child page → <code>Новина</code></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Заголовок</td><td>Інформативний, до 80 символів. Не «Новини бібліотеки» — а «Відкрилась виставка ілюстрацій у НБУ для дітей»</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Дата публікації</td><td>Дата виходу новини. Визначає порядок у стрічці</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Головне зображення</td><td>Мін. 800×600 пікс, JPG або PNG. MD5-перевірка на дублі автоматична</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Короткий опис</td><td>До 250 символів. Відображається в списку. Пишіть як самостійне речення — не обрізаний початок тексту</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Текст новини</td><td>Повний текст (Rich Text): заголовки H2/H3, списки, посилання, вбудовані зображення</td><td class="req">обов'язково</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert amber">
+      <h4>Новина vs PublicationPage</h4>
+      <p>Новина — оперативна інформація про подію у світі. Публікація — аналітичний або рецензійний матеріал з авторською позицією. Якщо пишете розгорнуту рецензію або есе — це PublicationPage, не новина.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.3. Зовнішня новина — імпорт за 3 хвилини</h2>
+    <p><strong>Шлях:</strong> Pages → Новини → Add child page → <code>Зовнішня новина</code></p>
+    <div class="import-flow">
+      <h3>Шість кроків <em>імпорту</em></h3>
+      <div class="flow-steps">
+        <div class="flow-step"><div class="fs-num">1</div><div class="fs-body"><h4>Вставте URL джерела</h4><p>Скопіюйте посилання (Читомо, БараБука, IBBY тощо) у поле <span class="acc">«URL джерела»</span></p></div></div>
+        <div class="flow-step"><div class="fs-num">2</div><div class="fs-body"><h4>Натисніть «Завантажити метадані»</h4><p>Кнопка поруч із полем URL. Система витягне заголовок, лід і зображення — 3–5 сек</p></div></div>
+        <div class="flow-step"><div class="fs-num">3</div><div class="fs-body"><h4>Скоригуйте назву джерела</h4><p>Система підставляє домен (<span class="acc">chytomo.com</span>) — замініть на читабельну назву (<span class="acc">Читомо</span>)</p></div></div>
+        <div class="flow-step"><div class="fs-num">4</div><div class="fs-body"><h4>Скоротіть лід до 300–400 символів</h4><p>2–3 речення — ідеально для картки. Автоімпорт часто витягує занадто довгий текст</p></div></div>
+        <div class="flow-step"><div class="fs-num">5</div><div class="fs-body"><h4>Оберіть категорію</h4><p>Одна з п'яти (див. нижче). Єдине рішення яке приймаєте вручну при імпорті</p></div></div>
+        <div class="flow-step"><div class="fs-num">6</div><div class="fs-body"><h4>Опублікуйте</h4><p>Новина з'явиться зі значком «→ Зовнішнє джерело». Клік → користувач переходить на оригінал</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.4. Категорії новин — закритий словник</h2>
+    <p>Одна категорія — найбільш точна. Вільний текст не допускається.</p>
+    <div class="cat-grid">
+      <span class="cat-pill">🏆 Премії</span>
+      <span class="cat-pill">🔬 Дослідження</span>
+      <span class="cat-pill">📅 Події</span>
+      <span class="cat-pill">🌍 Зарубіжний дитліт</span>
+      <span class="cat-pill">📰 Загальне</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Категорія</th><th>Що сюди входить</th><th>Приклад</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">🏆 Премії</td><td>Номінанти, переможці, нові премії, відмови від нагород</td><td>«Оголошено шорт-ліст премії «Книга року BBC»»</td></tr>
+          <tr><td class="lbl">🔬 Дослідження</td><td>Наукові публікації, статистика читання, аналітика ринку</td><td>«УАВ оприлюднила звіт видавничого ринку 2025»</td></tr>
+          <tr><td class="lbl">📅 Події</td><td>Анонси і звіти фестивалів, виставок, конференцій, ярмарків</td><td>«Відкрилась реєстрація на Forum Publisher 2026»</td></tr>
+          <tr><td class="lbl">🌍 Зарубіжний дитліт</td><td>Новини зарубіжних видавництв, переклади, іноземні премії</td><td>«Ліндґрен вийшла новою серією у видавництві Opal»</td></tr>
+          <tr><td class="lbl">📰 Загальне</td><td>Персональні новини авторів, бібліотечне життя, культурна політика</td><td>«Сашко Дерманський провів зустріч у Хмельницькому»</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ПОДІЇ -->
+  <div id="events" class="anchor section">
+    <h2>6.5. Три типи подій</h2>
+    <p>Тип події визначає значок на картці і текст кнопки CTA. Обирайте до того як заповнювати решту полів.</p>
+    <div class="type-grid">
+      <div class="type-card tc-event">
+        <span class="tc-badge">Захід</span>
+        <h3>Одноразовий захід</h3>
+        <p class="tc-desc">Конкретна подія з чіткою датою і місцем. Відбувається один раз або в межах одного дня.</p>
+        <div class="tc-ex">
+          <span>📖 Презентація книги</span>
+          <span>🎤 Зустріч з автором</span>
+          <span>🖼 Відкриття виставки</span>
+          <span>📚 Літературний вечір</span>
+        </div>
+      </div>
+      <div class="type-card tc-contest">
+        <span class="tc-badge">Конкурс / Проект</span>
+        <h3>Конкурс або проект</h3>
+        <p class="tc-desc">Має дедлайн, умови участі, журі або результат. Часто триває кілька місяців.</p>
+        <div class="tc-ex">
+          <span>🏆 Літературний конкурс</span>
+          <span>🎨 Конкурс ілюстрацій</span>
+          <span>📝 Конкурс рецензій</span>
+          <span>🤝 Партнерський проект</span>
+        </div>
+      </div>
+      <div class="type-card tc-program">
+        <span class="tc-badge">Програма / Серія</span>
+        <h3>Програма або серія заходів</h3>
+        <p class="tc-desc">Повторювані або пов'язані заходи в межах однієї програми. Може тривати весь сезон.</p>
+        <div class="tc-ex">
+          <span>📅 Клуб читання (щомісяця)</span>
+          <span>🎓 Лекційний цикл</span>
+          <span>🌐 Фестивальна програма</span>
+          <span>📚 Літня читацька програма</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.6. Поля події — повний перелік</h2>
+    <p><strong>Шлях:</strong> Pages → Події → Add child page → <code>Подія</code></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Назва</td><td>Повна офіційна назва. Для конкурсу — з лапками: «Ось як це було…»</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Тип події</td><td>Захід / Конкурс або проект / Програма або серія заходів</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Початок</td><td>Дата і час. Для конкурсів — дата відкриття прийому робіт</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Кінець</td><td>Для багатоденних подій і конкурсів обов'язково. Для одноразового заходу — кінець того ж дня</td><td class="req">якщо &gt;1 дня</td></tr>
+          <tr><td class="lbl">Місце проведення</td><td>Адреса або назва. Для онлайн: «Онлайн (Zoom)» або «YouTube-канал НБУ для дітей». Гібрид — обидва варіанти через «/»</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Лід</td><td>1–3 речення до 300 символів. Потрапляє в RSS — саме цей текст бачать підписники без переходу на сайт. Для конкурсів: вкажіть дедлайн і цільову аудиторію</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Опис</td><td>Повний текст (Rich Text): програма, умови участі, журі, контакти. Після події — фотозвіт</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Зображення (афіша)</td><td>Мін. 800×600 пікс. Зазвичай офіційна афіша. Перевірити права на використання</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Посилання на реєстрацію</td><td>URL форми реєстрації, сторінки умов або квитків. Для конкурсів — положення</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Пов'язані діячі</td><td>Автори, ілюстратори, спікери — учасники що мають картки <code>Person</code> в базі. Подія з'явиться на їхніх картках автоматично</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Партнери та організатори</td><td>Установи що мають <code>InstitutionPage</code> в базі. Якщо картки немає — вказати текстом в описі</td><td class="opt">якщо є</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Лід — найважливіше поле для RSS</h4>
+      <p>Підписники Feedly, Inoreader та інших RSS-рідерів бачать лише заголовок і лід — без переходу на сайт. Якщо лід порожній — подія «невидима» для підписників. Для конкурсів обов'язково вкажіть дедлайн у ліді.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>Пов'язані діячі — правило</h4>
+      <ul>
+        <li>Перевірте що діяч вже має картку <code>Person</code> в базі (пошук в адмінці)</li>
+        <li>Якщо картки немає — спочатку завести, потім прив'язати до події</li>
+        <li>Для спікерів-гостей без картки — вказати ім'я текстом в описі</li>
+        <li>Подія автоматично з'явиться на картці діяча у вкладці «Події»</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.7. RSS-стрічка подій</h2>
+    <div class="rss-box">
+      <h4>Адреси стрічок</h4>
+      <div class="rss-row"><span>RSS 2.0</span><code>key.chl.kiev.ua/feed/events/</code></div>
+      <div class="rss-row"><span>Atom</span><code>key.chl.kiev.ua/feed/events/atom/</code></div>
+    </div>
+    <p>В RSS-стрічку потрапляють: назва події, лід, посилання на сторінку, дата публікації. Зображення і повний опис — лише при переході на сайт.</p>
+  </div>
+
+
+  <!-- РИТМ -->
+  <div id="rhythm" class="anchor section">
+    <h2>6.8. Щоденний і тижневий ритм</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ритм</th><th>Дія</th><th>Час</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Щодня</td><td>Перегляд джерел (Читомо, БараБука, Facebook видавництв) → 1–3 зовнішні новини через імпорт</td><td>20–30 хв</td></tr>
+          <tr><td class="lbl">Щодня</td><td>Перевірка календаря подій — нові дедлайни або зміни в датах</td><td>5 хв</td></tr>
+          <tr><td class="lbl">1–2 рази/тижд.</td><td>Власна новина або оригінальний матеріал редакції</td><td>15–30 хв</td></tr>
+          <tr><td class="lbl">Раз на тиждень</td><td>Ювіляри наступного тижня — чи є подія або новина для прив'язки</td><td>10 хв</td></tr>
+          <tr><td class="lbl">За потреби</td><td>Нова подія — мінімум за тиждень до початку. Оновлення після події — фотозвіт в опис</td><td>15–25 хв</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- CHECKLIST -->
+  <div id="checklist-m6" class="anchor section">
+    <h2>Чеклист M6 — перед публікацією</h2>
+    <div class="checklist">
+      <h3>Зовнішня новина</h3>
+      <div class="chk"><div class="box"></div><span>URL вставлено, кнопку «Завантажити метадані» натиснуто</span></div>
+      <div class="chk"><div class="box"></div><span>Назва джерела — читабельна назва видання, не домен</span></div>
+      <div class="chk"><div class="box"></div><span>Лід скорочено до 300–400 символів (2–3 речення)</span></div>
+      <div class="chk"><div class="box"></div><span>Категорію обрано з закритого словника п'яти значень</span></div>
+      <div class="chk"><div class="box"></div><span>Зображення завантажилось і відображається коректно</span></div>
+
+      <h3 class="sub-head">Власна новина</h3>
+      <div class="chk"><div class="box"></div><span>Заголовок інформативний (не загальний), до 80 символів</span></div>
+      <div class="chk"><div class="box"></div><span>Зображення завантажено (мін. 800×600, права перевірено)</span></div>
+      <div class="chk"><div class="box"></div><span>Короткий опис до 250 символів заповнено як самостійне речення</span></div>
+      <div class="chk"><div class="box"></div><span>Текст відформатовано, всі посилання перевірено</span></div>
+
+      <h3 class="sub-head">Подія (EventPage)</h3>
+      <div class="chk"><div class="box"></div><span>Тип події обрано: Захід / Конкурс або проект / Програма або серія</span></div>
+      <div class="chk"><div class="box"></div><span>Дата початку вказана. Дата кінця — якщо більше одного дня</span></div>
+      <div class="chk"><div class="box"></div><span>Місце проведення заповнено (або «Онлайн» з уточненням платформи)</span></div>
+      <div class="chk"><div class="box"></div><span>Лід заповнено — 1–3 речення до 300 символів. Для конкурсів — дедлайн у ліді</span></div>
+      <div class="chk"><div class="box"></div><span>Опис містить повну інформацію: програму, умови, контакти</span></div>
+      <div class="chk"><div class="box"></div><span>Афіша завантажена, права на зображення перевірено</span></div>
+      <div class="chk"><div class="box"></div><span>Посилання на реєстрацію або умови участі додано (якщо є)</span></div>
+      <div class="chk"><div class="box"></div><span>Пов'язані діячі — картки Person перевірено і прив'язано (якщо є)</span></div>
+      <div class="chk"><div class="box"></div><span>Партнери і організатори — InstitutionPage прив'язано або вказано текстом в описі</span></div>
+      <div class="chk"><div class="box"></div><span>Подія створена мінімум за тиждень до початку</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M6 · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
