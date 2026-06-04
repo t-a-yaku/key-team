@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M8 · Картка діяча — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --m8:#4a1a5c;--m8-light:#f5eafa;--m8-mid:#7a3a9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 16px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:14px 10px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--m8);color:#fff;}
+  .module-header{margin-bottom:40px;}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--m8-light);border-color:var(--m8);color:var(--m8);}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:32px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+
+  /* TOC */
+  .toc{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin-bottom:44px;}
+  .toc h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;}
+  .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 24px;}
+  .toc a{font-size:13px;color:var(--m8);text-decoration:none;padding:3px 0;display:block;}
+  .toc a:hover{color:var(--pk-gold);}
+  .toc .n{font-size:10px;color:var(--pk-muted);margin-right:4px;}
+
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:21px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;}
+  .back{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);text-decoration:none;flex-shrink:0;}
+  .back:hover{color:var(--pk-gold);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+
+  /* TAB MAP */
+  .tab-map{display:flex;flex-direction:column;gap:4px;margin:16px 0;}
+  .tab-row{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .tab-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center;}
+  .tab-name{font-size:12px;font-weight:700;color:var(--pk-ink);min-width:160px;flex-shrink:0;}
+  .tab-desc{font-size:12px;color:var(--pk-muted);line-height:1.5;}
+  .tab-row.highlight{background:var(--m8-light);border-color:var(--m8);}
+  .tab-row.highlight .tab-name{color:var(--m8);}
+
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(184,134,11,0.03);}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:150px;}
+  td.req{color:var(--pk-sage);font-weight:600;white-space:nowrap;}
+  td.opt{color:var(--pk-muted);white-space:nowrap;}
+  td.warn{color:var(--pk-rust);font-weight:600;white-space:nowrap;}
+
+  /* ALERTS */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.purple{background:var(--m8-light);border-color:var(--m8);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.purple h4{color:var(--m8);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.purple ul li::before{content:'→';position:absolute;left:0;color:var(--m8);}
+  .alert p{font-size:13px;margin:0;max-width:100%;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* STEPS */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--m8);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* SCENARIO BOX */
+  .scenario-box{background:var(--pk-ink);border-radius:6px;padding:22px 26px;margin:12px 0;}
+  .scenario-box .s-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--pk-gold);margin-bottom:6px;}
+  .scenario-box h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:#fff;margin-bottom:10px;}
+  .scenario-table{width:100%;font-size:12px;border-collapse:collapse;}
+  .scenario-table tr{border-bottom:1px solid rgba(255,255,255,0.08);}
+  .scenario-table tr:last-child{border-bottom:none;}
+  .scenario-table td{padding:5px 0;color:rgba(247,243,236,0.65);}
+  .scenario-table td:first-child{font-weight:600;color:rgba(184,134,11,0.8);min-width:140px;padding-right:12px;}
+
+  /* POSADA DICT */
+  .posada-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+  .posada-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:14px 16px;}
+  .posada-card h4{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--pk-border);}
+  .posada-card ul{list-style:none;padding:0;}
+  .posada-card ul li{font-size:12px;padding:2px 0 2px 14px;position:relative;line-height:1.4;}
+  .posada-card ul li::before{content:'→';position:absolute;left:0;color:var(--pk-muted);font-size:10px;}
+  .posada-card ul li .yes{color:var(--pk-sage);font-weight:600;}
+  .posada-card ul li .no{color:var(--pk-rust);font-weight:600;}
+
+  /* PHOTO FLOW */
+  .photo-flow{display:flex;flex-direction:column;gap:0;margin:16px 0;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;overflow:hidden;}
+  .pf-step{display:flex;gap:16px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--pk-border);}
+  .pf-step:last-child{border-bottom:none;}
+  .pf-num{width:28px;height:28px;border-radius:50%;background:var(--m8);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .pf-body h4{font-size:13px;font-weight:600;margin-bottom:2px;}
+  .pf-body p{font-size:12px;color:var(--pk-muted);margin:0;max-width:100%;line-height:1.4;}
+  .pf-body .warn-text{color:var(--pk-rust);font-size:11px;margin-top:3px;}
+
+  /* CHECKLIST */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .checklist h3.sub-head{margin-top:18px;color:var(--m8);border-top:1px solid var(--pk-border);padding-top:14px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.toc-grid{grid-template-columns:1fr;}.posada-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="m5.html" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:14px 10px;white-space:nowrap;flex-shrink:0;">← M5</a>
+  <a href="#toc">M8</a>
+  <a href="#tabs">Вкладки</a>
+  <a href="#alias">Варіанти імені</a>
+  <a href="#context-id">Контекст. роль</a>
+  <a href="#affiliations">Афіліації</a>
+  <a href="#awards-person">Нагороди</a>
+  <a href="#photos">Фотогалерея</a>
+  <a href="#checklist-m8">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div id="top" class="anchor module-header">
+    <span class="module-badge">Модуль M8 · Передумова: M1</span>
+    <h1>Картка діяча:<br><em>імена, кар'єра, фото</em></h1>
+    <p class="lead">Поглиблений модуль для роботи з карткою Person. Охоплює варіанти імені і псевдоніми, контекстуальну роль, афіліації зі словником посад, нагороди особи і фотогалерею з правовим статусом.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Редактор-книгознавець</span>
+      <span class="role-tag primary">Контент-менеджер</span>
+      <span class="role-tag">Регіональний куратор</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Орієнтуватись у шести вкладках картки діяча</li>
+      <li>Правильно вносити варіанти імені, рос. форми і псевдоніми через PersonAlias</li>
+      <li>Налаштовувати контекстуальну роль для авторів що пишуть і ілюструють під різними іменами</li>
+      <li>Заповнювати афіліації з уніфікованими посадами без плодження розбіжностей</li>
+      <li>Прив'язувати нагороди до особи через три точки входу</li>
+      <li>Додавати фото з правильним правовим статусом і порядком дій</li>
+    </ul>
+  </div>
+
+  <!-- TOC -->
+  <div id="toc" class="anchor toc">
+    <h3>Зміст модуля</h3>
+    <div class="toc-grid">
+      <a href="#tabs"><span class="n">8.1</span>Шість вкладок картки діяча</a>
+      <a href="#alias"><span class="n">8.2</span>Варіанти імені (PersonAlias)</a>
+      <a href="#context-id"><span class="n">8.3</span>Контекстуальна роль</a>
+      <a href="#affiliations"><span class="n">8.4</span>Афіліації та кар'єрний шлях</a>
+      <a href="#awards-person"><span class="n">8.5</span>Нагороди особи</a>
+      <a href="#photos"><span class="n">8.6</span>Фотогалерея</a>
+      <a href="#checklist-m8"><span class="n">↓</span>Чеклист</a>
+    </div>
+  </div>
+
+
+  <!-- 8.1 ВКЛАДКИ -->
+  <div id="tabs" class="anchor section">
+    <h2>8.1. Шість вкладок картки діяча <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <div class="tab-map">
+      <div class="tab-row">
+        <span class="tab-icon">👤</span>
+        <span class="tab-name">Основне</span>
+        <span class="tab-desc">ПІБ, display_name, статус (живий/спочилий), ролі в літературі, коротка біографія, дати і місця народження/смерті, Linked Data (Wikidata/VIAF), теги</span>
+      </div>
+      <div class="tab-row highlight">
+        <span class="tab-icon">🎭</span>
+        <span class="tab-name">Імена та Ролі</span>
+        <span class="tab-desc">Варіанти імені та псевдоніми (PersonAlias) + Контекстуальна прив'язка (Contextual Identity). <strong>Цей модуль — про цю вкладку.</strong></span>
+      </div>
+      <div class="tab-row highlight">
+        <span class="tab-icon">🏢</span>
+        <span class="tab-name">Кар'єра</span>
+        <span class="tab-desc">Афіліації (місця роботи і навчання), Таймлайн подій (PersonLifeEvent), Пам'ятні місця (PersonMemorial). <strong>Цей модуль — про афіліації.</strong></span>
+      </div>
+      <div class="tab-row highlight">
+        <span class="tab-icon">🎬</span>
+        <span class="tab-name">Творчість</span>
+        <span class="tab-desc">Фотогалерея (PersonPhoto), медіа (відео/аудіо), бібліографія та зовнішні посилання. <strong>Цей модуль — про фотогалерею.</strong></span>
+      </div>
+      <div class="tab-row highlight">
+        <span class="tab-icon">🏆</span>
+        <span class="tab-name">Нагороди</span>
+        <span class="tab-desc">AwardWinner — нагороди і відзнаки, що отримала ця особа. <strong>Цей модуль — про нагороди особи.</strong></span>
+      </div>
+      <div class="tab-row">
+        <span class="tab-icon">⚙️</span>
+        <span class="tab-name">Налаштування</span>
+        <span class="tab-desc">Статус публікації, Службові коментарі, колекції, ембарго</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 8.2 PERSONALIАС -->
+  <div id="alias" class="anchor section">
+    <h2>8.2. Варіанти імені (PersonAlias) <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Одна особа — одна картка Person. Всі варіанти імені прив'язуються до неї через <code>PersonAlias</code>. Вони не є окремими картками — вони дозволяють системі і пошуку знайти особу за будь-якою формою її імені.</p>
+
+    <div class="alert purple">
+      <h4>Псевдонім ≠ варіант написання</h4>
+      <ul>
+        <li><strong>Псевдонім</strong> (<code>is_pseudonym ✅</code>) — літературне ім'я замість офіційного. «Леся Українка» замість «Лариса Косач». Особа <em>публікується</em> під цим іменем</li>
+        <li><strong>Варіант написання</strong> (<code>is_pseudonym ☐</code>) — те саме ім'я в іншій формі: рос. написання, дівоче прізвище, транслітерація. Особа не публікується під цим іменем, але система має його розпізнавати</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">Коли обов'язково додавати PersonAlias</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Тип варіанту</th><th>Приклад</th><th>is_pseudonym</th><th>Примітка</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Рос. форма імені</td><td>Надэмлинский А.</td><td>☐</td><td><code>рос. форма</code></td></tr>
+          <tr><td class="lbl">Дівоче прізвище</td><td>Наталя Коваль (→ Петренко після шлюбу)</td><td>☐</td><td><code>дівоче прізвище</code></td></tr>
+          <tr><td class="lbl">Прізвище після шлюбу</td><td>Наталя Петренко (кол. Коваль)</td><td>☐</td><td><code>прізвище після шлюбу</code></td></tr>
+          <tr><td class="lbl">Латинська транслітерація</td><td>Natalka Sniadanko</td><td>☐</td><td><code>латинська транслітерація</code></td></tr>
+          <tr><td class="lbl">Літературний псевдонім</td><td>Марко Вовчок</td><td>✅</td><td><code>псевдонім</code></td></tr>
+          <tr><td class="lbl">Криптонім</td><td>М.В., Н.М.</td><td>✅</td><td><code>криптонім</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Порядок додавання в адмінці</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Вкладка «🎭 Імена та Ролі» → «Додати PersonAlias»</h4><p>Відкрити картку діяча → вкладка «Імена та Ролі» → кнопка «Додати PersonAlias» внизу блоку.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Заповнити поле «Псевдонім або варіант імені»</h4><p>Точно так, як зустрічається в каталозі або виданні — без виправлень і нормалізації.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Галочка «Це псевдонім»</h4><p>Ставити тільки якщо особа <em>публікується</em> під цим іменем. Для рос. форм, дівочих прізвищ і транслітерацій — знімати.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-body"><h4>Поле «Примітка» — обов'язково</h4><p>Одне з: <code>рос. форма</code> / <code>дівоче прізвище</code> / <code>латинська транслітерація</code> / <code>криптонім</code> / <code>псевдонім</code>. Без примітки незрозуміло навіщо цей alias через рік.</p></div></div>
+    </div>
+
+    <div class="alert rust">
+      <h4>Сигнал від скрипту імпорту</h4>
+      <p>Скрипт <code>import_catalog_series.py</code> шукає особу спочатку за основними полями, потім за PersonAlias. Якщо рос. форму не внесено — скрипт виведе попередження:</p>
+      <p style="margin-top:8px;font-family:monospace;font-size:12px;background:rgba(0,0,0,0.06);padding:8px 12px;border-radius:3px;">⚠ РОС. ЗАПИС — потрібна ручна перевірка<br>⚠ рос. автор не знайдений: Надэмлинский А. — додати вручну + PersonAlias</p>
+      <p style="margin-top:8px;font-size:12px">Дія: знайти особу в базі → додати alias з рос. формою → перезапустити імпорт.</p>
+    </div>
+  </div>
+
+
+  <!-- 8.3 CONTEXTUAL IDENTITY -->
+  <div id="context-id" class="anchor section">
+    <h2>8.3. Контекстуальна роль (Contextual Identity) <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Розширена функція для авторів що публікуються під різними іменами залежно від ролі. Наприклад: Іван Петренко пише прозу під власним іменем, але ілюструє книги як «Ів. Петро». Система має показувати правильне ім'я в кожному контексті.</p>
+
+    <div class="alert gold">
+      <h4>Коли заповнювати — а коли ні</h4>
+      <p>Заповнювати потрібно лише якщо псевдонім суттєво відрізняється від офіційного імені і є «брендовим» саме для конкретної ролі. У більшості випадків — не потрібно. Якщо сумніваєтесь — не заповнюйте.</p>
+    </div>
+
+    <h3 class="sub">Де знаходиться і як налаштувати</h3>
+    <p>Вкладка <strong>«🎭 Імена та Ролі»</strong> → у кожному PersonAlias → розкрити секцію <strong>«Контекстуальна прив'язка (Ролі)»</strong>. Два поля:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Призначення</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Пов'язані ролі (alias_roles)</td><td>Галочки — оберіть ролі де використовується цей варіант імені. Доступні: Ілюстратор, Бібліотекар, Видавець, Викладач, Дослідник, Журналіст, Літературний редактор, Перекладач, Письменник, Поет, Упорядник</td></tr>
+          <tr><td class="lbl">Основне ім'я для цих ролей (is_primary_for_roles)</td><td>✅ — саме це ім'я підставляється на сторінках книг замість офіційного коли особа фігурує у вибраних ролях</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scenario-box">
+      <div class="s-label">Типовий сценарій</div>
+      <h3>Автор і ілюстратор під різними іменами</h3>
+      <table class="scenario-table">
+        <tr><td>PersonAlias → name</td><td>Ів. Петро</td></tr>
+        <tr><td>PersonAlias → is_pseudonym</td><td>✅</td></tr>
+        <tr><td>Пов'язані ролі</td><td>Ілюстратор</td></tr>
+        <tr><td>is_primary_for_roles</td><td>✅</td></tr>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:rgba(247,243,236,0.5)">Результат: на сторінках книг де ця особа фігурує як ілюстратор, система автоматично покаже «Ів. Петро» замість «Іван Петренко».</p>
+    </div>
+
+    <div class="scenario-box">
+      <div class="s-label">Реальний кейс з бази КЛЮЧ</div>
+      <h3>Наталя Марченко / Наталя Савчук — одна особа, два контексти</h3>
+      <table class="scenario-table">
+        <tr><td colspan="2" style="color:rgba(184,134,11,0.6);padding-bottom:6px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase">Варіант імені 1 — для творчих ролей</td></tr>
+        <tr><td>PersonAlias → name</td><td>Наталя Савчук</td></tr>
+        <tr><td>Це псевдонім</td><td>✅</td></tr>
+        <tr><td>is_primary_for_roles</td><td>✅</td></tr>
+        <tr><td>Пов'язані ролі</td><td>Письменник ✅ · Поет ✅</td></tr>
+        <tr><td colspan="2" style="color:rgba(184,134,11,0.6);padding:10px 0 6px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase">Варіант імені 2 — для наукових і бібліотечних ролей</td></tr>
+        <tr><td>PersonAlias → name</td><td>Наталя Марченко</td></tr>
+        <tr><td>Це псевдонім</td><td>☐ (варіант написання)</td></tr>
+        <tr><td>is_primary_for_roles</td><td>✅</td></tr>
+        <tr><td>Пов'язані ролі</td><td>Бібліотекар ✅ · Дослідник ✅</td></tr>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:rgba(247,243,236,0.5)">Результат: на картках художніх книг і збірок — «Наталя Савчук». На дослідницьких публікаціях і в ролі бібліотекаря — «Наталя Марченко». Одна картка Person, правильне ім'я в кожному контексті.</p>
+    </div>
+  </div>
+
+
+  <!-- 8.4 АФІЛІАЦІЇ -->
+  <div id="affiliations" class="anchor section">
+    <h2>8.4. Афіліації та кар'єрний шлях <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Афіліація — прив'язка діяча до установи з вказанням ролі і періоду. <strong>Шлях:</strong> вкладка «🏢 Кар'єра» → блок «Афіліації (Місця роботи)» → «Додати».</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Установа</td><td>Autocomplete — починайте вводити назву. Установа має бути попередньо створена як <code>InstitutionPage</code>. Якщо установа мала іншу назву в радянський час — система підставить правильну за датою початку</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Тип афіліації</td><td>Робота / Освіта / Професійна приналежність / Почесне членство / Інше</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Роль / Посада</td><td>Конкретна назва посади або ролі. Читати застереження про словник нижче</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Дата початку</td><td>Рік або повна дата. Якщо невідомо — залишити порожнім</td><td class="opt">якщо відомо</td></tr>
+          <tr><td class="lbl">Дата завершення</td><td>Якщо досі — залишити порожнім. Система покаже «по теперішній час»</td><td class="opt">якщо є кінець</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Проблема словника посад — читати обов'язково</h4>
+      <p>Поле «Роль / Посада» — вільний текст без контрольованого словника. Це вже призвело до розбіжностей в базі. До запровадження єдиного словника дотримуйтесь цих правил:</p>
+    </div>
+
+    <div class="posada-grid">
+      <div class="posada-card">
+        <h4>Освіта — як писати</h4>
+        <ul>
+          <li><span class="yes">✓</span> «Випускник» / «Випускниця»</li>
+          <li><span class="yes">✓</span> «Студент» / «Студентка»</li>
+          <li><span class="yes">✓</span> «Аспірант» / «Аспірантка»</li>
+          <li><span class="no">✗</span> «Закінчив», «Закінчила»</li>
+          <li><span class="no">✗</span> «Навчався», «Навчалась»</li>
+          <li><span class="no">✗</span> «Випуск» (без роду)</li>
+        </ul>
+      </div>
+      <div class="posada-card">
+        <h4>Робота — як писати</h4>
+        <ul>
+          <li><span class="yes">✓</span> Посада в називному відмінку</li>
+          <li><span class="yes">✓</span> «Головний редактор»</li>
+          <li><span class="yes">✓</span> «Завідувач відділу»</li>
+          <li><span class="yes">✓</span> «Член правління»</li>
+          <li><span class="no">✗</span> «Працював головним редактором»</li>
+          <li><span class="no">✗</span> «Редактор відділу прози» (занадто специфічно)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert steel">
+      <h4>Перед внесенням — перевірити як у вже внесених</h4>
+      <p>Перед заповненням поля «Посада» — пошукати в адмінці кілька вже внесених афіліацій схожого типу і подивитись як вони оформлені. Це займе 2 хвилини і збереже консистентність бази.</p>
+    </div>
+
+    <h3 class="sub">Яку установу заводити — нагадування редполітики</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Тип установи</th><th>Рішення</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Університет (будь-який)</td><td>✅ InstitutionPage — завжди</td></tr>
+          <tr><td class="lbl">Інститут гуманітарного профілю</td><td>✅ InstitutionPage — літературний, мистецький, педагогічний, бібліотечний</td></tr>
+          <tr><td class="lbl">Профільний заклад 1–2 рівня</td><td>✅ InstitutionPage — художня школа, мовний ліцей, музична школа</td></tr>
+          <tr><td class="lbl">Загальноосвітня школа</td><td>❌ Лише текст у таймлайні (PersonLifeEvent) — без окремої сутності</td></tr>
+          <tr><td class="lbl">Інститут негуманітарного профілю</td><td>❌ Лише текст у таймлайні — лісотехнічний, будівельний тощо</td></tr>
+          <tr><td class="lbl">Видавництво</td><td>✅ InstitutionPage — завжди</td></tr>
+          <tr><td class="lbl">Бібліотека, культурний центр</td><td>✅ InstitutionPage — якщо місце роботи</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 8.5 НАГОРОДИ ОСОБИ -->
+  <div id="awards-person" class="anchor section">
+    <h2>8.5. Нагороди особи <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Нагороди діяча відображаються у вкладці <strong>«🏆 Нагороди»</strong>. Вони не вносяться напряму в цю вкладку — вона формується автоматично з записів <code>AwardWinner</code> у сніпетах нагород.</p>
+
+    <div class="alert purple">
+      <h4>Три точки входу — одна база</h4>
+      <ul>
+        <li><strong>Зі сніпету нагороди</strong> — Snippets → Нагороди → конкретна премія → вкладка «Лауреати» → «Додати лауреата». Зручно при опрацюванні повного списку премії по роках</li>
+        <li><strong>З профілю діяча</strong> — вкладка «🏆 Нагороди» → кнопка «Додати нагороду». Зручно коли перед очима біографія і треба внести всі нагороди однієї особи</li>
+        <li><strong>З картки книги</strong> — якщо нагороду отримує конкретне видання, а не особа напряму. Зручно при обробці книжкових нагород</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле AwardWinner</th><th>Що вносити</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Нагорода</td><td>Прив'язка до сніпету Award — autocomplete за назвою премії</td></tr>
+          <tr><td class="lbl">Рік</td><td>Рік присудження — не рік вручення якщо вони різні</td></tr>
+          <tr><td class="lbl">Номінація</td><td>Якщо є окремі номінації всередині премії</td></tr>
+          <tr><td class="lbl">Це рукопис / проект</td><td>✅ якщо нагорода отримана до публікації книги (наприклад «Коронація слова»). На сайті — бейдж [Рукопис]</td></tr>
+          <tr><td class="lbl">Назва при нагородженні</td><td>Якщо назва рукопису відрізнялась від фінальної назви книги</td></tr>
+          <tr><td class="lbl">Ім'я лауреата (fallback)</td><td>Лише якщо особи ще немає в базі. Замінити на реальне посилання після створення картки</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 8.6 ФОТОГАЛЕРЕЯ -->
+  <div id="photos" class="anchor section">
+    <h2>8.6. Фотогалерея діяча (PersonPhoto) <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p><strong>Шлях:</strong> вкладка «🎬 Творчість» → блок «Фотогалерея». Кожне фото — окремий запис <code>PersonPhoto</code>.</p>
+
+    <h3 class="sub">Обов'язковий порядок дій</h3>
+
+    <div class="photo-flow">
+      <div class="pf-step">
+        <div class="pf-num">1</div>
+        <div class="pf-body">
+          <h4>Внести фото</h4>
+          <p>Завантажити з медіабібліотеки або новий файл. MD5-перевірка на дублі автоматична.</p>
+        </div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">2</div>
+        <div class="pf-body">
+          <h4>Заповнити rights_status</h4>
+          <p>Без цього поля фото не можна опублікувати — поле is_public заблоковане.</p>
+          <p class="warn-text">! Це межа правової відповідальності порталу — не пропускати.</p>
+        </div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">3</div>
+        <div class="pf-body">
+          <h4>Заповнити consent_note</h4>
+          <p>Внутрішнє поле — не відображається на сайті. Хто і коли підтвердив право на публікацію.</p>
+        </div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">4</div>
+        <div class="pf-body">
+          <h4>Заповнити alt_text і caption</h4>
+          <p>Різні поля для різних цілей — детально нижче.</p>
+        </div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">5</div>
+        <div class="pf-body">
+          <h4>Лише після кроків 2–4 → поставити is_public ✅</h4>
+          <p>Фото стає видимим для відвідувачів.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Правовий статус (rights_status) — три варіанти</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Статус</th><th>Коли</th><th>Що вказати в consent_note</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Суспільне надбання</td><td>Автор знімка помер 70+ років тому. Типово для фото XIX – першої пол. XX ст.</td><td>Ім'я автора знімка і дата смерті або джерело підтвердження</td></tr>
+          <tr><td class="lbl">Дозвіл отримано</td><td>Є пряма згода правовласника на публікацію саме на КЛЮЧІ</td><td>Хто дав дозвіл, коли, яким чином (лист, повідомлення, усна згода з підтвердженням)</td></tr>
+          <tr><td class="lbl">Ліцензія CC</td><td>Фото поширюється під відкритою ліцензією Creative Commons</td><td>Обов'язково: тип ліцензії (напр. CC BY-SA 4.0) і ім'я автора знімка — атрибуція є умовою ліцензії</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Де шукати права на фото</h4>
+      <ul>
+        <li><strong>Живий сучасний автор</strong> — звернутися безпосередньо до автора або видавця</li>
+        <li><strong>Радянський архівний</strong> — перевірити дату смерті автора знімка; якщо 70+ років — суспільне надбання</li>
+        <li><strong>Фото з Вікіпедії</strong> — перевірити ліцензію у Wikimedia Commons; зазвичай CC BY-SA</li>
+        <li><strong>Від бібліотеки або архіву</strong> — запит до фондодержателя; фіксувати відповідь у consent_note</li>
+        <li><strong>Усне «вони ж не проти»</strong> — недостатньо. Потрібен письмовий слід: де він зберігається — фіксуйте в consent_note</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">alt_text і caption — різні поля для різних цілей</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Призначення</th><th>Хто читає</th><th>Приклад</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">caption</td><td>Публічний підпис під фото</td><td>Відвідувач сайту</td><td>«Під час зустрічі з читачами, Київ, 1978»</td></tr>
+          <tr><td class="lbl">alt_text</td><td>Текстовий опис ЩО зображено — для screen reader</td><td>Незрячий або слабозорий користувач</td><td>«Чорно-біле фото: чоловік середнього віку стоїть за трибуною»</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert steel">
+      <h4>Три автоматичні fallback для alt_text</h4>
+      <p>Якщо alt_text порожній → система підставляє caption. Якщо й caption порожній → ім'я діяча. Але порожній alt — це не норма, це заглушка. Заповнюйте обидва поля.</p>
+    </div>
+
+    <h3 class="sub">Головне фото (is_primary)</h3>
+    <p>Одне фото на діяча позначається головним — воно стає обличчям картки і OG-зображенням для соцмереж. Встановити: знайти потрібне фото в галереї → поставити <code>✅ Головне фото</code> → зберегти. Попереднє головне автоматично перестає бути головним.</p>
+
+    <div class="alert purple">
+      <h4>Кількість фото — культурний факт</h4>
+      <p>Десять знімків молодого сучасного автора і один архівний портрет класика — однаково валідна ситуація. Різниця в кількості сама по собі є культурним фактом, а не помилкою системи. Не шукати «додаткові» фото штучно — вносити лише верифіковані.</p>
+    </div>
+  </div>
+
+
+  <!-- CHECKLIST -->
+  <div id="checklist-m8" class="anchor section">
+    <h2>Чеклист M8 <a href="#toc" class="back">↑ зміст</a></h2>
+    <div class="checklist">
+
+      <h3>Варіанти імені (PersonAlias)</h3>
+      <div class="chk"><div class="box"></div><span>Рос. форма імені внесена як alias з приміткою <code>рос. форма</code></span></div>
+      <div class="chk"><div class="box"></div><span>Дівоче прізвище або прізвище після шлюбу — alias з відповідною приміткою</span></div>
+      <div class="chk"><div class="box"></div><span>Галочка «Це псевдонім» лише якщо особа публікується під цим іменем</span></div>
+      <div class="chk"><div class="box"></div><span>Поле «Примітка» заповнено для кожного alias</span></div>
+
+      <h3 class="sub-head">Контекстуальна роль</h3>
+      <div class="chk"><div class="box"></div><span>Заповнювати лише якщо псевдонім суттєво відрізняється і є «брендовим» для конкретної ролі</span></div>
+      <div class="chk"><div class="box"></div><span>Галочка is_primary_for_roles встановлена якщо це ім'я має підставлятись автоматично</span></div>
+
+      <h3 class="sub-head">Афіліації</h3>
+      <div class="chk"><div class="box"></div><span>Установа прив'язана до InstitutionPage через autocomplete (не текстом)</span></div>
+      <div class="chk"><div class="box"></div><span>Тип афіліації обрано: Робота / Освіта / Профес. приналежність / Почесне членство</span></div>
+      <div class="chk"><div class="box"></div><span>Посада — в уніфікованій формі (перевірити як у вже внесених)</span></div>
+      <div class="chk"><div class="box"></div><span>Для освіти: «Випускник/ця» — не дієслівна форма</span></div>
+      <div class="chk"><div class="box"></div><span>Загальноосвітня школа — лише таймлайн, не афіліація</span></div>
+
+      <h3 class="sub-head">Нагороди особи</h3>
+      <div class="chk"><div class="box"></div><span>Нагорода внесена через AwardWinner — не редагується напряму у вкладці «Нагороди»</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо рукопис — прапорець «Це рукопис» встановлений</span></div>
+      <div class="chk"><div class="box"></div><span>Fallback-текст замінений на реальне посилання якщо картка вже є</span></div>
+
+      <h3 class="sub-head">Фотогалерея</h3>
+      <div class="chk"><div class="box"></div><span>rights_status заповнений перш ніж ставити is_public</span></div>
+      <div class="chk"><div class="box"></div><span>consent_note заповнений — хто, коли, яким чином підтвердив право</span></div>
+      <div class="chk"><div class="box"></div><span>Для CC-ліцензії: тип ліцензії і ім'я автора знімка в consent_note</span></div>
+      <div class="chk"><div class="box"></div><span>alt_text описує ЩО зображено (не дублює caption)</span></div>
+      <div class="chk"><div class="box"></div><span>Рік знімка — рік коли знято, не рік додавання</span></div>
+      <div class="chk"><div class="box"></div><span>Одне фото позначене як головне (is_primary)</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M8 · v1.0 · <a href="#toc">↑ до змісту</a></span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

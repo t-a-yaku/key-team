@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M5 · Книги та читальня — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --m5:#1a4a3a;--m5-light:#eaf4f0;--m5-mid:#2a7a5a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 16px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:14px 10px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--m5);color:#fff;}
+  .module-header{margin-bottom:40px;}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--m5-light);border-color:var(--m5);color:var(--m5);}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:32px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+
+  /* TOC */
+  .toc{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin-bottom:44px;}
+  .toc h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;}
+  .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 24px;}
+  .toc a{font-size:13px;color:var(--m5);text-decoration:none;padding:3px 0;display:block;}
+  .toc a:hover{color:var(--pk-gold);}
+  .toc .n{font-size:10px;color:var(--pk-muted);margin-right:4px;}
+
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:21px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;}
+  .back{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);text-decoration:none;flex-shrink:0;}
+  .back:hover{color:var(--pk-gold);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+
+  /* TAB MAP */
+  .tab-map{display:flex;flex-direction:column;gap:4px;margin:16px 0;}
+  .tab-row{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .tab-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center;}
+  .tab-name{font-size:12px;font-weight:700;color:var(--pk-ink);min-width:160px;flex-shrink:0;}
+  .tab-desc{font-size:12px;color:var(--pk-muted);line-height:1.5;}
+
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(184,134,11,0.03);}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:150px;}
+  td.req{color:var(--pk-sage);font-weight:600;white-space:nowrap;}
+  td.opt{color:var(--pk-muted);white-space:nowrap;}
+  td.auto{color:var(--pk-steel);font-weight:600;white-space:nowrap;}
+  td.warn{color:var(--pk-rust);font-weight:600;white-space:nowrap;}
+
+  /* ALERTS */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.green{background:var(--m5-light);border-color:var(--m5);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.green h4{color:var(--m5);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.green ul li::before{content:'→';position:absolute;left:0;color:var(--m5);}
+  .alert p{font-size:13px;margin:0;max-width:100%;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* STEPS */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--m5);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* CASE */
+  .case-box{background:var(--pk-ink);border-radius:6px;padding:24px 28px;margin:16px 0;}
+  .case-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--pk-gold);margin-bottom:8px;}
+  .case-box h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:14px;}
+  .case-box h3 em{font-style:italic;color:var(--pk-gold);}
+  .covers{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .cover-pill{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:3px;padding:7px 11px;font-size:12px;color:rgba(247,243,236,0.8);line-height:1.4;}
+  .cover-pill .pub{font-size:10px;color:rgba(184,134,11,0.8);display:block;font-weight:600;margin-bottom:2px;}
+  .cover-pill .sub{font-size:11px;color:rgba(247,243,236,0.45);display:block;}
+  .case-box p{font-size:12.5px;color:rgba(247,243,236,0.5);margin:0;max-width:100%;}
+
+  /* TWO COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+  .col-card{border-radius:4px;border:1px solid var(--pk-border);padding:16px 18px;background:var(--pk-paper-dark);}
+  .col-card::before{content:'';display:block;height:3px;border-radius:2px;margin-bottom:12px;}
+  .col-a::before{background:var(--m5);}
+  .col-b::before{background:var(--pk-steel);}
+  .col-card h3{font-size:13px;font-weight:600;margin-bottom:8px;}
+  .col-a h3{color:var(--m5);}
+  .col-b h3{color:var(--pk-steel);}
+  .col-card ul{list-style:none;padding:0;}
+  .col-card ul li{font-size:12px;padding:3px 0 3px 14px;position:relative;line-height:1.4;}
+  .col-card ul li::before{content:'–';position:absolute;left:0;color:var(--pk-muted);}
+
+  /* SERIES COMPARE */
+  .series-compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:16px 0;background:var(--pk-border);border:1px solid var(--pk-border);border-radius:4px;overflow:hidden;}
+  .sc-card{background:var(--pk-paper);padding:18px 20px;}
+  .sc-card .sc-type{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:2px 8px;border-radius:2px;color:#fff;display:inline-block;margin-bottom:10px;}
+  .sc-canon .sc-type{background:var(--m5);}
+  .sc-series .sc-type{background:var(--pk-steel);}
+  .sc-card h3{font-size:14px;font-weight:600;margin-bottom:10px;}
+  .sc-canon h3{color:var(--m5);}
+  .sc-series h3{color:var(--pk-steel);}
+  .sc-row{font-size:12px;padding:4px 0;border-bottom:1px solid var(--pk-border);display:flex;gap:8px;}
+  .sc-row:last-child{border-bottom:none;}
+  .sc-row .k{font-weight:600;min-width:100px;flex-shrink:0;color:var(--pk-muted);}
+
+  /* READING ROOM */
+  .rr-box{background:var(--m5);border-radius:6px;padding:24px 28px;margin:16px 0;position:relative;overflow:hidden;}
+  .rr-box::before{content:'🎧';position:absolute;right:20px;top:14px;font-size:40px;opacity:0.12;}
+  .rr-box h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .rr-box p{font-size:13px;color:rgba(255,255,255,0.6);max-width:540px;line-height:1.5;margin-bottom:10px;}
+  .rr-field{font-size:12px;color:rgba(255,255,255,0.5);padding:4px 0 4px 16px;position:relative;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .rr-field:last-child{border-bottom:none;}
+  .rr-field::before{content:'→';position:absolute;left:0;color:rgba(184,134,11,0.7);}
+  .rr-field strong{color:rgba(255,255,255,0.85);}
+
+  /* CHECKLIST */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .checklist h3.sub-head{margin-top:18px;color:var(--m5);border-top:1px solid var(--pk-border);padding-top:14px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.toc-grid{grid-template-columns:1fr;}.two-col{grid-template-columns:1fr;}.series-compare{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="m1.html" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:14px 10px;white-space:nowrap;flex-shrink:0;">← M1</a>
+  <a href="#toc">M5</a>
+  <a href="#book-card">Твір</a>
+  <a href="#editions">Видання</a>
+  <a href="#multivolume">Томи</a>
+  <a href="#illustrations">Ілюстрації</a>
+  <a href="#series">Серії</a>
+  <a href="#marc">MARC</a>
+  <a href="#awards">Нагороди</a>
+  <a href="#reading-room">Читальня</a>
+  <a href="#badges">Відзнаки</a>
+  <a href="#checklist-m5">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div id="top" class="anchor module-header">
+    <span class="module-badge">Модуль M5 · Передумова: M1</span>
+    <h1>Книги та читальня:<br><em>твір, видання, голос</em></h1>
+    <p class="lead">Повний цикл роботи з карткою книги — від створення до відзнак. Охоплює всі вкладки BookPage, серії і цикли, MARC-імпорт, ілюстрації видань, читальню авторських голосів і автоматичні відзнаки.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Каталогізатор</span>
+      <span class="role-tag primary">Контент-менеджер</span>
+      <span class="role-tag">Регіональний куратор</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Орієнтуватись у п'яти вкладках картки книги і знати що де шукати</li>
+      <li>Розрізняти твір, видання, том — і вносити кожен правильно</li>
+      <li>Розрізняти авторський канон і видавничу серію та прив'язувати на правильному рівні</li>
+      <li>Імпортувати MARC-запис і знати що доробити вручну</li>
+      <li>Додавати ілюстрації видань через окремий розділ адмінки</li>
+      <li>Вносити записи читальні з правильним порядком заповнення полів</li>
+      <li>Розуміти звідки беруться відзнаки «Вибір читачів» і «Ключове опитування»</li>
+    </ul>
+  </div>
+
+  <!-- TOC -->
+  <div id="toc" class="anchor toc">
+    <h3>Зміст модуля</h3>
+    <div class="toc-grid">
+      <a href="#book-card"><span class="n">5.1</span>Вкладки картки книги</a>
+      <a href="#editions"><span class="n">5.2</span>Видання і обкладинки</a>
+      <a href="#multivolume"><span class="n">5.3</span>Багатотомні видання</a>
+      <a href="#illustrations"><span class="n">5.4</span>Ілюстрації видань</a>
+      <a href="#series"><span class="n">5.5</span>Серії і цикли</a>
+      <a href="#marc"><span class="n">5.6</span>MARC-імпорт</a>
+      <a href="#awards"><span class="n">5.7</span>Нагороди твору</a>
+      <a href="#reading-room"><span class="n">5.8</span>Читальня авторських голосів</a>
+      <a href="#badges"><span class="n">5.9</span>Відзнаки на картці книги</a>
+      <a href="#checklist-m5"><span class="n">↓</span>Чеклист</a>
+    </div>
+  </div>
+
+
+  <!-- 5.1 ВКЛАДКИ -->
+  <div id="book-card" class="anchor section">
+    <h2>5.1. П'ять вкладок картки книги <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Перш ніж заповнювати — зорієнтуйтесь. BookPage має п'ять вкладок. Кожна відповідає за свій шар інформації.</p>
+
+    <div class="tab-map">
+      <div class="tab-row">
+        <span class="tab-icon">👤</span>
+        <span class="tab-name">Твір та Автори</span>
+        <span class="tab-desc">Назва, автори, ілюстратори, перекладачі, <strong>авторський канон</strong>, мова оригіналу, рік першого видання, зміст збірки, опис, «Письменник радить»</span>
+      </div>
+      <div class="tab-row">
+        <span class="tab-icon">🏷️</span>
+        <span class="tab-name">Класифікація</span>
+        <span class="tab-desc">Вікова група, жанри, спецпроєкти, теги — усе що визначає де книга з'явиться у фільтрах каталогу</span>
+      </div>
+      <div class="tab-row">
+        <span class="tab-icon">📚</span>
+        <span class="tab-name">Видання</span>
+        <span class="tab-desc">Прапорець багатотомного, головна обкладинка, список видань (BookCover) — кожне окремо: рік, видавництво, ISBN, ілюстратори видання, <strong>видавнича серія</strong></span>
+      </div>
+      <div class="tab-row">
+        <span class="tab-icon">🎬</span>
+        <span class="tab-name">Контент та Історія</span>
+        <span class="tab-desc">Методичні питання для дискусії, <strong>Медіа і Читальня</strong>, таймлайн «Друге життя» (переклади, екранізації, вистави), нагороди твору</span>
+      </div>
+      <div class="tab-row">
+        <span class="tab-icon">⚙️</span>
+        <span class="tab-name">Налаштування</span>
+        <span class="tab-desc">Ембарго (два незалежні перемикачі), службові коментарі, Linked Data (Wikidata/VIAF), джерело запису</span>
+      </div>
+    </div>
+
+    <h3 class="sub">Основні поля вкладки «Твір та Автори»</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Назва</td><td>Канонічна назва — з першого або найповнішого українського видання. Для перекладних: як на обкладинці основного видання</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Автори</td><td>Прив'язка до карток Person. Пошук за прізвищем — autocomplete. Кількох авторів — по одному через «Add»</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Рік першого видання</td><td>Рік появи твору у світі — не цього конкретного видання в руках</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Мова оригіналу</td><td>Для перекладних творів обов'язково. MARC-імпорт підставляє з поля 008/041</td><td class="req">якщо переклад</td></tr>
+          <tr><td class="lbl">Опис / анотація</td><td>Живий текст для читача — не бібліографічний опис. До 500 символів</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Авторський канон</td><td>Якщо твір входить у цикл — прив'язка тут, на рівні твору (не видання). Детально — розділ 5.5</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Зміст збірки</td><td>Для антологій і збірок — посилання на BookPage творів що входять</td><td class="opt">якщо збірка</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert steel">
+      <h4>Перекладні твори — різні назви на одній картці</h4>
+      <p>Один твір може мати різні українські назви в різних перекладах. «Мацюсеві пригоди», «Король Матіуш Перший», «Пригоди Короля Мацюся» — один <code>BookPage</code>. Інші назви і бібліографічні описи фіксуються в <strong>таймлайні книги</strong> як окремі записи видань. Те саме — переклади українських творів іншими мовами: «Векша» латиською «Vāvere» → запис у таймлайні з типом «Переклад на іншу мову».</p>
+    </div>
+
+    <div class="alert gold">
+      <h4>Вкладка «Класифікація» — не пропускати</h4>
+      <ul>
+        <li>Вікова група — з класифікатора. Визначає де книга з'явиться у фільтрах</li>
+        <li>Жанри і теги — лише через autocomplete-поле. Вільний текст заборонений — закрита фолксономія</li>
+        <li>Без класифікації книга не потрапить у жоден фільтр каталогу</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 5.2 ВИДАННЯ -->
+  <div id="editions" class="anchor section">
+    <h2>5.2. Видання і обкладинки (BookCover) <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Один твір — один <code>BookPage</code>. Скільки б видань не виходило — вони всі додаються як <code>BookCover</code> у вкладці «Видання». Читач бачить всю видавничу долю твору в одному місці.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле BookCover</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Обкладинка</td><td>Зображення обкладинки. MD5-перевірка на дублі автоматична при завантаженні</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Рік видання</td><td>Рік першого видання цієї серії перевидань — не рік конкретного примірника. Детально нижче</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Видавництво</td><td>Прив'язка до InstitutionPage. Поле фільтрує лише установи з галочкою «Видавництво» — детально нижче</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Бібліографічний опис</td><td>Вільний текст — вихідні дані видання. Джерело: примірник у фонді, WorldCat, іноземний каталог. КЛЮЧ — не каталог фонду, тому запис може існувати без примірника</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">ISBN</td><td>MARC-імпорт підставляє з поля 020$a</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Ілюстратори видання</td><td>Прив'язка до Person — ілюстратори саме цього видання. Може відрізнятись між виданнями</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Перекладачі видання</td><td>Прив'язка до Person — перекладачі саме цього видання</td><td class="opt">якщо переклад</td></tr>
+          <tr><td class="lbl">Упорядники</td><td>Для збірок — укладачі цього видання</td><td class="opt">якщо збірка</td></tr>
+          <tr><td class="lbl">Видавнича серія</td><td>Якщо видання входить у серію видавництва — прив'язка тут, на рівні видання. Детально — розділ 5.5</td><td class="opt">якщо є</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Перевидання — який рік вказувати</h4>
+      <p>«Тореадори з Васюківки» А-БА-БА-ГА-ЛА-МА-ГИ виходять з 2004 року і мають вже кілька десятків перевидань. Бібліотекар тримає в руках примірник з написом «15-те видання, 2019».</p>
+      <ul>
+        <li>Поле «Рік видання» BookCover → <strong>2004</strong> (рік першого видання цієї серії в цьому видавництві)</li>
+        <li>Якщо ISBN однаковий у всіх перевиданнях → <strong>один BookCover</strong>, не кілька</li>
+        <li>Як дізнатись рік першого: зворот титулу — там зазвичай «Перше видання — 2004». Або WorldCat за ISBN</li>
+        <li>Новий BookCover потрібен лише якщо змінився ISBN, ілюстратор або суттєво оформлення</li>
+      </ul>
+    </div>
+
+    <div class="alert rust">
+      <h4>Поле «Видавництво» — фільтр і галочка</h4>
+      <p>Поле показує лише установи з позначкою «Видавництво» в їхній картці. Якщо видавництво є в базі але галочку не поставили — поле його не знайде і покаже помилку. Два сценарії:</p>
+      <ul>
+        <li><strong>Очевидне видавництво</strong> (є слово «Видавництво» в назві, або відомий видавець) → каталогізатор самостійно ставить галочку при створенні InstitutionPage</li>
+        <li><strong>Неочевидний випадок</strong> (музей, фонд, університет, громадська організація що видала збірку) → не ставити галочку самостійно. Винести питання до контент-менеджера або редактора через «Службові коментарі» картки установи: <code>[Питання] Чи позначати як видавництво? Видали: [назва книги, рік]</code></li>
+      </ul>
+      <p style="margin-top:8px;font-size:12px">У будь-якому сценарії — <strong>одразу заповнити бібліографічний опис</strong> з повними вихідними даними. Тоді установа зафіксована в таймлайні незалежно від рішення про галочку, і до картки не доведеться повертатись.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>КЛЮЧ — не каталог фонду</h4>
+      <p>Бібліографічний опис може бути складений з будь-якого джерела: примірник у фонді, запис у WorldCat, опис в іноземному каталозі, відомості з титульної сторінки фото. Запис видання може існувати в КЛЮЧІ без жодного примірника — і це нормально. Нас цікавить знання про твір і його видавничу долю, а не облік фізичних одиниць.</p>
+    </div>
+
+    <div class="alert green">
+      <h4>Видавництво — автоматичні потоки</h4>
+      <p>На сторінці видавництва (InstitutionPage) автоматично збираються <strong>«Наші автори»</strong> і <strong>«Наші ілюстратори»</strong> з даних про книги. Правильна прив'язка кожного видання до видавництва — внесок у профіль установи, не лише в картку книги.</p>
+    </div>
+  </div>
+
+
+  <!-- 5.3 БАГАТОТОМНІ -->
+  <div id="multivolume" class="anchor section">
+    <h2>5.3. Багатотомні видання <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Один твір у кількох фізичних томах. Галочка «Багатотомне видання» — на рівні <code>BookPage</code> (вкладка «Видання»). Стосується твору загалом, не одного видання.</p>
+
+    <div class="alert rust">
+      <h4>Три поняття — три різних інструменти</h4>
+      <ul>
+        <li><strong>Багатотомне видання</strong> — один твір у кількох томах. Один <code>BookPage</code>, галочка «Багатотомне», кілька <code>BookCover</code> з номерами томів. Приклад: «Сині води» у трьох книжечках від «Зеленого пса»</li>
+        <li><strong>Авторський канон / цикл</strong> — кілька самостійних творів одного автора зі спільним світом. Кожен — окрема <code>BookPage</code>. Прив'язка через поле «Авторський канон» на рівні твору. Приклад: «Джури» Рутківського — 4 книги 2007–2015</li>
+        <li><strong>Видавнича серія</strong> — книги різних авторів об'єднані видавцем. Кожна — окрема <code>BookPage</code>. Прив'язка через поле «Видавнича серія» на рівні видання. Приклад: «Богданова шкільна наука» від «Навчальна книга–Богдан»</li>
+      </ul>
+    </div>
+
+    <div class="case-box">
+      <div class="case-label">Кейс · Реальний приклад з порталу КЛЮЧ</div>
+      <h3>«Сині води» Рутківського — <em>один BookPage, сім обкладинок</em></h3>
+      <div class="covers">
+        <div class="cover-pill"><span class="pub">Зелений пес · 2004</span>Том 1 · Двобій з тінню<span class="sub">Географія</span></div>
+        <div class="cover-pill"><span class="pub">Зелений пес · 2004</span>Том 2 · Вогонь до вогню<span class="sub">Хімія</span></div>
+        <div class="cover-pill"><span class="pub">Зелений пес · 2004</span>Том 3 · Стріли під сонцем<span class="sub">Політологія</span></div>
+        <div class="cover-pill"><span class="pub">Темпора · 2011</span>Том 1 · Князь Бродників<span class="sub">іл. Німенко М.</span></div>
+        <div class="cover-pill"><span class="pub">Темпора · 2011</span>Том 2 · Стріли впрітул<span class="sub"> </span></div>
+        <div class="cover-pill"><span class="pub">Навч. книга–Богдан · 2015</span>Повне видання<span class="sub">іл. Кіналь О.</span></div>
+        <div class="cover-pill"><span class="pub">А-БА-БА-ГА-ЛА-МА-ГА · 2019</span>Нова редакція<span class="sub">обкл. Коршунов І.</span></div>
+      </div>
+      <p>Читач бачить усю видавничу долю твору — різних ілюстраторів, різну кількість томів від кожного видавця. В бібліотечному каталозі України такого зведеного вигляду не отримає.</p>
+    </div>
+
+    <h3 class="sub">Порядок створення</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Встановити галочку «Багатотомне видання»</h4><p>Вкладка «Видання». Робиться один раз — після цього з'являються поля «Номер тому» і «Назва тому» в кожному BookCover.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Для кожного тому — окремий BookCover</h4><p>Обкладинка, <strong>номер тому</strong> (обов'язково — визначає порядок), назва тому, рік, видавництво, ISBN. Якщо кілька томів одного видавництва — по одному запису на кожен.</p><p class="tip">Не натискати «Імпорт з MARC» двічі для одного тому — кожен клік додає новий запис.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Якщо твори раніше виходили окремими книжками</h4><p>Створіть окремі BookPage для попередніх видань → відкрийте повне зібрання → вкладка «Твір та Автори» → блок «Зміст збірки» → додайте їх туди. Таймлайни і рецензії пов'яжуться автоматично.</p></div></div>
+    </div>
+  </div>
+
+
+  <!-- 5.4 ІЛЮСТРАЦІЇ -->
+  <div id="illustrations" class="anchor section">
+    <h2>5.4. Ілюстрації видань <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Внутрішні ілюстрації — окремі зображення зі сторінок книги — зберігаються <strong>не всередині картки книги</strong>, а через окремий розділ адмінки. Це технічне обмеження Wagtail.</p>
+
+    <div class="alert gold">
+      <h4>Чому ілюстрації важливі для дитячих книжок</h4>
+      <p>У дитячій літературі ілюстрація — рівноправний автор тексту. Можливість показати розвороти, порівняти ілюстрації різних видань одного твору, атрибутувати роботу художника — це унікальна цінність КЛЮЧА порівняно з будь-яким бібліотечним каталогом.</p>
+    </div>
+
+    <h3 class="sub">Порядок додавання</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Переконатись що видання (BookCover) вже існує</h4><p>Ілюстрація прив'язується до конкретного видання. Якщо BookCover ще не збережено — спочатку зберегти книгу з обкладинкою.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Меню «Ілюстрації» в бічній панелі адмінки</h4><p>Розташоване поруч із «Обкладинками». Не всередині картки книги — окремий розділ.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>«Add illustration» → заповнити поля</h4><p><strong>Видання</strong> — autocomplete (назва книги + рік + видавець). <strong>Зображення</strong> — з медіабібліотеки або завантажити новий файл. <strong>Підпис</strong> — короткий опис: «Ілюстрація до розділу 3» або «Розворот з першого видання». <strong>Публічна</strong> — увімкнути щоб ілюстрація відображалась відвідувачам.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-body"><h4>Перевірити порядок</h4><p>Ілюстрації відображаються в порядку завантаження. Якщо порядок важливий — завантажуйте у правильній послідовності одразу. Змінити порядок після збереження через адмінку наразі неможливо.</p><p class="tip">Планується drag-and-drop у майбутній версії.</p></div></div>
+    </div>
+
+    <p>На публічній сторінці книги всі ілюстрації з позначкою «Публічна = так» збираються в секцію <strong>«Ілюстрації»</strong> з фільтром по виданнях — відвідувач може перемикатись між виданнями і бачити ілюстрації кожного окремо.</p>
+  </div>
+
+
+  <!-- 5.5 СЕРІЇ -->
+  <div id="series" class="anchor section">
+    <h2>5.5. Серії і цикли (BookSeries) <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Обидва типи — авторський канон і видавнича серія — зберігаються в <strong>Snippets → Книжкові Серії / Цикли</strong>. Технічно один клас, але різняться одним ключовим полем і рівнем прив'язки.</p>
+
+    <div class="series-compare">
+      <div class="sc-card sc-canon">
+        <span class="sc-type">Авторський канон</span>
+        <h3>Цикл творів</h3>
+        <div class="sc-row"><span class="k">Поле «Видавництво»</span><span>порожнє</span></div>
+        <div class="sc-row"><span class="k">Прив'язується до</span><span>BookPage (твір)</span></div>
+        <div class="sc-row"><span class="k">Вкладка</span><span>👤 Твір та Автори</span></div>
+        <div class="sc-row"><span class="k">Блок</span><span>«Входить до циклу»</span></div>
+        <div class="sc-row"><span class="k">Номер</span><span>FloatField (1, 1.5, 2…)</span></div>
+        <div class="sc-row"><span class="k">Приклад</span><span>Джури Рутківського</span></div>
+      </div>
+      <div class="sc-card sc-series">
+        <span class="sc-type">Видавнича серія</span>
+        <h3>Серія видавництва</h3>
+        <div class="sc-row"><span class="k">Поле «Видавництво»</span><span>заповнене</span></div>
+        <div class="sc-row"><span class="k">Прив'язується до</span><span>BookCover (видання)</span></div>
+        <div class="sc-row"><span class="k">Вкладка</span><span>📚 Видання</span></div>
+        <div class="sc-row"><span class="k">Блок</span><span>«Видавництво та Серія»</span></div>
+        <div class="sc-row"><span class="k">Номер</span><span>Вільний текст («Вип. 12»)</span></div>
+        <div class="sc-row"><span class="k">Приклад</span><span>Богданова шкільна наука</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Як створити серію (сніппет)</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Snippets → Книжкові Серії / Цикли → «Додати»</h4><p>Назва, slug (заповнюється автоматично), опис (необов'язково), «Серія завершена» (якщо автор більше не пише нових частин).</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Поле «Видавництво» — ключове рішення</h4><p>Залишити <strong>порожнім</strong> → авторський канон, прив'язується до твору.<br>Заповнити → видавнича серія, прив'язується до видання.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Прив'язати до книги або видання</h4><p><strong>Авторський канон:</strong> BookPage → вкладка «Твір та Автори» → «Входить до циклу» → номер у циклі (дробовий допустимий: 1.5 для пріквела між 1 і 2 частиною).<br><strong>Видавнича серія:</strong> BookPage → вкладка «Видання» → конкретний BookCover → «Видавнича серія» + номер вільним текстом.</p></div></div>
+    </div>
+  </div>
+
+
+  <!-- 5.6 MARC -->
+  <div id="marc" class="anchor section">
+    <h2>5.6. Імпорт MARC-записів <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Кнопка <strong>«📂 Імпорт з MARC»</strong> — праворуч від поля «Назва». Приймає формат MARC 21 рядковий (не XML, не ISO 2709). Після натискання система нагадає що залишилось заповнити вручну.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>MARC-поле</th><th>Підполе</th><th>Куди потрапляє</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">245</td><td>$a / $b</td><td>Назва і підназва</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">245</td><td>$n / $p</td><td>Номер і назва тому (для багатотомних)</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">008</td><td>поз.35–37</td><td>Мова оригіналу</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">041</td><td>$a</td><td>Мова оригіналу (уточнює 008)</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">020</td><td>$a</td><td>ISBN видання</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">260</td><td>$c</td><td>Рік видання</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">300</td><td>$a</td><td>Обсяг (бібліографічний опис)</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">505</td><td>$a</td><td>Зміст збірки</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">650 / 653</td><td>$a</td><td>Теги (крім слів з рос. літерами)</td><td class="auto">автоматично</td></tr>
+          <tr><td class="lbl">100 / 700</td><td>$a</td><td>Ім'я автора — підказка, прив'язка вручну</td><td class="req">вручну</td></tr>
+          <tr><td class="lbl">260</td><td>$b</td><td>Назва видавництва — підказка, вибір вручну</td><td class="req">вручну</td></tr>
+          <tr><td class="lbl">521</td><td>$a</td><td>Текст вікової аудиторії — підказка, класифікатор вручну</td><td class="req">вручну</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Чотири кроки після імпорту</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Прив'язати автора до картки Person</h4><p>MARC підказує ім'я — знайти в базі через autocomplete. Якщо картки немає — спочатку створити Person, потім повернутись.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Прив'язати ілюстратора (якщо є в MARC 700$a з роллю ill)</h4><p>Ілюстратор прив'язується до конкретного видання (BookCover), не до BookPage загалом.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Обрати видавництво з каталогу установ</h4><p>MARC підказує назву з поля 260$b. Знайти InstitutionPage — якщо немає, спочатку створити установу.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-body"><h4>Встановити вікову групу з класифікатора</h4><p>Текст з поля 521$a — підказка. Остаточний вибір — з dropdown класифікатора.</p></div></div>
+    </div>
+
+    <div class="alert gold">
+      <h4>Для багатотомних — MARC по одному тому</h4>
+      <ul>
+        <li>Спочатку встановити галочку «Багатотомне видання» на BookPage</li>
+        <li>Для кожного тому — окремий клік «📂 Імпорт з MARC» з записом саме цього тому</li>
+        <li>Система розпізнає «Т. 2» або «Кн. 3» з поля 245$n і проставить номер тому автоматично</li>
+        <li>Не натискати двічі для одного тому — кожен клік створює новий BookCover</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 5.7 НАГОРОДИ -->
+  <div id="awards" class="anchor section">
+    <h2>5.7. Нагороди твору — два потоки <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Нагороди вносяться через запис <code>AwardWinner</code> у сніпеті нагороди. На картках книги і діяча з'являються автоматично. Є три точки входу — всі ведуть до одного запису, дублювання не виникає.</p>
+
+    <div class="two-col">
+      <div class="col-card col-a">
+        <h3>◆ Потік 1 — Ретро-наповнення</h3>
+        <ul>
+          <li>Snippets → Нагороди → конкретна премія → вкладка «Лауреати»</li>
+          <li>Пройти по роках і проставити зв'язки</li>
+          <li>Джерело: офіційні списки, бібліографії, покажчики</li>
+          <li>Коли: планова сесія наповнення</li>
+        </ul>
+      </div>
+      <div class="col-card col-b">
+        <h3>◆ Потік 2 — Живий контент</h3>
+        <ul>
+          <li>Вийшла новина: книга отримала нагороду</li>
+          <li>Snippets → Нагороди → «Додати лауреата»</li>
+          <li>Прив'язати книгу або діяча → рік → номінація</li>
+          <li>Опублікувати новину з посиланням на картку нагороди</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert green">
+      <h4>Три точки входу — одна база</h4>
+      <ul>
+        <li><strong>Зі сніпету нагороди</strong> — зручно коли опрацьовуєш весь список лауреатів по роках</li>
+        <li><strong>З профілю діяча</strong> — зручно коли перед очима біографія</li>
+        <li><strong>З картки книги</strong> — зручно коли нагороду отримує конкретне видання, а не твір загалом</li>
+      </ul>
+    </div>
+
+    <div class="alert gold">
+      <h4>Фокус ювілярів — планування роботи</h4>
+      <p>В адмінці можна вибирати ювілярів за роком. Нагороди, публікації і медіа ювіляра варто внести до святкової дати — не після.</p>
+    </div>
+  </div>
+
+
+  <!-- 5.8 ЧИТАЛЬНЯ -->
+  <div id="reading-room" class="anchor section">
+    <h2>5.8. Читальня авторських голосів <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Читальня (<code>/read/</code>) — публічний розділ начитаних аудіоуривків. Кожен запис — це <code>MediaAsset</code>. Два аудіо-типи для читальні — інші типи медіа (буктрейлер, презентація) відображаються на сторінці книги але не в читальні.</p>
+
+    <div class="rr-box">
+      <h3>Що таке запис читальні</h3>
+      <p>П'ять елементів що визначають запис повністю:</p>
+      <div class="rr-field"><strong>Тип медіа</strong> — «Аудіо: Автор читає уривок» або «Аудіо: Бібліотекар читає уривок»</div>
+      <div class="rr-field"><strong>Аудіофайл або URL</strong> — завантажений MP3 (пріоритет) або зовнішнє посилання. Не заповнювати обидва одночасно</div>
+      <div class="rr-field"><strong>Нарратор/Виконавець</strong> — прив'язка до Person якщо є в базі; текстове поле «Начитувач/Виконавець» якщо картки немає</div>
+      <div class="rr-field"><strong>Пов'язана книга</strong> — FK до BookPage. Обов'язково — без цього запис не з'явиться на сторінці книги</div>
+      <div class="rr-field"><strong>Видання (з якого начитано)</strong> — FK до BookCover. Важливо для перекладних творів де різні видання мають різний текст</div>
+    </div>
+
+    <div class="alert rust">
+      <h4>Важливий порядок заповнення</h4>
+      <p>Спочатку оберіть <strong>Книгу</strong> — тоді поле <strong>Видання</strong> автоматично відфільтрується і покаже лише видання цієї книги. Якщо обрати навпаки — список видань буде порожнім.</p>
+    </div>
+
+    <h3 class="sub">Статуси публікації</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Статус</th><th>Коли використовувати</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Затверджено</td><td>Запис одразу публікується в читальні. Використовуйте якщо додаєте самостійно як редактор</td></tr>
+          <tr><td class="lbl">На модерації</td><td>Подано бібліотекарем через кабінет — чекає перевірки редактором</td></tr>
+          <tr><td class="lbl">Відхилено</td><td>Не публікується. Запис залишається в системі для аудиту</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Два шляхи додавання</h3>
+    <div class="two-col">
+      <div class="col-card col-a">
+        <h3>◆ Через картку книги</h3>
+        <ul>
+          <li>BookPage → 🎬 Контент та Історія</li>
+          <li>Блок «Медіа-Контент» → «Add Медіа-Актив»</li>
+          <li>Книга прив'язується автоматично</li>
+          <li>Зручно коли вже редагуєш книгу</li>
+        </ul>
+      </div>
+      <div class="col-card col-b">
+        <h3>◆ Через Snippets → Читальня</h3>
+        <ul>
+          <li>Snippets → Читальня (MediaAsset) → «Додати»</li>
+          <li>Книгу і видання прив'язати вручну</li>
+          <li>Зручно для масового додавання або регіонального внеску</li>
+          <li>Тут є фільтрація і пошук за записами</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert steel">
+      <h4>Бімодальне читання</h4>
+      <p>Поле «Транскрипт/Текст уривка» — текст що відображається поруч з аудіо для паралельного читання. Галочка «Бімодальне читання» — активує режим «слухаю і читаю одночасно». Зараз транскрипт показується як статичний текст. Повна синхронізація з підсвіченням слів — у беклозі.</p>
+    </div>
+  </div>
+
+
+  <!-- 5.9 ВІДЗНАКИ -->
+  <div id="badges" class="anchor section">
+    <h2>5.9. Відзнаки на картці книги <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Значки «Вибір читачів: 15 бібліотек», «Лауреат опитування» та інші <strong>генеруються автоматично</strong> з зв'язків. Ніяких окремих галочок у налаштуваннях BookPage немає — достатньо правильно прив'язати книгу.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Відзнака</th><th>Звідки береться</th><th>Що зробити</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">«Вибір читачів»</td><td>ReaderChoiceMapPage — кампанія → локація → «Книги у виборі»</td><td>Знайти запис книги → поле «Книга (КЛЮЧ)» → autocomplete → BookPage → статус «Опубліковано». Поле <code>book_title_raw</code> — архівне, <strong>не редагувати</strong></td></tr>
+          <tr><td class="lbl">«Ключове опитування»</td><td>SurveyMention у конкретному опитуванні</td><td>Surveys → опитування → блок «SurveyMention» → поле book → autocomplete → заповнити <code>vote_count</code></td></tr>
+          <tr><td class="lbl">«Золоті перемоги»</td><td>AwardWinner у сніпеті нагороди</td><td>Додати нагороду через будь-яку з трьох точок входу (розділ 5.7). Книга автоматично потрапляє на сторінку «Золоті перемоги»</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert green">
+      <h4>Примітка: «Письменник радить почитати»</h4>
+      <p>На картці книги є блок «Письменник радить» — список авторів, що рекомендували цей твір, з цитатами. Він формується автоматично з публікацій де є рекомендація. Як додати рекомендацію — у <strong>M2, розділ 2.3</strong> (два способи: блок у тексті публікації або окрема вкладка).</p>
+    </div>
+  </div>
+
+
+  <!-- CHECKLIST -->
+  <div id="checklist-m5" class="anchor section">
+    <h2>Чеклист M5 <a href="#toc" class="back">↑ зміст</a></h2>
+    <div class="checklist">
+
+      <h3>Картка твору (BookPage)</h3>
+      <div class="chk"><div class="box"></div><span>Перевірено що такого BookPage ще немає — пошук перед створенням</span></div>
+      <div class="chk"><div class="box"></div><span>Автори прив'язані до карток Person через autocomplete (не текстом)</span></div>
+      <div class="chk"><div class="box"></div><span>Рік першого видання — рік появи твору у світі, не цього видання</span></div>
+      <div class="chk"><div class="box"></div><span>Вкладка «Класифікація» заповнена: вікова група + жанри/теги з класифікатора</span></div>
+
+      <h3 class="sub-head">Видання (BookCover)</h3>
+      <div class="chk"><div class="box"></div><span>Хоча б одне видання додано, видавництво прив'язане до InstitutionPage</span></div>
+      <div class="chk"><div class="box"></div><span>Головна обкладинка обрана</span></div>
+      <div class="chk"><div class="box"></div><span>Ілюстратори видання прив'язані на рівні BookCover (не BookPage загалом)</span></div>
+
+      <h3 class="sub-head">Багатотомне видання</h3>
+      <div class="chk"><div class="box"></div><span>Галочка «Багатотомне видання» встановлена на рівні BookPage до першого MARC-імпорту</span></div>
+      <div class="chk"><div class="box"></div><span>Кожен том — окремий BookCover з номером тому (обов'язково)</span></div>
+      <div class="chk"><div class="box"></div><span>Порядок томів перевірено після внесення всіх</span></div>
+
+      <h3 class="sub-head">Ілюстрації видань</h3>
+      <div class="chk"><div class="box"></div><span>Додані через розділ «Ілюстрації» (не всередині картки книги)</span></div>
+      <div class="chk"><div class="box"></div><span>Кожна ілюстрація прив'язана до конкретного видання (BookCover)</span></div>
+      <div class="chk"><div class="box"></div><span>Завантажені у правильній послідовності (порядок не можна змінити після збереження)</span></div>
+      <div class="chk"><div class="box"></div><span>Галочка «Публічна» увімкнена для тих що мають відображатись відвідувачам</span></div>
+
+      <h3 class="sub-head">Серії і цикли</h3>
+      <div class="chk"><div class="box"></div><span>Авторський канон прив'язаний на рівні BookPage (вкладка «Твір та Автори»)</span></div>
+      <div class="chk"><div class="box"></div><span>Видавнича серія прив'язана на рівні BookCover (вкладка «Видання»)</span></div>
+      <div class="chk"><div class="box"></div><span>Сніппет серії створений до прив'язки</span></div>
+
+      <h3 class="sub-head">MARC-імпорт</h3>
+      <div class="chk"><div class="box"></div><span>Автор прив'язаний до Person вручну після імпорту</span></div>
+      <div class="chk"><div class="box"></div><span>Видавництво обрано з InstitutionPage вручну</span></div>
+      <div class="chk"><div class="box"></div><span>Вікова група встановлена з класифікатора</span></div>
+
+      <h3 class="sub-head">Нагороди</h3>
+      <div class="chk"><div class="box"></div><span>Нагорода внесена через AwardWinner у сніпеті нагороди</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо рукопис — прапорець «Це рукопис» встановлений</span></div>
+
+      <h3 class="sub-head">Читальня</h3>
+      <div class="chk"><div class="box"></div><span>Тип медіа — «Автор читає» або «Бібліотекар читає» (не відео-тип)</span></div>
+      <div class="chk"><div class="box"></div><span>Спочатку обрано Книгу — потім Видання (порядок важливий)</span></div>
+      <div class="chk"><div class="box"></div><span>Нарратор/Виконавець прив'язаний до Person якщо є в базі</span></div>
+      <div class="chk"><div class="box"></div><span>Статус «Затверджено» якщо додаєте як редактор</span></div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M5 · v2.0 · <a href="#toc">↑ до змісту</a></span>
+    <span><a href="m8.html">M8 · Картка діяча →</a> · Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
