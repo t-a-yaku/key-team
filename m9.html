@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M9 · Кабінети користувачів — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --m9:#1a3a5c;--m9-light:#e8f0f8;--m9-mid:#2a5a8c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 16px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:14px 10px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+  .module-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--m9);color:#fff;}
+  .module-header{margin-bottom:40px;}
+  .module-header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  .module-header h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;}
+  .for-whom{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .role-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--pk-border);color:var(--pk-muted);background:var(--pk-paper-dark);}
+  .role-tag.primary{background:var(--m9-light);border-color:var(--m9);color:var(--m9);}
+  .outcomes{background:var(--pk-sage-light);border-left:4px solid var(--pk-sage);border-radius:0 4px 4px 0;padding:18px 22px;margin-bottom:32px;}
+  .outcomes h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-sage);margin-bottom:10px;}
+  .outcomes ul{list-style:none;padding:0;}
+  .outcomes ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;}
+  .outcomes ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+
+  /* TOC */
+  .toc{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin-bottom:44px;}
+  .toc h3{font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:12px;}
+  .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 24px;}
+  .toc a{font-size:13px;color:var(--m9);text-decoration:none;padding:3px 0;display:block;}
+  .toc a:hover{color:var(--pk-gold);}
+  .toc .n{font-size:10px;color:var(--pk-muted);margin-right:4px;}
+
+  .section{margin-bottom:44px;}
+  .anchor{scroll-margin-top:56px;}
+  h2{font-family:'Playfair Display',serif;font-size:21px;font-weight:600;color:var(--pk-ink);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;}
+  .back{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);text-decoration:none;flex-shrink:0;}
+  .back:hover{color:var(--pk-gold);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+
+  /* ROLE CARDS */
+  .role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:16px 0;}
+  .role-card{border-radius:4px;border:1px solid var(--pk-border);padding:16px 18px;background:var(--pk-paper-dark);position:relative;overflow:hidden;}
+  .role-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .rc-pro::before{background:#1a4a3a;}
+  .rc-community::before{background:#2e4a6b;}
+  .rc-researcher::before{background:#4a2060;}
+  .rc-author::before{background:#8b3a1a;}
+  .rc-educator::before{background:#5c3d00;}
+  .rc-parent::before{background:#3d5c3d;}
+  .rc-other::before{background:#6b5f52;}
+  .role-card .rc-badge{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;border-radius:2px;color:#fff;display:inline-block;margin-bottom:8px;background:var(--pk-muted);}
+  .role-card h3{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .role-card .rc-who{font-size:11px;color:var(--pk-muted);margin-bottom:8px;font-style:italic;}
+  .role-card ul{list-style:none;padding:0;}
+  .role-card ul li{font-size:12px;padding:2px 0 2px 14px;position:relative;color:var(--pk-ink);line-height:1.4;}
+  .role-card ul li::before{content:'→';position:absolute;left:0;color:var(--pk-muted);font-size:10px;}
+  .admin-only{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:#8b3a1a;color:#fff;padding:1px 6px;border-radius:2px;margin-left:6px;}
+
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(184,134,11,0.03);}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:150px;}
+  td.req{color:var(--pk-sage);font-weight:600;white-space:nowrap;}
+  td.warn{color:var(--pk-rust);font-weight:600;}
+
+  /* ALERTS */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.blue{background:var(--m9-light);border-color:var(--m9);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.blue h4{color:var(--m9);}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.blue ul li::before{content:'→';position:absolute;left:0;color:var(--m9);}
+  .alert p{font-size:13px;margin:0;max-width:100%;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* STEPS */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--m9);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* STATUS PILLS */
+  .status{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;}
+  .s-pending{background:#fdf3e0;color:#8b5e00;border:1px solid #e8c060;}
+  .s-approved{background:var(--pk-sage-light);color:var(--pk-sage);border:1px solid var(--pk-sage);}
+  .s-rejected{background:var(--pk-rust-light);color:var(--pk-rust);border:1px solid var(--pk-rust);}
+
+  /* MONITORING */
+  .monitor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:16px 0;}
+  .monitor-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:16px 18px;}
+  .monitor-card h4{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--pk-ink);}
+  .monitor-card .freq{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--m9);margin-bottom:6px;display:block;}
+  .monitor-card ul{list-style:none;padding:0;}
+  .monitor-card ul li{font-size:12px;padding:3px 0 3px 14px;position:relative;color:var(--pk-muted);line-height:1.4;}
+  .monitor-card ul li::before{content:'–';position:absolute;left:0;}
+
+  /* CODE BOX */
+  .code-box{background:#1a1410;border-radius:4px;padding:16px 20px;margin:12px 0;overflow-x:auto;}
+  .code-box pre{font-family:monospace;font-size:12px;color:#e8d48a;line-height:1.6;white-space:pre;}
+  .code-box .comment{color:#4a5a4a;}
+
+  /* CHECKLIST */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .checklist h3.sub-head{margin-top:18px;color:var(--m9);border-top:1px solid var(--pk-border);padding-top:14px;}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.toc-grid{grid-template-columns:1fr;}.role-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#toc">M9</a>
+  <a href="#roles">Ролі</a>
+  <a href="#admin-panel">Адмін-панель</a>
+  <a href="#verification">Верифікація</a>
+  <a href="#assign-role">Призначення ролей</a>
+  <a href="#monitoring">Моніторинг</a>
+  <a href="#checklist-m9">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div id="top" class="anchor module-header">
+    <span class="module-badge">Модуль M9 · Передумова: M1</span>
+    <h1>Кабінети користувачів:<br><em>ролі, верифікація, адміністрування</em></h1>
+    <p class="lead">Модуль для адміністратора і контент-менеджера. Охоплює сім ролей системи, розділ Accounts в адмін-панелі, розгляд верифікаційних запитів авторів і регулярний моніторинг.</p>
+    <div class="for-whom">
+      <span class="role-tag primary">Адміністратор</span>
+      <span class="role-tag primary">Контент-менеджер</span>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <h3>Після цього модуля ви вмієте</h3>
+    <ul>
+      <li>Розрізняти сім ролей і розуміти що кожна дає користувачу</li>
+      <li>Знаходити і редагувати профіль будь-якого користувача</li>
+      <li>Призначати привілейовані ролі яких користувач не може обрати самостійно</li>
+      <li>Розглядати верифікаційні запити авторів і прив'язувати до картки Person</li>
+      <li>Проводити регулярний моніторинг кабінетів</li>
+    </ul>
+  </div>
+
+  <!-- TOC -->
+  <div id="toc" class="anchor toc">
+    <h3>Зміст модуля</h3>
+    <div class="toc-grid">
+      <a href="#roles"><span class="n">9.1</span>Сім ролей системи</a>
+      <a href="#admin-panel"><span class="n">9.2</span>Розділ Accounts в адмін-панелі</a>
+      <a href="#profiles"><span class="n">9.3</span>Профілі користувачів</a>
+      <a href="#verification"><span class="n">9.4</span>Верифікаційні запити авторів</a>
+      <a href="#assign-role"><span class="n">9.5</span>Призначення привілейованих ролей</a>
+      <a href="#other-models"><span class="n">9.6</span>Вибране, підписки, щоденники</a>
+      <a href="#monitoring"><span class="n">9.7</span>Моніторинг і регулярні перевірки</a>
+      <a href="#checklist-m9"><span class="n">↓</span>Чеклист</a>
+    </div>
+  </div>
+
+
+  <!-- 9.1 РОЛІ -->
+  <div id="roles" class="anchor section">
+    <h2>9.1. Сім ролей системи <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Роль визначає які розділи кабінету доступні користувачу і що він бачить на головній сторінці після входу. Два способи отримати роль: обрати самостійно при реєстрації або отримати від адміністратора.</p>
+
+    <div class="role-grid">
+
+      <div class="role-card rc-pro">
+        <span class="rc-badge">librarian_pro</span>
+        <h3>Бібліотекар-фахівець <span class="admin-only">лише адмін</span></h3>
+        <p class="rc-who">Штатний бібліотекар, методист</p>
+        <ul>
+          <li>Регіональний зріз (діячі і установи регіону)</li>
+          <li>PDF-конструктор з пресетами</li>
+          <li>Популярні книги і новинки</li>
+          <li>Вибране, підписки, Читальня</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-community">
+        <span class="rc-badge">librarian_community</span>
+        <h3>Бібліотекар-спільнота</h3>
+        <p class="rc-who">Обирається при реєстрації</p>
+        <ul>
+          <li>Вибране, підписки</li>
+          <li>Регіональний зріз якщо вказано регіон</li>
+          <li>PDF-конструктор</li>
+          <li>Читальня</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-researcher">
+        <span class="rc-badge">researcher</span>
+        <h3>Дослідник</h3>
+        <p class="rc-who">Обирається при реєстрації</p>
+        <ul>
+          <li>Бібліографічні корпуси / папки</li>
+          <li>Вибране з прив'язкою до папок</li>
+          <li>Автоматично: перша папка «Моє перше дослідження»</li>
+          <li>Публічний шеринг папок</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-author">
+        <span class="rc-badge">author</span>
+        <h3>Автор</h3>
+        <p class="rc-who">Обирається при реєстрації</p>
+        <ul>
+          <li>Форма верифікації → прив'язка до картки Person</li>
+          <li>Після верифікації: метрики залученості</li>
+          <li>Збереження книг, цитування, завантаження PDF</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-educator">
+        <span class="rc-badge">educator</span>
+        <h3>Освітянин <span class="admin-only">лише адмін</span></h3>
+        <p class="rc-who">Педагог, викладач</p>
+        <ul>
+          <li>Профілі учнів і читацькі щоденники</li>
+          <li>Бібліографічні корпуси / папки</li>
+          <li>PDF-конструктор</li>
+          <li>Популярні книги і новинки</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-parent">
+        <span class="rc-badge">parent</span>
+        <h3>Батьки</h3>
+        <p class="rc-who">Обирається при реєстрації</p>
+        <ul>
+          <li>Профілі дітей (ім'я або псевдонім + рік народження)</li>
+          <li>Читацькі щоденники для кожної дитини</li>
+          <li>Зведення: читає / прочитала / хоче прочитати</li>
+        </ul>
+      </div>
+
+      <div class="role-card rc-other">
+        <span class="rc-badge">other</span>
+        <h3>Інше</h3>
+        <p class="rc-who">Обирається при реєстрації</p>
+        <ul>
+          <li>Вибране, підписки</li>
+          <li>Пошук і Машина Часу</li>
+          <li>Мінімальний кабінет</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="alert blue">
+      <h4>Friction-triggered реєстрація</h4>
+      <p>Портал не просить реєструватись одразу. Модальне вікно реєстрації з'являється лише коли незареєстрований користувач натискає «Зберегти», «Підписатись» або іншу дію що потребує кабінету. Дія зберігається в сесії і виконується автоматично після входу — користувач бачить одразу результат, а не порожній кабінет.</p>
+    </div>
+  </div>
+
+
+  <!-- 9.2 АДМІН-ПАНЕЛЬ -->
+  <div id="admin-panel" class="anchor section">
+    <h2>9.2. Розділ Accounts в адмін-панелі <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p><strong>Шлях:</strong> <code>key.chl.kiev.ua/admin/</code> → розділ <strong>Accounts</strong>. Потрібен статус <code>staff</code> або <code>superuser</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Модель в адмінці</th><th>Що містить</th><th>Хто використовує</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">User Profiles</td><td>Основний профіль: роль, регіон, установа, verified_person</td><td>Адмін — редагування; КМ — перегляд</td></tr>
+          <tr><td class="lbl">Verification Requests</td><td>Запити авторів на прив'язку до картки діяча</td><td>Адмін — розгляд і затвердження</td></tr>
+          <tr><td class="lbl">Favorites</td><td>Збережені матеріали з нотатками і папками</td><td>Адмін — перегляд, видалення за скаргою</td></tr>
+          <tr><td class="lbl">Research Collections</td><td>Бібліографічні папки (Дослідник, Освітянин)</td><td>Адмін — перегляд, is_public</td></tr>
+          <tr><td class="lbl">Subscriptions</td><td>Підписки на теги з частотою і статусом</td><td>Адмін — активація / деактивація / видалення</td></tr>
+          <tr><td class="lbl">PDF Builder Presets</td><td>Збережені пресети Конструктора PDF</td><td>Адмін — видалення за потреби</td></tr>
+          <tr><td class="lbl">Child Profiles</td><td>Профілі дітей / учнів (батьки, педагоги)</td><td>Адмін — перегляд</td></tr>
+          <tr><td class="lbl">Reading Logs</td><td>Записи читацьких щоденників</td><td>Адмін — перегляд</td></tr>
+          <tr><td class="lbl">User Interactions</td><td>Лог поведінкових подій: перегляди, повторні відвідини</td><td>Адмін — аналітика інтересів</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 9.3 ПРОФІЛІ -->
+  <div id="profiles" class="anchor section">
+    <h2>9.3. Профілі користувачів <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p><strong>Шлях:</strong> Accounts → User Profiles. Фільтри: за роллю, за статусом розсилки. Пошук: ім'я, email, текст «Про себе».</p>
+
+    <h3 class="sub">Ключові поля профілю</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Опис</th><th>Хто заповнює</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">role</td><td>Роль — визначає функціонал кабінету</td><td>Користувач при реєстрації або адмін</td></tr>
+          <tr><td class="lbl">region</td><td>Регіон з REGION_CHOICES. Якщо порожній — береться з установи</td><td>Користувач в налаштуваннях</td></tr>
+          <tr><td class="lbl">institution</td><td>FK → InstitutionPage. Використовується для регіонального зрізу</td><td>Користувач в налаштуваннях</td></tr>
+          <tr><td class="lbl">verified_person</td><td>FK → Person. Прив'язує обліковий запис до картки діяча. Тільки для role=author</td><td>Адмін після розгляду запиту</td></tr>
+          <tr><td class="lbl">receive_newsletter</td><td>Дозвіл на email-розсилки. Без ✅ підписки не надсилають листи</td><td>Користувач в налаштуваннях</td></tr>
+          <tr><td class="lbl">avatar</td><td>Зображення профілю</td><td>Користувач</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Підводний камінь з підписками</h4>
+      <p>Користувач може мати активні підписки але <strong>не отримувати листів</strong> якщо: не вказаний email, або <code>receive_newsletter = False</code>. Це не помилка системи — перевіряти при зверненнях про «не приходять листи».</p>
+    </div>
+  </div>
+
+
+  <!-- 9.4 ВЕРИФІКАЦІЯ -->
+  <div id="verification" class="anchor section">
+    <h2>9.4. Верифікаційні запити авторів <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Автор з роллю <code>author</code> може надіслати заявку на прив'язку до картки діяча в каталозі. Після верифікації він отримує доступ до метрик залученості.</p>
+
+    <p><strong>Шлях:</strong> Accounts → Verification Requests. Фільтр за статусом <span class="status s-pending">pending</span> — показує незрозглянуті.</p>
+
+    <h3 class="sub">Порядок розгляду заявки</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Відкрити запит зі статусом «pending»</h4>
+          <p>Побачите: ім'я користувача, яку картку Person обрав, коментар або посилання для підтвердження (наприклад, Facebook-сторінка або сайт автора).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Верифікувати відповідність</h4>
+          <p>Порівняти ПІБ облікового запису з ім'ям у картці Person. Перевірити посилання або коментар. Якщо є сумніви — написати користувачу через email з профілю.</p>
+          <p class="tip">Перевіряти також чи не прив'язана ця картка Person до іншого облікового запису.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h4>Якщо підтверджено → заповнити verified_person</h4>
+          <p>Відкрити UserProfile цього користувача (Accounts → User Profiles → пошук за email) → поле <code>verified_person</code> → autocomplete → обрати відповідного діяча → зберегти.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <h4>Оновити статус запиту</h4>
+          <p>Повернутись до запиту → поле «Status» → <span class="status s-approved">approved</span> або <span class="status s-rejected">rejected</span> → зберегти. Користувач побачить зміну в кабінеті.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Статус</th><th>Значення</th><th>Що далі</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl"><span class="status s-pending">pending</span></td><td>Очікує розгляду</td><td>Переглянути регулярно — не залишати довго</td></tr>
+          <tr><td class="lbl"><span class="status s-approved">approved</span></td><td>Підтверджено</td><td>verified_person встановлено, автор бачить метрики</td></tr>
+          <tr><td class="lbl"><span class="status s-rejected">rejected</span></td><td>Відхилено</td><td>Автор може подати нову заявку з іншим діячем</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Що отримує автор після верифікації</h4>
+      <ul>
+        <li>Кількість книг у базі КЛЮЧА</li>
+        <li>Скільки разів його книги додали у Вибране</li>
+        <li>Скільки разів зберегли його профіль діяча</li>
+        <li>Цитування публікацій через CitationEvent</li>
+        <li>Завантаження PDF-матеріалів профілю та книг</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 9.5 ПРИЗНАЧЕННЯ РОЛЕЙ -->
+  <div id="assign-role" class="anchor section">
+    <h2>9.5. Призначення привілейованих ролей <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <p>Дві ролі користувач не може обрати самостійно при реєстрації — їх призначає адміністратор:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Роль</th><th>Для кого</th><th>Що додається порівняно з базовою</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">librarian_pro</td><td>Штатний бібліотекар, методист НБУ для дітей і мережі</td><td>Повний регіональний зріз, PDF-пресети, пріоритет у аналітиці</td></tr>
+          <tr><td class="lbl">educator</td><td>Педагог, викладач що веде роботу з учнями</td><td>Профілі учнів і щоденники + корпуси + PDF-конструктор</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Порядок призначення</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Accounts → User Profiles → знайти профіль</h4>
+          <p>Пошук за email або ім'ям. Переконатись що це правильний користувач.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Поле «Role» → обрати librarian_pro або educator → зберегти</h4>
+          <p>Зміна набуває чинності одразу — при наступному вході користувач побачить розширений кабінет.</p>
+          <p class="tip">Якщо користувач вже в системі — кабінет оновиться без виходу і повторного входу.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert steel">
+      <h4>Як користувач запитує привілейовану роль</h4>
+      <p>Стандартного механізму запиту немає — користувач звертається через email або особисто. Фіксуйте підставу призначення в полі «Про себе» або в «Службових коментарях» якщо потрібна внутрішня нотатка.</p>
+    </div>
+  </div>
+
+
+  <!-- 9.6 ІНШІ МОДЕЛІ -->
+  <div id="other-models" class="anchor section">
+    <h2>9.6. Вибране, підписки, щоденники <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <h3 class="sub">Вибране (Favorites)</h3>
+    <p>Accounts → Favorites. Кожен запис: користувач + тип контенту + ID об'єкта + нотатки + папка. Дублів не буває (unique_together). Видаляти тільки якщо запис помилковий або за скаргою користувача.</p>
+
+    <h3 class="sub">Підписки (Subscriptions)</h3>
+    <p>Accounts → Subscriptions. Масові операції: позначити чекбоксами → Активувати / Деактивувати / Видалити. Частота: <code>instant</code> / <code>daily</code> / <code>weekly</code>.</p>
+
+    <div class="alert rust">
+      <h4>Умова отримання листів — три компоненти</h4>
+      <ul>
+        <li>У профілі вказано email</li>
+        <li><code>receive_newsletter = True</code> у UserProfile</li>
+        <li>Підписка має <code>is_active = True</code></li>
+      </ul>
+    </div>
+
+    <h3 class="sub">Читацькі щоденники (Reading Logs)</h3>
+    <p>Accounts → Reading Logs. Кожен запис прив'язаний до профілю дитини (ChildProfile). Поле <code>book_title_raw</code> — вільний текст якщо книги немає в базі КЛЮЧА; поле <code>book</code> — FK до BookPage якщо є. Не редагувати записи без звернення від користувача.</p>
+
+    <h3 class="sub">PDF-пресети (PDF Builder Presets)</h3>
+    <p>Accounts → PDF Builder Presets. Збережені налаштування Конструктора PDF. Видаляти тільки якщо є скарга або пресет помилковий. З поля <code>filter_state_json</code> доступні: <code>object_type</code> (book/person), <code>anniversary_year</code>.</p>
+  </div>
+
+
+  <!-- 9.7 МОНІТОРИНГ -->
+  <div id="monitoring" class="anchor section">
+    <h2>9.7. Моніторинг і регулярні перевірки <a href="#toc" class="back">↑ зміст</a></h2>
+
+    <div class="monitor-grid">
+      <div class="monitor-card">
+        <span class="freq">Щотижня</span>
+        <h4>Верифікаційні запити</h4>
+        <ul>
+          <li>Accounts → Verification Requests → фільтр pending</li>
+          <li>Розглянути всі нові заявки</li>
+          <li>Не залишати pending більше тижня</li>
+        </ul>
+      </div>
+      <div class="monitor-card">
+        <span class="freq">Щомісяця</span>
+        <h4>Профілі без email</h4>
+        <ul>
+          <li>Не отримають жодного сповіщення</li>
+          <li>Підписки для них неефективні</li>
+          <li>Перевірити через shell-запит нижче</li>
+        </ul>
+      </div>
+      <div class="monitor-card">
+        <span class="freq">Щомісяця</span>
+        <h4>Активні підписки з newsletter=False</h4>
+        <ul>
+          <li>Підписки є, але листи не надсилаються</li>
+          <li>Технічно коректно, але варто відстежувати</li>
+        </ul>
+      </div>
+      <div class="monitor-card">
+        <span class="freq">За потреби</span>
+        <h4>Топ тегів і матеріалів</h4>
+        <ul>
+          <li>Які теги найпопулярніші для підписок</li>
+          <li>Які матеріали найчастіше зберігають</li>
+          <li>Для редакційних рішень і пріоритетів</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">Корисні запити через Django shell</h3>
+    <p><strong>Запуск:</strong> <code>docker-compose exec web python manage.py shell</code></p>
+
+    <div class="code-box"><pre><span class="comment"># Кількість профілів за роллю</span>
+from accounts.models import UserProfile
+from django.db.models import Count
+UserProfile.objects.values('role').annotate(
+    count=Count('id')
+).order_by('-count')
+
+<span class="comment"># Верифікаційні запити що очікують</span>
+from accounts.models import VerificationRequest
+VerificationRequest.objects.filter(status='pending').count()
+
+<span class="comment"># Активні підписки з newsletter=False (лист не надійде)</span>
+from accounts.models import Subscription
+Subscription.objects.filter(
+    is_active=True,
+    user__userprofile__receive_newsletter=False
+).count()
+
+<span class="comment"># Топ-10 тегів для підписок</span>
+Subscription.objects.values('tag__name').annotate(
+    count=Count('id')
+).order_by('-count')[:10]
+
+<span class="comment"># Найбільш збережені матеріали (топ-20)</span>
+from accounts.models import Favorite
+Favorite.objects.values(
+    'content_type__model', 'object_id'
+).annotate(count=Count('id')).order_by('-count')[:20]</pre></div>
+
+    <div class="alert rust">
+      <h4>Масове видалення — погодити з командою</h4>
+      <p>Операції на кшталт <code>Subscription.objects.filter(is_active=False).delete()</code> виконувати лише після погодження. Неактивні підписки — не сміття: користувач міг призупинити навмисно.</p>
+    </div>
+  </div>
+
+
+  <!-- CHECKLIST -->
+  <div id="checklist-m9" class="anchor section">
+    <h2>Чеклист M9 <a href="#toc" class="back">↑ зміст</a></h2>
+    <div class="checklist">
+
+      <h3>Щотижня</h3>
+      <div class="chk"><div class="box"></div><span>Accounts → Verification Requests → фільтр pending → розглянути всі нові заявки</span></div>
+      <div class="chk"><div class="box"></div><span>Після затвердження: verified_person встановлено в UserProfile → статус запиту → approved</span></div>
+
+      <h3 class="sub-head">При призначенні привілейованої ролі</h3>
+      <div class="chk"><div class="box"></div><span>Accounts → User Profiles → знайти профіль за email</span></div>
+      <div class="chk"><div class="box"></div><span>Поле Role → librarian_pro або educator → зберегти</span></div>
+      <div class="chk"><div class="box"></div><span>Підставу призначення зафіксовано (в листуванні або в нотатках профілю)</span></div>
+
+      <h3 class="sub-head">При скарзі «не приходять листи»</h3>
+      <div class="chk"><div class="box"></div><span>Перевірити що email вказано в профілі</span></div>
+      <div class="chk"><div class="box"></div><span>Перевірити receive_newsletter = True в UserProfile</span></div>
+      <div class="chk"><div class="box"></div><span>Перевірити що підписка has is_active = True</span></div>
+
+      <h3 class="sub-head">Щомісяця</h3>
+      <div class="chk"><div class="box"></div><span>Запустити shell-запит: кількість профілів за роллю — для звітності</span></div>
+      <div class="chk"><div class="box"></div><span>Перевірити топ тегів підписок — для редакційних пріоритетів</span></div>
+      <div class="chk"><div class="box"></div><span>Перевірити топ збережених матеріалів — для розуміння попиту</span></div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Модуль M9 · v1.0 · <a href="#toc">↑ до змісту</a></span>
+    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.anchor');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
