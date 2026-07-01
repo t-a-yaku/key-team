@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КЛЮЧ · Мережа як партнер — Концепт 2026–2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper: #f7f3ec;
+    --pk-ink: #1a1410;
+    --pk-gold: #b8860b;
+    --pk-gold-light: #faf5e4;
+    --pk-gold-dim: #e8d48a;
+    --pk-rust: #8b3a1a;
+    --pk-steel: #2e4a6b;
+    --pk-steel-light: #eef2f7;
+    --pk-sage: #3d5c3d;
+    --pk-sage-light: #f0f5f0;
+    --pk-muted: #6b5f52;
+    --pk-border: #d4c9b8;
+    --pk-paper-dark: #ede8df;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    background: var(--pk-paper);
+    color: var(--pk-ink);
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--pk-ink);
+    padding: 72px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(184,134,11,0.04) 48px, rgba(184,134,11,0.04) 49px);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--pk-gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(184,134,11,0.3);
+    max-width: 120px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--pk-gold);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(247,243,236,0.5);
+    margin-bottom: 36px;
+    max-width: 560px;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 12px;
+    color: rgba(247,243,236,0.35);
+  }
+
+  .hero-meta span strong {
+    color: rgba(247,243,236,0.6);
+    font-weight: 500;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 48px 100px;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 56px;
+  }
+
+  .toc h3 {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 14px;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 32px;
+  }
+
+  .toc ol li {
+    font-size: 13px;
+  }
+
+  .toc ol li a {
+    color: var(--pk-steel);
+    text-decoration: none;
+  }
+
+  .toc ol li a:hover { color: var(--pk-gold); }
+
+  .toc .n {
+    font-size: 10px;
+    color: var(--pk-muted);
+    margin-right: 6px;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .anchor { scroll-margin-top: 32px; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--pk-ink);
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--pk-gold);
+    line-height: 1.2;
+  }
+
+  h2 em { font-style: italic; color: var(--pk-gold); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--pk-ink);
+    margin: 28px 0 10px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 14px;
+    max-width: 680px;
+  }
+
+  p strong { font-weight: 600; }
+
+  /* CHAIN */
+  .chain {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+
+  .chain-item {
+    flex: 1;
+    min-width: 140px;
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    padding: 16px 16px 14px;
+    position: relative;
+    text-align: center;
+  }
+
+  .chain-item:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--pk-gold);
+    font-size: 18px;
+    font-weight: 700;
+    z-index: 1;
+    background: var(--pk-paper);
+    padding: 0 2px;
+  }
+
+  .chain-item .ci-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+  .chain-item .ci-text { font-size: 12px; line-height: 1.4; color: var(--pk-ink); }
+  .chain-item .ci-sub { font-size: 10px; color: var(--pk-muted); margin-top: 3px; display: block; }
+
+  /* WHAT WE OFFER / WHAT THEY GIVE */
+  .exchange {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 20px 0;
+    background: var(--pk-border);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .ex-card {
+    background: var(--pk-paper);
+    padding: 22px 24px;
+  }
+
+  .ex-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .ex-give h4 { color: var(--pk-sage); }
+  .ex-get h4 { color: var(--pk-steel); }
+
+  .ex-card ul { list-style: none; padding: 0; }
+
+  .ex-card ul li {
+    font-size: 13px;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .ex-card ul li:last-child { border-bottom: none; }
+  .ex-give ul li::before { content: '✦'; position: absolute; left: 0; color: var(--pk-sage); font-size: 9px; top: 7px; }
+  .ex-get ul li::before { content: '→'; position: absolute; left: 0; color: var(--pk-steel); font-size: 11px; top: 5px; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    margin: 24px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--pk-border);
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .tl-date {
+    width: 80px;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 16px;
+    padding-top: 14px;
+  }
+
+  .tl-date .month {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--pk-muted);
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tl-date .year {
+    font-size: 10px;
+    color: var(--pk-border);
+    display: block;
+  }
+
+  .tl-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--pk-paper-dark);
+    border: 2px solid var(--pk-border);
+    flex-shrink: 0;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot.gold { background: var(--pk-gold); border-color: var(--pk-gold); }
+  .tl-dot.steel { background: var(--pk-steel); border-color: var(--pk-steel); }
+  .tl-dot.sage { background: var(--pk-sage); border-color: var(--pk-sage); }
+
+  .tl-content {
+    flex: 1;
+    padding: 12px 0 24px;
+    border-bottom: 1px solid var(--pk-border);
+    margin-bottom: 0;
+  }
+
+  .tl-item:last-child .tl-content { border-bottom: none; }
+
+  .tl-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--pk-ink);
+    margin-bottom: 4px;
+  }
+
+  .tl-content p {
+    font-size: 13px;
+    color: var(--pk-muted);
+    margin: 0;
+    max-width: 100%;
+    line-height: 1.5;
+  }
+
+  .tl-content .tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+
+  .tag-test { background: var(--pk-muted); }
+  .tag-launch { background: var(--pk-steel); }
+  .tag-event { background: var(--pk-sage); }
+  .tag-peak { background: var(--pk-gold); color: var(--pk-ink); }
+  .tag-milestone { background: var(--pk-rust); }
+
+  /* ALERT */
+  .alert {
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    border: 1px solid;
+  }
+
+  .alert.gold { background: var(--pk-gold-light); border-color: var(--pk-gold); }
+  .alert.steel { background: var(--pk-steel-light); border-color: var(--pk-steel); }
+  .alert.sage { background: var(--pk-sage-light); border-color: var(--pk-sage); }
+
+  .alert h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .alert.gold h4 { color: #7a5900; }
+  .alert.steel h4 { color: var(--pk-steel); }
+  .alert.sage h4 { color: var(--pk-sage); }
+
+  .alert p { font-size: 13px; margin: 0; max-width: 100%; line-height: 1.6; }
+  .alert ul { list-style: none; padding: 0; }
+  .alert ul li { font-size: 13px; padding: 3px 0 3px 16px; position: relative; line-height: 1.5; }
+  .alert.gold ul li::before { content: '✦'; position: absolute; left: 0; color: var(--pk-gold); font-size: 9px; top: 5px; }
+  .alert.steel ul li::before { content: '→'; position: absolute; left: 0; color: var(--pk-steel); }
+  .alert.sage ul li::before { content: '✓'; position: absolute; left: 0; color: var(--pk-sage); font-weight: 700; }
+
+  /* ROLES TABLE */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  thead th {
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    background: var(--pk-paper-dark);
+    border-bottom: 2px solid var(--pk-border);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--pk-border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(184,134,11,0.03); }
+
+  td { padding: 10px 14px; vertical-align: top; line-height: 1.5; }
+  td.lbl { font-weight: 600; font-size: 12px; background: var(--pk-paper-dark); border-right: 1px solid var(--pk-border); white-space: nowrap; }
+
+  /* MAP METAPHOR */
+  .map-box {
+    background: var(--pk-ink);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin: 20px 0;
+  }
+
+  .map-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .map-box h3 em { font-style: italic; color: var(--pk-gold); }
+
+  .map-box p {
+    font-size: 13px;
+    color: rgba(247,243,236,0.55);
+    max-width: 100%;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .map-regions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .region {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .region.done { background: rgba(61,92,61,0.5); color: #8fbc8f; }
+  .region.partial { background: rgba(184,134,11,0.2); color: var(--pk-gold-dim); }
+  .region.empty { background: rgba(255,255,255,0.05); color: rgba(247,243,236,0.3); }
+
+  .map-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .map-legend span {
+    font-size: 11px;
+    color: rgba(247,243,236,0.4);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .map-legend .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* NEEDS */
+  .needs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .need-card {
+    background: var(--pk-paper-dark);
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+
+  .need-card .who {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .need-card ul { list-style: none; padding: 0; }
+
+  .need-card ul li {
+    font-size: 12.5px;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.4;
+    border-bottom: 1px solid var(--pk-border);
+  }
+
+  .need-card ul li:last-child { border-bottom: none; }
+  .need-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--pk-muted); }
+
+  /* FOOTER */
+  footer {
+    background: var(--pk-paper-dark);
+    border-top: 1px solid var(--pk-border);
+    padding: 28px 48px;
+    font-size: 11px;
+    color: var(--pk-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer strong { color: var(--pk-ink); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .hero { padding: 48px 24px; }
+    .main { padding: 40px 24px 80px; }
+    .exchange { grid-template-columns: 1fr; }
+    .toc ol { grid-template-columns: 1fr; }
+    .timeline::before { left: 64px; }
+    .tl-date { width: 64px; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">КЛЮЧ · Внутрішній робочий документ · Червень 2026</div>
+    <h1>Мережа як партнер:<br><em>верифікація, залучення,<br>ювілейний рік</em></h1>
+    <p class="hero-sub">Концепт співпраці з бібліотеками-донаторами контенту на 2026–2027 роки. Для обговорення з заступницями директора.</p>
+    <div class="hero-meta">
+      <span><strong>Підготувала:</strong> Тетяна Якушко</span>
+      <span><strong>Для обговорення:</strong> Наталя Дзюба, Людмила Полікарпова, Центр дослідження книги та читання</span>
+      <span><strong>Горизонт:</strong> Червень 2026 — 20 листопада 2027</span>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Зміст документа</h3>
+    <ol>
+      <li><a href="#why"><span class="n">1.</span>Чому зараз і чому саме мережа</a></li>
+      <li><a href="#what"><span class="n">2.</span>Що таке верифікація простими словами</a></li>
+      <li><a href="#exchange"><span class="n">3.</span>Що отримує бібліотека — що отримуємо ми</a></li>
+      <li><a href="#how"><span class="n">4.</span>Як це працює на практиці</a></li>
+      <li><a href="#map"><span class="n">5.</span>Карта покриття як рушій участі</a></li>
+      <li><a href="#timeline"><span class="n">6.</span>Таймлайн 2026–2027</a></li>
+      <li><a href="#needs"><span class="n">7.</span>Що потрібно від кожної сторони</a></li>
+    </ol>
+  </div>
+
+
+  <!-- 1. ЧОМУ ЗАРАЗ -->
+  <div id="why" class="anchor section">
+    <div class="section-label">Розділ 1</div>
+    <h2>Чому зараз —<br><em>і чому саме мережа</em></h2>
+
+    <p>Портал КЛЮЧ 2.0 за перші шість місяців зібрав понад 1 900 записів: книги, письменники, установи, нагороди, публікації. Частина цих матеріалів прийшла зі старого порталу та інших проектів НБУ для дітей із залученням мережі — де бібліотеки роками ділились своїми знаннями: рецензіями, добірками, замітками про місцевих авторів.</p>
+
+    <p>Тепер ці знання живуть у новій системі. Але система — не людина. Вона не знає чи правильно розпізнала що «Іваненко з Полтави» у старій статті — це той самий Іваненко, чия картка вже є в каталозі. Не знає чи точна дата заходу, який відбувся у Сумах у 2015 році. Не знає що бібліотека в Тернополі має архівне фото письменника, якого в базі ще немає.</p>
+
+    <p><strong>Ці знання є — вони просто розпорошені по 25 областях.</strong> І ті, хто їх має, — це саме бібліотеки що найактивніше наповнювали старий портал.</p>
+
+    <div class="alert gold">
+      <h4>Ключова ідея</h4>
+      <p>Ми не просимо бібліотеки зробити щось нове і незвичне. Ми пропонуємо їм зробити те, що вони вже вміють — перевіряти і доповнювати знання про свій регіон — але тепер з інструментом який це фіксує, показує і зберігає назавжди.</p>
+    </div>
+  </div>
+
+
+  <!-- 2. ЩО ТАКЕ ВЕРИФІКАЦІЯ -->
+  <div id="what" class="anchor section">
+    <div class="section-label">Розділ 2</div>
+    <h2>Що таке верифікація —<br><em>простими словами</em></h2>
+
+    <p>Верифікація — це перевірка того, що вже є в системі, очима людини яка знає предмет. Не технічна операція, а фахова оцінка.</p>
+
+    <p>Бібліотекар з Херсонщини краще за будь-яку програму знає чи правильно вказано місто народження місцевого поета. Бібліотекар з Чернігова пам'ятає зустріч з письменником у 2018 і може підтвердити дату. Завідувачка відділу обслуговування впізнає на фото автора якого особисто запрошувала на читання.</p>
+
+    <p>Верифікація — це коли ця знання перетворюється з «я пам'ятаю» на «в базі зафіксовано і підтверджено».</p>
+
+    <h3>Що конкретно перевіряє куратор</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Що перевіряє</th><th>Як фіксується результат</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Правильність даних про місцевого автора</td><td>Коментар або підтвердження в кабінеті куратора</td></tr>
+          <tr><td class="lbl">Точність дат і місць заходів</td><td>Уточнення через форму — редактор вносить в систему</td></tr>
+          <tr><td class="lbl">Наявність фото або матеріалів з архіву</td><td>Завантаження файлу або повідомлення що є і як передати</td></tr>
+          <tr><td class="lbl">Виявлення того чого ще немає в базі</td><td>Заявка на додавання нового запису</td></tr>
+          <tr><td class="lbl">Підтвердження що запис правильний</td><td>Позначка «перевірено» з підписом бібліотеки</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 3. ОБМІН -->
+  <div id="exchange" class="anchor section">
+    <div class="section-label">Розділ 3</div>
+    <h2>Що отримує бібліотека —<br><em>що отримуємо ми</em></h2>
+
+    <p>Це не благодійність з боку мережі і не нав'язана робота зверху. Це партнерство з чіткою взаємною вигодою.</p>
+
+    <div class="exchange">
+      <div class="ex-card ex-give">
+        <h4>Що дає бібліотека</h4>
+        <ul>
+          <li>Місцеве знання яке не можна отримати з каталогу</li>
+          <li>Перевірку даних про авторів свого регіону</li>
+          <li>Архівні фото і матеріали з фондів</li>
+          <li>Інформацію про заходи і події що відбулись</li>
+          <li>Час фахівця — 1–2 години на тиждень</li>
+        </ul>
+      </div>
+      <div class="ex-card ex-get">
+        <h4>Що отримує бібліотека</h4>
+        <ul>
+          <li>Видима присутність на порталі: сторінка установи з внеском</li>
+          <li>Регіональний зріз в кабінеті: автори і книги свого краю в одному місці</li>
+          <li>Перші в Україні хто бачить і верифікує матеріали свого регіону</li>
+          <li>Готові PDF-матеріали для заходів з бази КЛЮЧА</li>
+          <li>У перспективі: API-з'єднання КЛЮЧ ↔ власний каталог бібліотеки</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert steel">
+      <h4>Перспектива API — чому це важливо для бібліотеки</h4>
+      <p>Коли КЛЮЧ відкриє програмний інтерфейс (API), читач на порталі зможе одразу перевірити чи є книга у фонді конкретної бібліотеки і замовити її. Бібліотека яка верифікувала свій регіональний шар отримає реального відвідувача — не випадкового, а того хто вже зацікавлений у конкретній книзі. Бібліотека вкладає знання сьогодні — отримує трафік завтра.</p>
+    </div>
+  </div>
+
+
+  <!-- 4. ЯК ЦЕ ПРАЦЮЄ -->
+  <div id="how" class="anchor section">
+    <div class="section-label">Розділ 4</div>
+    <h2>Як це працює<br><em>на практиці</em></h2>
+
+    <p>Перший етап (2026) — мінімальний інструмент, максимально простий процес. Жодної складної технічної підготовки від бібліотеки не потрібно.</p>
+
+    <div class="chain">
+      <div class="chain-item">
+        <span class="ci-icon">📋</span>
+        <span class="ci-text">Бібліотека отримує список матеріалів свого регіону</span>
+        <span class="ci-sub">email або кабінет</span>
+      </div>
+      <div class="chain-item">
+        <span class="ci-icon">🔍</span>
+        <span class="ci-text">Переглядає — знаходить що перевірити або уточнити</span>
+        <span class="ci-sub">свій темп</span>
+      </div>
+      <div class="chain-item">
+        <span class="ci-icon">💬</span>
+        <span class="ci-text">Надсилає коментар або підтвердження через форму</span>
+        <span class="ci-sub">кабінет куратора</span>
+      </div>
+      <div class="chain-item">
+        <span class="ci-icon">✅</span>
+        <span class="ci-text">Редактор в центрі вносить зміни — матеріал позначається «перевірено»</span>
+        <span class="ci-sub">НБУ для дітей</span>
+      </div>
+      <div class="chain-item">
+        <span class="ci-icon">📊</span>
+        <span class="ci-text">Бібліотека бачить свій внесок на дашборді</span>
+        <span class="ci-sub">одразу</span>
+      </div>
+    </div>
+
+    <h3>Кабінет куратора — що всередині</h3>
+    <p>На першому етапі кабінет регіонального куратора містить:</p>
+
+    <div class="alert sage">
+      <h4>Що є в кабінеті куратора (перший етап)</h4>
+      <ul>
+        <li>Відфільтрований перелік матеріалів регіону — книги, автори, установи, події</li>
+        <li>Форма коментаря до кожного запису — «підтверджую», «є уточнення», «маю фото»</li>
+        <li>Статус опрацювання — що вже перевірено, що очікує</li>
+        <li>Дашборд внеску — скільки матеріалів перевірено, скільки уточнено</li>
+        <li>Карта покриття регіону — які записи верифіковані, які мають прогалини</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 5. КАРТА -->
+  <div id="map" class="anchor section">
+    <div class="section-label">Розділ 5</div>
+    <h2>Карта покриття<br><em>як рушій участі</em></h2>
+
+    <p>Досвід мапи «Читання без кордонів» показав: бібліотекарі реагують не на заклики, а на <strong>видиму прогалину</strong>. Коли на карті порожня пляма там де має бути їхня область — це діє сильніше за будь-який бейдж або нагороду.</p>
+
+    <p>Для верифікації працює та сама механіка. Кожна бібліотека бачить карту покриття свого регіону — які записи перевірено, які ще чекають. Не порівняння з іншими — а власна прогалина яку хочеться закрити.</p>
+
+    <div class="map-box">
+      <h3>Карта верифікації — <em>як виглядає</em></h3>
+      <p>Приклад відображення покриття по регіонах. Кожна бібліотека бачить свою область і її стан.</p>
+      <div class="map-regions">
+        <span class="region done">Львівська ✓</span>
+        <span class="region done">Київська ✓</span>
+        <span class="region done">Харківська ✓</span>
+        <span class="region partial">Полтавська ◐</span>
+        <span class="region partial">Одеська ◐</span>
+        <span class="region partial">Вінницька ◐</span>
+        <span class="region empty">Сумська</span>
+        <span class="region empty">Чернігівська</span>
+        <span class="region empty">Житомирська</span>
+        <span class="region empty">Волинська</span>
+        <span class="region empty">Рівненська</span>
+        <span class="region empty">Хмельницька</span>
+      </div>
+      <div class="map-legend">
+        <span><span class="dot" style="background:#3d5c3d"></span>Верифіковано</span>
+        <span><span class="dot" style="background:#b8860b"></span>Частково</span>
+        <span><span class="dot" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2)"></span>Очікує куратора</span>
+      </div>
+    </div>
+
+    <div class="alert gold">
+      <h4>Чому це працює без примусу</h4>
+      <p>Бібліотекар бачить що її область — порожня. Це не рейтинг де хтось кращий. Це факт про власний регіон. І фаховий інстинкт каже: «це треба виправити». Жодних балів, жодних дедлайнів — просто видима прогалина і зрозуміла дія.</p>
+    </div>
+  </div>
+
+
+  <!-- 6. ТАЙМЛАЙН -->
+  <div id="timeline" class="anchor section">
+    <div class="section-label">Розділ 6</div>
+    <h2>Таймлайн 2026–2027:<br><em>від тесту до публічного результату</em></h2>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Червень–Серпень</span><span class="year">2026</span></div>
+        <div class="tl-dot steel"></div>
+        <div class="tl-content">
+          <span class="tag tag-test">Підготовка</span>
+          <h4>Технічне розгортання кабінету куратора</h4>
+          <p>Мінімальний кабінет Б: перегляд регіонального шару, форма коментаря, дашборд внеску. Внутрішнє тестування командою НБУ для дітей.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Вересень</span><span class="year">2026</span></div>
+        <div class="tl-dot steel"></div>
+        <div class="tl-content">
+          <span class="tag tag-test">Пілот</span>
+          <h4>Онбординг команди НБУ для дітей</h4>
+          <p>Обкатка процесу верифікації на власних співробітниках. Виявлення що незручно, що незрозуміло. Доробка до запуску в мережу.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Жовтень</span><span class="year">2026</span></div>
+        <div class="tl-dot gold"></div>
+        <div class="tl-content">
+          <span class="tag tag-event">Подія</span>
+          <h4>Конференція бібліотек для дітей — анонс партнерства</h4>
+          <p>Презентація мережі. Живе демо кабінету куратора. Запрошення бібліотек-донаторів контенту до пілоту. Перші реєстрації кураторів.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Листопад</span><span class="year">2026</span></div>
+        <div class="tl-dot sage"></div>
+        <div class="tl-content">
+          <span class="tag tag-launch">Запуск</span>
+          <h4>20 листопада — Всесвітній день дитини</h4>
+          <p>Перші публічні результати верифікації. Скільки регіонів долучилось, скільки записів перевірено. Комунікація в соцмережах і пресі.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Початок</span><span class="year">2027</span></div>
+        <div class="tl-dot gold"></div>
+        <div class="tl-content">
+          <span class="tag tag-peak">Ювілейний рік</span>
+          <h4>Портал відкриває рік — і відкривається для подій мережі</h4>
+          <p>Кожна бібліотека вже планує власні заходи на ювілейний рік. КЛЮЧ 2.0 може стати місцем де ці події знаходять своє відображення і продовжують жити після того як зал розійшовся. Зустріч з автором, конкурс читців, виставка — все це може з'явитись на порталі і повертати читача знову і знову. (Наприклад, 1 січня — ювілей Наталі Марченко (Савчук): ювілейне есе на порталі з'являється рівно в день народження — перша редакційна подія року, що задає тон.)</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">31 Січня</span><span class="year">2027</span></div>
+        <div class="tl-dot gold"></div>
+        <div class="tl-content">
+          <span class="tag tag-peak">Щорічна подія</span>
+          <h4>День народження Всеволода Нестайка — оголошення лауреатів премії</h4>
+          <p>Щорічна якірна дата. Якщо бібліотека планує захід до цієї дати — він може знайти відображення на порталі. Лауреати премії з'являються на КЛЮЧ 2.0 одними з перших. Привід для бібліотек мережі поділитись подією з читачами через портал.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Березень–Квітень</span><span class="year">2027</span></div>
+        <div class="tl-dot gold"></div>
+        <div class="tl-content">
+          <span class="tag tag-peak">Центральна акція</span>
+          <h4>Тиждень дитячої книги — Мапа «Вибір читачів» + нагородження премії Нестайка</h4>
+          <p>Бібліотеки і так проводять заходи Тижня книги. КЛЮЧ 2.0 пропонує одну додаткову дію: зібрати голоси читачів свого регіону і додати їх на спільну карту. Карта заповнюється в реальному часі — і кожна бібліотека бачить свій внесок поруч з іншими. 2 квітня — Міжнародний день дитячої книги.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">Протягом</span><span class="year">2027</span></div>
+        <div class="tl-dot sage"></div>
+        <div class="tl-content">
+          <span class="tag tag-event">Хвиля</span>
+          <h4>Відкрите опитування «Що треба прочитати в дитинстві»</h4>
+          <p>Читачі, бібліотекарі і педагоги по всій Україні формують список. Бібліотека яка долучиться може збирати відповіді від своїх читачів і бачити регіональний результат поруч із загальноукраїнським. Ще один привід повернутись на портал протягом року.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date"><span class="month">2027</span><span class="year"> </span></div>
+        <div class="tl-dot gold"></div>
+        <div class="tl-content">
+          <span class="tag tag-milestone">Ювілей</span>
+          <h4>60-річчя НБУ для дітей — КЛЮЧ 2.0 як підсумок спільної роботи</h4>
+          <p>До ювілею бібліотека мережі вже матиме на порталі верифікований регіональний шар, відображені події року і слід своєї участі. КЛЮЧ 2.0 стає не просто ресурсом НБУ для дітей — а спільним результатом усієї мережі.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 7. ПОТРЕБИ -->
+  <div id="needs" class="anchor section">
+    <div class="section-label">Розділ 7</div>
+    <h2>Що потрібно<br><em>від кожної сторони</em></h2>
+
+    <div class="needs-grid">
+
+      <div class="need-card">
+        <span class="who">НБУ для дітей · ІТ</span>
+        <ul>
+          <li>Розгорнути кабінет куратора (мінімальний варіант Б) до вересня 2026</li>
+          <li>Технічна підтримка при реєстрації перших кураторів</li>
+          <li>Координація з мережею через наявні канали комунікації</li>
+        </ul>
+      </div>
+
+      <div class="need-card">
+        <span class="who">НБУ для дітей · Науково-методична</span>
+        <ul>
+          <li>Визначити список бібліотек для першого пілоту (донатори контенту старого порталу)</li>
+          <li>Листування з бібліотеками — запрошення і пояснення</li>
+          <li>Представлення концепту на конференції у жовтні 2026</li>
+          <li>Координація графіку заходів мережі з редакційним календарем КЛЮЧА</li>
+        </ul>
+      </div>
+
+      <div class="need-card">
+        <span class="who">Регіональна бібліотека</span>
+        <ul>
+          <li>Призначити куратора — людину відповідальну за регіональний шар</li>
+          <li>Зареєструватись на порталі (15 хвилин)</li>
+          <li>Переглядати матеріали свого регіону у власному темпі</li>
+          <li>Надсилати уточнення і підтвердження через форму кабінету</li>
+        </ul>
+      </div>
+
+      <div class="need-card">
+        <span class="who">Редакційна команда КЛЮЧА</span>
+        <ul>
+          <li>Опрацьовувати коментарі від кураторів — вносити в систему</li>
+          <li>Підтримувати зв'язок з кураторами — відповідати на питання</li>
+          <li>Готувати редакційні приводи за календарем 2027</li>
+          <li>Вести публічну комунікацію про результати верифікації</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="alert sage">
+      <h4>Найважливіше для старту</h4>
+      <ul>
+        <li>Список бібліотек-донаторів з контактами — без нього нічого не запустити</li>
+        <li>Рішення про канал комунікації з мережею — через кого іде запрошення</li>
+        <li>Технічна готовність кабінету куратора до жовтневої конференції</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span><strong>КЛЮЧ</strong> · key.chl.kiev.ua · Внутрішній робочий документ</span>
+  <span>Тетяна Якушко, НБУ для дітей · Червень 2026 · Для службового використання</span>
+</footer>
+
+</body>
+</html>
