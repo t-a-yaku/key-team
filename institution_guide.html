@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Картка установи — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --inst:#2e4a6b;--inst-light:#eef2f7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:860px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--inst);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:620px;line-height:1.6;margin-bottom:36px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  .concept{background:var(--pk-ink);border-radius:6px;padding:26px 30px;margin-bottom:36px;}
+  .concept p{font-size:14px;color:rgba(247,243,236,0.7);line-height:1.7;margin-bottom:10px;max-width:680px;}
+  .concept p:last-child{margin:0;}
+  .concept strong{color:#fff;}
+  .concept em{color:var(--pk-gold);font-style:normal;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:150px;}
+  td.req{color:var(--pk-sage);font-weight:600;white-space:nowrap;}
+  td.opt{color:var(--pk-muted);white-space:nowrap;}
+
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--inst-light);border-color:var(--inst);}
+  .alert.green{background:var(--pk-sage-light);border-color:var(--pk-sage);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--inst);}
+  .alert.green h4{color:var(--pk-sage);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--inst);}
+  .alert.green ul li::before{content:'→';position:absolute;left:0;color:var(--pk-sage);}
+
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--inst);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0;max-width:100%;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#where" class="active">Де живе</a>
+  <a href="#create">Створення</a>
+  <a href="#names">Історія назв</a>
+  <a href="#publisher">Галочка видавництва</a>
+  <a href="#auto">Що збирається само</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Всі ролі що прив'язують установи</div>
+  <h1>Картка установи:<br><em>створення і історія назв</em></h1>
+  <p class="lead">Установи прив'язуються скрізь — в афіліаціях діячів, у виданнях книг, у партнерах подій, у методичках. Цей довідник — про те як створити картку правильно, щоб усі ці прив'язки працювали.</p>
+
+  <!-- КОНЦЕПТ -->
+  <div class="concept">
+    <p><strong>Установа в КЛЮЧІ — це сторінка, а не допоміжний запис.</strong> На відміну від діячів і нагород (розділ «Уривки»), установа живе в розділі <em>Pages (Сторінки)</em> і має власну публічну адресу на сайті.</p>
+    <p>Один раз добре заповнена картка установи працює на весь граф: діячі, книги, події і методички прив'язуються до неї автоматично, а пошук знаходить її за будь-якою історичною назвою.</p>
+  </div>
+
+  <!-- ДЕ ЖИВЕ -->
+  <div id="where" style="scroll-margin-top:56px">
+    <h2>Де знаходиться в адмінці</h2>
+    <p><strong>Pages (Сторінки) → Установи</strong> — не «Уривки». Це найчастіша помилка: виконавець шукає установу поруч з діячами в «Уривках» і не знаходить.</p>
+
+    <div class="alert steel">
+      <h4>Перед створенням — пошук, і не лише за сучасною назвою</h4>
+      <p>Установа може вже бути в базі під іншою назвою. Введіть в autocomplete стару назву («Дитвидав УРСР») — якщо історія назв заповнена, система покаже сучасну картку («Веселка»). Створюйте нову лише якщо пошук нічого не дав за жодним відомим варіантом назви.</p>
+    </div>
+  </div>
+
+  <!-- СТВОРЕННЯ -->
+  <div id="create" style="scroll-margin-top:56px">
+    <h2>Основні поля картки</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Назва</td><td>Сучасна офіційна назва. Історичні назви — в блок «Історія назв», не сюди</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Тип установи</td><td>Видавництво / бібліотека / навчальний заклад / музей / часопис має окрему сутність (PeriodicalPage)</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Регіон</td><td>З закритого словника регіонів. Живить регіональний зріз і карту</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Опис</td><td>Коротка довідка про установу — 2–4 речення для відвідувача</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Історія назв</td><td>Всі попередні назви з роками — детально нижче</td><td class="opt">якщо були</td></tr>
+          <tr><td class="lbl">Логотип</td><td>Зображення. Для відомих установ можна імпортувати з Wikidata разом із даними</td><td class="opt">якщо є</td></tr>
+          <tr><td class="lbl">Це видавництво</td><td>Галочка-фільтр — детально нижче</td><td class="opt">якщо видавець</td></tr>
+          <tr><td class="lbl">Службові коментарі</td><td>Внутрішні нотатки і питання до редактора — не видимі відвідувачам</td><td class="opt">за потреби</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Wikidata-імпорт — для відомих установ</h4>
+      <p>Якщо установа є у Вікіпедії — скористайтесь імпортом з Wikidata: підтягнуться основні дані і логотип. Після імпорту перевірте регіон і тип — вони можуть потребувати уточнення під словники КЛЮЧА.</p>
+    </div>
+  </div>
+
+  <!-- ІСТОРІЯ НАЗВ -->
+  <div id="names" style="scroll-margin-top:56px">
+    <h2>Історія назв — найцінніший блок картки</h2>
+    <p>Українські установи перейменовувались — часто не раз. «Дитвидав УРСР» → «Веселка». «Київський художній інститут» → НАОМА. Якщо історію назв заповнено, стається дві важливі речі:</p>
+
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Розумний пошук працює скрізь</h4><p>У будь-якому полі прив'язки установи (афіліації, видавництво видання, партнер події, укладач методички) можна вводити стару назву — система знайде сучасну картку. Бібліотекар з біографією 1960-х років не мусить знати як установа називається сьогодні.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>На картці установи видно тяглість</h4><p>Відвідувач бачить що це одна установа з неперервною історією, а не дві різні. Книги «Дитвидаву» 1960 року і «Веселки» 1990 року збираються на одній сторінці.</p></div></div>
+    </div>
+
+    <div class="alert rust">
+      <h4>Кожна назва — з роками чинності</h4>
+      <p>Запис в історії назв без років — напівкорисний: пошук працюватиме, але система не зможе підставити правильну назву за датою афіліації. Якщо точні роки невідомі — вкажіть орієнтовні і зафіксуйте питання у «Службових коментарях».</p>
+    </div>
+  </div>
+
+  <!-- ГАЛОЧКА ВИДАВНИЦТВА -->
+  <div id="publisher" style="scroll-margin-top:56px">
+    <h2>Галочка «Це видавництво»</h2>
+    <p>Поле «Видавництво» у виданні книги фільтрує установи за цією галочкою. Установа без галочки в тому полі просто не знайдеться — навіть якщо вона є в базі.</p>
+
+    <div class="alert steel">
+      <h4>Два сценарії — коротке правило</h4>
+      <ul>
+        <li><strong>Очевидне видавництво</strong> (слово «видавництво» в назві, відомий видавець) → ставте галочку самі при створенні</li>
+        <li><strong>Неочевидний випадок</strong> (музей, фонд, університет що видав збірку) → галочку не ставте; питання у «Службові коментарі»: <code>[Питання] Чи позначати як видавництво? Видали: [книга, рік]</code> — і заповніть бібліографічний опис видання одразу, щоб внесок не залежав від рішення</li>
+      </ul>
+      <p style="margin-top:8px;font-size:12px">Повний контекст цього правила — <a href="m5.html" style="color:var(--inst);font-weight:600">M5, розділ 5.2</a>.</p>
+    </div>
+  </div>
+
+  <!-- ЩО ЗБИРАЄТЬСЯ САМО -->
+  <div id="auto" style="scroll-margin-top:56px">
+    <h2>Що збирається на картці автоматично</h2>
+    <p>Картку установи не треба наповнювати вручну списками — вона агрегує зв'язки з усього графу:</p>
+
+    <div class="alert green">
+      <h4>Автоматичні блоки на сторінці установи</h4>
+      <ul>
+        <li><strong>«Наші автори»</strong> — з прив'язок авторів у книгах цього видавництва</li>
+        <li><strong>«Наші ілюстратори»</strong> — з прив'язок ілюстраторів у виданнях (BookCover)</li>
+        <li><strong>Пов'язані діячі</strong> — з афіліацій (хто тут працював або навчався, з посадами і роками)</li>
+        <li><strong>Внесок у портал</strong> — методички та архівні PDF, де установа вказана укладачем</li>
+        <li><strong>Події</strong> — заходи де установа є партнером або організатором</li>
+      </ul>
+      <p style="margin-top:8px;font-size:12px">Тому найкращий спосіб «наповнити» картку установи — правильно прив'язувати її в книгах, афіліаціях і подіях. Кожна прив'язка — внесок у профіль установи.</p>
+    </div>
+
+    <div class="alert gold">
+      <h4>Яку установу взагалі заводити</h4>
+      <p>Не кожна згадана установа стає карткою. Редполітика: університети, гуманітарні інститути, профільні заклади, видавництва, бібліотеки — так; загальноосвітні школи і негуманітарні виші — лише текст у таймлайні діяча. Повна таблиця — <a href="m8.html" style="color:#7a5900;font-weight:600">M8, розділ 8.4</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Картка установи» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Липень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
