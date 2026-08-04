@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Спецпроєкти — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --sp:#3d4a1a;--sp-light:#f0f4e6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:860px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--sp);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:24px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:22px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* ОДНА ДУМКА */
+  .one-thought{background:var(--pk-ink);border-radius:6px;padding:26px 30px;margin-bottom:32px;}
+  .one-thought .ot-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--pk-gold);margin-bottom:10px;}
+  .one-thought p{font-size:14.5px;color:rgba(247,243,236,0.8);line-height:1.7;margin:0;max-width:660px;}
+  .one-thought strong{color:#fff;}
+
+  /* ТРИ КАНАЛИ */
+  .channels{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .channel{border:1px solid var(--pk-border);border-radius:6px;overflow:hidden;}
+  .ch-head{padding:14px 18px;background:var(--pk-paper-dark);border-bottom:1px solid var(--pk-border);}
+  .ch-head .ch-role{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:4px;}
+  .ch-head h4{font-size:14px;font-weight:600;margin:0;color:var(--sp);}
+  .ch-body{padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .ch-col .cc-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:5px;display:block;}
+  .ch-col .cc-text{font-size:12.5px;line-height:1.5;}
+  .ch-col.where .cc-text{font-weight:600;color:var(--pk-ink);}
+
+  /* ПРИКЛАД-КАЛІБРУВАННЯ */
+  .calib{background:var(--sp-light);border:1px solid var(--sp);border-radius:6px;padding:18px 22px;margin:16px 0;}
+  .calib .cal-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--sp);margin-bottom:10px;}
+  .calib .cal-story{font-size:13px;font-style:italic;line-height:1.6;margin-bottom:12px;padding-left:12px;border-left:3px solid var(--sp);}
+  .calib .cal-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .calib .cal-box{background:#fff;border-radius:4px;padding:10px 12px;font-size:12.5px;}
+  .calib .cal-box strong{display:block;font-size:11px;color:var(--sp);margin-bottom:3px;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:170px;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.sp{background:var(--sp-light);border-color:var(--sp);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.sp h4{color:var(--sp);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.sp ul li::before{content:'→';position:absolute;left:0;color:var(--sp);}
+
+  /* КРОКИ */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--sp);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0 0 4px;max-width:100%;}
+  .step-body p:last-child{margin-bottom:0;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* ПАСТКИ */
+  .trap{background:var(--pk-paper-dark);border-left:3px solid var(--pk-rust);border-radius:0 4px 4px 0;padding:14px 18px;margin:10px 0;}
+  .trap .tr-num{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-rust);margin-bottom:5px;}
+  .trap p{font-size:12.5px;margin:0;max-width:100%;line-height:1.55;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.ch-body{grid-template-columns:1fr}.calib .cal-split{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#how" class="active">Як влаштовано</a>
+  <a href="#create">Створити серію</a>
+  <a href="#markup">Розмітка публікацій</a>
+  <a href="#rule">Три канали</a>
+  <a href="#traps">Пастки</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Контент-менеджер, редактор</div>
+  <h1>Спецпроєкти:<br><em>як розмічати матеріали серії</em></h1>
+  <p class="lead">Редакційна серія — це добірка публікацій навколо теми: «Час війни», «Запитай у письменника», «Що читати дітям під час війни». Головне питання цього довідника — куди прив'язувати книжки й людей, щоб вкладки лендінгу наповнились правильно.</p>
+
+  <div class="one-thought">
+    <div class="ot-label">Одна думка, яка пояснює все інше</div>
+    <p><strong>Лендінг серії сам нічого не зберігає.</strong> Він щоразу збирає все з публікацій-учасниць: хто розмічений у «Зв'язках» кожної статті — той і з'явиться на вкладках серії. Тому вся робота редактора — на вкладці «Зв'язки» кожної публікації.</p>
+  </div>
+
+  <!-- ЯК ВЛАШТОВАНО -->
+  <div id="how">
+    <h2>Три панелі публікації → три вкладки лендінгу</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Панель на публікації</th><th>Вкладка лендінгу серії</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">«Редакційні серії / Спецпроєкти»<br><span style="font-weight:400;font-size:11px;color:var(--pk-muted)">серія + роль + герой матеріалу</span></td><td>«Публікації» — членство, роль і герой на картці</td></tr>
+          <tr><td class="lbl">«Книги, про які йдеться»</td><td>«Книжки» — об'єднання по всій серії, без дублів</td></tr>
+          <tr><td class="lbl">«Діячі, про яких йдеться (Предмет)»</td><td>«Діячі» — так само об'єднання</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Лічильники на лендінгу рахуються автоматично. Порядок матеріалів: поле сортування членства, далі новіші за датою публікації. Чернетки на лендінг не потрапляють.</p>
+  </div>
+
+  <!-- СТВОРИТИ -->
+  <div id="create">
+    <h2>Створити лендінг серії</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>У дереві сторінок під <code>/editorial/</code> → додати «Редакційна серія»</h4>
+          <p>Заповніть: банер серії, редакційний вступ, коло питань серії. Позначте «Активна серія» і задайте порядок виводу (менше число — вище).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Slug сторінки = постійна адреса добірки</h4>
+          <p>Три прямі посилання, які можна давати в соцмережі й листи:</p>
+          <p style="font-family:monospace;font-size:11.5px;margin-top:6px;line-height:1.8;">
+            <code>/editorial/&lt;slug&gt;/</code> — матеріали серії<br>
+            <code>/editorial/&lt;slug&gt;/?tab=persons</code> — діячі серії<br>
+            <code>/editorial/&lt;slug&gt;/?tab=books</code> — добірка книжок серії
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert sp">
+      <h4>Стару статтю можна додати до серії будь-коли</h4>
+      <p>Участь у серії — це запис на публікації, тому добірка може бути ретроактивною. Проголосили старт серії про інклюзію — поки збираються нові інтерв'ю, додайте статті минулих років, і лендінг покаже їх негайно.</p>
+      <p style="margin-top:8px"><strong>Умова повноти:</strong> у старих статей мають бути заповнені «Книги, про які йдеться» і «Діячі, про яких йдеться» — інакше стаття буде в «Публікаціях», а її книжки й люди в добірки не потраплять.</p>
+    </div>
+  </div>
+
+  <!-- ГОЛОВНЕ ПРАВИЛО -->
+  <div id="rule">
+    <h2>Головне правило: три канали для згаданих книжок</h2>
+    <p>Книжка, згадана в матеріалі, йде рівно в <strong>один</strong> канал — за роллю згадки.</p>
+
+    <div class="channels">
+      <div class="channel">
+        <div class="ch-head">
+          <div class="ch-role">Роль згадки</div>
+          <h4>Про неї розмова — книжка є предметом матеріалу</h4>
+        </div>
+        <div class="ch-body">
+          <div class="ch-col where"><span class="cc-label">Куди прив'язати</span><span class="cc-text">«Книги, про які йдеться»</span></div>
+          <div class="ch-col"><span class="cc-label">Де з'явиться</span><span class="cc-text">Сайдбар статті · вкладка «Книжки» серії · PDF</span></div>
+        </div>
+      </div>
+
+      <div class="channel">
+        <div class="ch-head">
+          <div class="ch-role">Роль згадки</div>
+          <h4>Її порадили мимохідь — «прочитайте Б, щоб зрозуміти персонажа»</h4>
+        </div>
+        <div class="ch-body">
+          <div class="ch-col where"><span class="cc-label">Куди прив'язати</span><span class="cc-text">«Письменник радить почитати»<br><span style="font-weight:400;font-size:11px;color:var(--pk-muted)">хто радить → яку книжку → цитата</span></span></div>
+          <div class="ch-col"><span class="cc-label">Де з'явиться</span><span class="cc-text">Картка книжки Б · картка того хто радить · PDF книжки Б.<br><strong style="color:var(--pk-rust)">У серію НЕ потрапляє — і це правильно</strong></span></div>
+        </div>
+      </div>
+
+      <div class="channel">
+        <div class="ch-head">
+          <div class="ch-role">Роль згадки</div>
+          <h4>Її назвали голосом в опитуванні або диспуті</h4>
+        </div>
+        <div class="ch-body">
+          <div class="ch-col where"><span class="cc-label">Куди прив'язати</span><span class="cc-text">Канал опитувань — голоси, рейтинг 3+/2/1</span></div>
+          <div class="ch-col"><span class="cc-label">Де з'явиться</span><span class="cc-text">Сторінка опитування · рейтинги</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert rust">
+      <h4>Ніколи не дублювати одну книжку у двох каналах</h4>
+      <p>Не прив'язуйте ту саму книжку одночасно в «про які йдеться» <strong>і</strong> «радить почитати». Добірка серії має відповідати на питання «про що серія», а не «що будь-де згадали».</p>
+      <p style="margin-top:8px">Механіка спецпроєкту <strong>рейтингу не має</strong> — якщо формат передбачає голосування за книжки, це робиться інструментами опитувань, не спецпроєкту.</p>
+    </div>
+
+    <div class="calib">
+      <div class="cal-label">Приклад-калібрування</div>
+      <div class="cal-story">Читач бере інтерв'ю у письменника про книжку А. В розмові письменник каже: «щоб краще зрозуміти персонажа — прочитайте Б».</div>
+      <div class="cal-split">
+        <div class="cal-box"><strong>Книжка А</strong>→ «Книги, про які йдеться»</div>
+        <div class="cal-box"><strong>Книжка Б</strong>→ «Письменник радить почитати»</div>
+      </div>
+    </div>
+
+    <div class="alert gold">
+      <h4>Приклад із практики — «Письменницька_Мобілізація»</h4>
+      <p>У питаннях були і власні книжки автора, і книжки колег. Власні, про які йде розмова → «Книги, про які йдеться». Книжки колег, які автор радить → «Письменник радить почитати». Обидві розмітки в одному матеріалі, кожна книжка у своєму каналі.</p>
+    </div>
+  </div>
+
+  <!-- ПАСТКИ -->
+  <div id="traps">
+    <h2>Пастки</h2>
+
+    <div class="trap">
+      <div class="tr-num">Пастка 1</div>
+      <p><strong>«Герой матеріалу» ≠ вкладка «Діячі».</strong> Герой показується на картці матеріалу в стрічці серії, але у вкладку «Діячі» діяч потрапляє <strong>тільки</strong> з панелі «Діячі, про яких йдеться». Якщо письменник — герой інтерв'ю, додайте його в обидва місця.</p>
+    </div>
+
+    <div class="trap">
+      <div class="tr-num">Пастка 2</div>
+      <p><strong>«Автори статті» на лендінг не агрегуються</strong> — це підпис на самій статті. У форматі «читач бере інтерв'ю у письменника»: письменник → «Діячі, про яких йдеться» + «Герой матеріалу». Дитині-читачу картку діяча не заводимо — вона лишається текстом у статті.</p>
+    </div>
+
+    <div class="trap">
+      <div class="tr-num">Пастка 3</div>
+      <p><strong>Одна публікація може бути в кількох серіях</strong> — кілька рядків у панелі. Нюанс: навігація «попередній/наступний матеріал серії» на сторінці статті будується за <strong>першою вказаною</strong> серією.</p>
+    </div>
+
+    <div class="trap">
+      <div class="tr-num">Пастка 4</div>
+      <p><strong>Книжка, яку порадили, не з'явиться у вкладці «Книжки» серії</strong> — це не помилка, а задум. Див. головне правило трьох каналів вище.</p>
+    </div>
+  </div>
+
+  <div class="alert steel">
+    <h4>Пов'язані довідники</h4>
+    <p>→ <a href="methodic_advice_guide.html" style="color:var(--pk-steel);font-weight:600">«Методичні поради»</a> — детально про блок «Письменник радить почитати»<br>
+    → <a href="embed_book_guide.html" style="color:var(--pk-steel);font-weight:600">«Як показати книгу в тексті»</a> — вставка книжки в тіло статті</p>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Спецпроєкти» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -389,6 +389,12 @@
 </style>
 </head>
 <body>
+<nav style="position:sticky;top:0;z-index:100;background:#1a1410;padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;">
+  <a href="index.html" style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#b8860b;letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;">Майстерня КЛЮЧ</a>
+  <a href="#" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;">Протокол ретрокаталогізації</a>
+  <a href="workflows.html" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;">← Два потоки</a>
+  <a href="m4.html" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 14px;white-space:nowrap;">M4 Ретрокаталогізація →</a>
+</nav>
 <div class="page">
 
   <header>
@@ -527,20 +533,6 @@
             <td>—</td>
           </tr>
           <tr>
-            <td class="label">Нагорода / відзнака</td>
-            <td>«Лауреат премії…», «нагороджена…», «увійшла до списку…», «переможець конкурсу»</td>
-            <td><strong>Крок 1.</strong> Snippets → Нагороди (перевірити або створити).<br><strong>Крок 2а. Нагорода для книги:</strong> BookPage → «Нагороди» → рік, категорія.<br><strong>Крок 2б. Нагорода для діяча:</strong> Картка діяча → «Кар'єра» → «Нагороди та відзнаки» → рік.</td>
-            <td><code>[Ретро] Нагорода підтверджена: [джерело]</code></td>
-            <td>Не вносити рік якщо в тексті його немає — лише верифіковані дані</td>
-          </tr>
-          <tr>
-            <td class="label">Афіліація / посада в установі</td>
-            <td>«Головний редактор…», «завідує кафедрою…», «директор…», «член редколегії», «постійний автор»</td>
-            <td>Картка діяча → «Афіліації» → новий <code>PersonAffiliation</code>: установа, роль/посада, рік початку, рік завершення.<br><em>Лише якщо установа має InstitutionPage.</em> Якщо немає — записати в таймлайн як факт біографії.</td>
-            <td><code>[Ретро] Афіліація підтверджена: [джерело]</code></td>
-            <td>Без InstitutionPage — не створювати PersonAffiliation, лише PersonLifeEvent</td>
-          </tr>
-          <tr>
             <td class="label">Рекомендація книги</td>
             <td>«Автор радить», «10 книжок які…», пряма мова з назвами</td>
             <td>Публікація → вкладка «Письменник радить» + «Пов'язані книги»</td>
@@ -661,7 +653,7 @@
           <span class="phase-badge">Фаза 1 · Зараз</span>
           <h3>Ручний процес + NotebookLM / Gemini</h3>
         </div>
-        <div class="when">Червень 2026 → до запуску Apps Script інтеграції</div>
+        <div class="when">Серпень 2026 → до запуску Apps Script інтеграції</div>
         <ul>
           <li>Виконавець вручну читає матеріал і заповнює протокол виявлення</li>
           <li>Для питань дискусії: копіює текст у NotebookLM (корпус матеріалів про автора) або Gemini (окремий матеріал)</li>
@@ -722,8 +714,6 @@
       <h3>Перед тим як закрити адмінку — перевірити:</h3>
       <div class="checklist-item"><div class="box"></div><span>Всі знахідки з протоколу внесено (або позначено причину чому ні)</span></div>
       <div class="checklist-item"><div class="box"></div><span>Кожна нова сутність перевірена на дублі перед створенням</span></div>
-      <div class="checklist-item"><div class="box"></div><span>Нагороди: Snippet перевірено/створено → запис у правильній вкладці (BookPage або картка діяча → «Кар'єра»)</span></div>
-      <div class="checklist-item"><div class="box"></div><span>Афіліації: PersonAffiliation додано лише якщо установа має InstitutionPage; інакше — PersonLifeEvent у таймлайні</span></div>
       <div class="checklist-item"><div class="box"></div><span>У «Службових коментарях» зафіксовано джерело і дату для кожного внесеного поля</span></div>
       <div class="checklist-item"><div class="box"></div><span>Архівні поля (посада, місто, дата публікації) — не змінені</span></div>
       <div class="checklist-item"><div class="box"></div><span>Питання для дискусії відредаговані (не пряма копія з ШІ)</span></div>
@@ -734,8 +724,8 @@
 
 
   <footer>
-    <span>КЛЮЧ · key.chl.kiev.ua · Протокол ретрокаталогізації v1.0</span>
-    <span>Тетяна Якушко, НБУ для дітей · Червень 2026</span>
+    <span><a href="index.html" style="color:#b8860b;text-decoration:none">← Майстерня КЛЮЧ</a> · Протокол ретрокаталогізації · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
   </footer>
 
 </div>

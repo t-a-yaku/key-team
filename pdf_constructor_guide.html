@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конструктор PDF — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --pdf:#0f5c4a;--pdf-light:#e6f4f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:880px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--pdf);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;margin-bottom:14px;}
+  .url-chip{display:inline-block;font-family:monospace;font-size:12px;background:var(--pdf-light);border:1px solid var(--pdf);color:var(--pdf);padding:5px 12px;border-radius:3px;margin-bottom:36px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* СЦЕНАРІЇ */
+  .scenarios{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:20px 0;}
+  .sc-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;}
+  .sc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--pdf);}
+  .sc-card .sc-icon{font-size:24px;display:block;margin-bottom:8px;}
+  .sc-card h4{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--pdf);}
+  .sc-card p{font-size:12px;color:var(--pk-muted);margin:0;max-width:100%;line-height:1.5;}
+  .sc-card .sc-out{font-size:11px;margin-top:8px;padding-top:8px;border-top:1px solid var(--pk-border);color:var(--pk-ink);font-weight:500;}
+
+  /* КРОКИ */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--pdf);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0 0 4px;max-width:100%;}
+  .step-body p:last-child{margin-bottom:0;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* ДВА ФОРМАТИ */
+  .formats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:16px 0;background:var(--pk-border);border:1px solid var(--pk-border);border-radius:6px;overflow:hidden;}
+  .fmt{background:var(--pk-paper);padding:20px 22px;}
+  .fmt .f-icon{font-size:26px;display:block;margin-bottom:8px;}
+  .fmt h4{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--pdf);}
+  .fmt .f-desc{font-size:12.5px;color:var(--pk-muted);line-height:1.5;margin-bottom:10px;}
+  .fmt .f-when{font-size:12px;padding-top:10px;border-top:1px solid var(--pk-border);}
+  .fmt .f-when strong{display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:4px;}
+
+  /* ЛИСТОК-МАКЕТ */
+  .sheet-mock{background:#fff;border:1px solid var(--pk-border);border-radius:4px;padding:16px 18px;margin:12px 0;max-width:340px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+  .sheet-mock .sm-head{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);margin-bottom:10px;}
+  .sheet-mock .sm-logo{font-size:9px;font-weight:700;color:var(--pdf);letter-spacing:0.1em;}
+  .sheet-mock .sm-qr{width:26px;height:26px;background:repeating-linear-gradient(45deg,var(--pk-ink) 0 3px,#fff 3px 6px);margin-left:auto;border-radius:2px;}
+  .sheet-mock .sm-body{display:flex;gap:12px;}
+  .sheet-mock .sm-img{width:52px;height:74px;background:linear-gradient(135deg,#5a7a6b,#3a5a4a);border-radius:2px;flex-shrink:0;}
+  .sheet-mock .sm-lines{flex:1;font-size:10px;color:var(--pk-muted);line-height:1.6;}
+  .sheet-mock .sm-lines strong{display:block;font-size:12px;color:var(--pk-ink);margin-bottom:3px;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:150px;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.pdf{background:var(--pdf-light);border-color:var(--pdf);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.pdf h4{color:var(--pdf);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.pdf ul li::before{content:'→';position:absolute;left:0;color:var(--pdf);}
+
+  /* ЧЕКЛИСТ */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.formats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#what" class="active">Навіщо</a>
+  <a href="#how">Як зробити</a>
+  <a href="#formats">Два формати</a>
+  <a href="#presets">Пресети</a>
+  <a href="#inside">Що всередині</a>
+  <a href="#checklist">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Бібліотекарі, методисти, педагоги</div>
+  <h1>Конструктор PDF:<br><em>роздаткові матеріали за кілька хвилин</em></h1>
+  <p class="lead">Задаєте фільтри — ювілярів року, регіон, жанр, вік читача — конструктор показує що знайшлось і одним кліком робить готові до друку листки. Не треба верстати вручну.</p>
+  <div class="url-chip">key.chl.kiev.ua/methodic/constructor/</div>
+
+  <!-- СЦЕНАРІЇ -->
+  <div id="what">
+    <h2>Для чого це у вашій роботі</h2>
+    <div class="scenarios">
+      <div class="sc-card">
+        <span class="sc-icon">📚</span>
+        <h4>Книжкова виставка</h4>
+        <p>Листок з обкладинкою, анотацією і QR-кодом — наклеїти на стенд поруч із книжкою.</p>
+        <div class="sc-out">Дитина читає анотацію, сканує код — слухає уривок голосом автора</div>
+      </div>
+      <div class="sc-card">
+        <span class="sc-icon">🎂</span>
+        <h4>План заходів на рік</h4>
+        <p>Усі ювіляри 2027 року одним списком — роздати колегам на плануванні.</p>
+        <div class="sc-out">Один PDF, який можна роздрукувати і покласти на стіл</div>
+      </div>
+      <div class="sc-card">
+        <span class="sc-icon">🏫</span>
+        <h4>Урок або заняття</h4>
+        <p>Роздатковий матеріал для учнів: біографія автора, ключові факти, питання для обговорення.</p>
+        <div class="sc-out">Окремий листок на кожного автора чи книгу</div>
+      </div>
+      <div class="sc-card">
+        <span class="sc-icon">🗺️</span>
+        <h4>Регіональний календар</h4>
+        <p>Ювіляри вашої області на наступний рік — для методичних рекомендацій мережі.</p>
+        <div class="sc-out">Таблиця: ім'я, роки, дата ювілею, роль</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЯК ЗРОБИТИ -->
+  <div id="how">
+    <h2>Як зробити підбірку — шість кроків</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Оберіть тип матеріалу</h4>
+          <p>Два перемикачі вгорі форми: <strong>Автори / Діячі</strong> або <strong>Книги / Твори</strong>. Від цього залежить які фільтри з'являться нижче і що буде на листку.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Встановіть фільтри</h4>
+          <p><strong>Рік ювілею</strong> — знаходить тих, у кого цього року кругла дата (кратна 5 або 10) від народження або смерті. Наприклад <code>2027</code> покаже народжених 1927, 1937, 1947…</p>
+          <p>Для авторів — <strong>регіон народження</strong> (можна писати як завгодно: «Харківщина», «Львів», «Київська область»).</p>
+          <p>Для книг — <strong>вік читача від і до</strong>, <strong>жанри</strong>, <strong>спецпроєкти</strong>, перемикач <strong>тільки знакові книжки</strong>.</p>
+          <p class="tip">Для кількох жанрів чи тегів одразу — тримайте Ctrl і клікайте.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h4>Оберіть пресет полів (або залиште стандартні)</h4>
+          <p>Пресет визначає які розділи потраплять на листок — біографія, хронологія, ключові факти, галерея видань. Якщо не обирати — включається все.</p>
+          <p class="tip">Пресети налаштовує адміністратор. Ваші власні збережені фільтри — це інше, про них нижче.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <h4>Обмежте кількість</h4>
+          <p>За замовчуванням 10, максимум 100. Понад 50 за раз генерується помітно довше — краще розбити на порції.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">5</div>
+        <div class="step-body">
+          <h4>Оберіть формат виводу</h4>
+          <p>Окремі листки в архіві або один спільний список — детально в наступному розділі.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">6</div>
+        <div class="step-body">
+          <h4>Знайти → переглянути → згенерувати</h4>
+          <p>Натисніть <strong>«Знайти»</strong> — під формою з'явиться сітка карток і лічильник «Знайдено N». Перегляньте чи те знайшлось. Якщо так — <strong>«Згенерувати PDF»</strong>, файл завантажиться сам.</p>
+          <p class="tip">Не те? Скоригуйте фільтри або натисніть «Скинути» — очистить усе.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ДВА ФОРМАТИ -->
+  <div id="formats">
+    <h2>Два формати виводу — різні задачі</h2>
+    <div class="formats">
+      <div class="fmt">
+        <span class="f-icon">🗂️</span>
+        <h4>Архів окремих файлів (ZIP)</h4>
+        <div class="f-desc">Окремий PDF на кожного автора або книгу. Розпаковуєте — маєте пачку готових листків.</div>
+        <div class="f-when"><strong>Коли брати</strong>Роздаткові матеріали, наклейки на стенди виставки, листки для учнів</div>
+      </div>
+      <div class="fmt">
+        <span class="f-icon">📋</span>
+        <h4>Єдиний список / Календар</h4>
+        <div class="f-desc">Один PDF з усіма знайденими: таблиця імен, років, дат ювілею і ролей.</div>
+        <div class="f-when"><strong>Коли брати</strong>Планування заходів, регіональний календар, документ для наради</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЩО ВСЕРЕДИНІ -->
+  <div id="inside">
+    <h2>Що буде на листку</h2>
+
+    <h3 class="sub">Листок автора</h3>
+    <div class="sheet-mock">
+      <div class="sm-head"><span class="sm-logo">КЛЮЧ</span><span class="sm-logo" style="color:var(--pk-muted)">+ ваша бібліотека</span><div class="sm-qr"></div></div>
+      <div class="sm-body">
+        <div class="sm-img"></div>
+        <div class="sm-lines"><strong>Прізвище Ім'я</strong>1930–2008 · Полтавщина<br>письменник, перекладач<br>біографія · хронологія<br>5 фактів для розмови</div>
+      </div>
+    </div>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Портрет, роки, місце народження, ролі, біографічна довідка, хронологія подій, організації, п'ять ключових фактів для розмови з дітьми, відомі книги з обкладинками, QR-код на профіль.</p>
+
+    <h3 class="sub">Листок книги</h3>
+    <div class="sheet-mock">
+      <div class="sm-head"><span class="sm-logo">КЛЮЧ</span><div class="sm-qr"></div></div>
+      <div class="sm-body">
+        <div class="sm-img" style="background:linear-gradient(135deg,#8b7355,#6b5a45)"></div>
+        <div class="sm-lines"><strong>Назва книги</strong>Автор · 1960 · Веселка<br>для дітей 8–12 років<br>анотація · методичні поради<br>питання для обговорення</div>
+      </div>
+    </div>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Обкладинка, автори, рік першої публікації, видавець, вікова рекомендація, анотація, питання для обговорення, методичні поради з публікацій порталу, галерея видань (якщо увімкнена), QR-код на сторінку книги.</p>
+
+    <div class="alert pdf">
+      <h4>Логотип вашої бібліотеки на листку</h4>
+      <p>Якщо ваша установа завантажила логотип у свою картку на порталі — він з'явиться в шапці кожного листка поруч із логотипом КЛЮЧА. Матеріал виглядає як ваш власний, а не запозичений.</p>
+    </div>
+  </div>
+
+  <!-- ПРЕСЕТИ -->
+  <div id="presets">
+    <h2>Збережіть свої фільтри — щоб не набирати щоразу</h2>
+    <p>Якщо ви увійшли в кабінет з роллю бібліотекаря — під формою є кнопка <strong>«Зберегти як пресет»</strong>.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body"><h4>Налаштуйте фільтри як потрібно</h4><p>Наприклад: ювіляри 2027, регіон «Київська область», тип «Автори».</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body"><h4>«Зберегти як пресет» → дайте назву</h4><p>Наприклад «Ювіляри Київщини 2027». Опис необов'язковий.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body"><h4>Наступного разу — з кабінету одним кліком</h4><p>Кабінет → <strong>Мої PDF-пресети</strong> → «Використати». Конструктор відкриється вже з вашими налаштуваннями.</p></div>
+      </div>
+    </div>
+
+    <div class="alert gold">
+      <h4>Якщо створюєте новий пресет полів — перевірте галерею видань</h4>
+      <p>Коли пресет не обраний, у листок книги входить усе, включно з галереєю різних видань. Але в новоствореному пресеті галерея <strong>вимкнена за замовчуванням</strong> — якщо вона вам потрібна, увімкніть її явно.</p>
+    </div>
+  </div>
+
+  <!-- ЧЕКЛИСТ -->
+  <div id="checklist">
+    <h2>Перед друком великої партії</h2>
+    <div class="checklist">
+      <h3>Швидка перевірка</h3>
+      <div class="chk"><div class="box"></div><span>Натиснули «Знайти» і переглянули результати — знайшлось саме те, що потрібно</span></div>
+      <div class="chk"><div class="box"></div><span>Кількість не перевищує 50 за один раз (інакше довго генерується)</span></div>
+      <div class="chk"><div class="box"></div><span>Формат обрано правильно: ZIP для роздатки, єдиний PDF для планування</span></div>
+      <div class="chk"><div class="box"></div><span>Згенерували один пробний листок і подивились як він виглядає на друку</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо потрібна галерея видань — перевірили що вона увімкнена в пресеті</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо робите це регулярно — зберегли фільтри як пресет</span></div>
+    </div>
+
+    <div class="alert steel">
+      <h4>Технічне</h4>
+      <p>Формат А4, підходить для кольорового і чорно-білого друку. QR-коди створюються автоматично і ведуть на сторінку профілю чи книги на порталі.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Конструктор PDF» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

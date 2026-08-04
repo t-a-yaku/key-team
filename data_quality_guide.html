@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аналітика і якість даних — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --an:#5c2e6b;--an-light:#f3eaf7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:880px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--an);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:36px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* РИТМ */
+  .rhythm{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:20px 0;}
+  .rh-card{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:6px;padding:16px 18px;}
+  .rh-card .rh-freq{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--an);margin-bottom:8px;display:block;padding-bottom:6px;border-bottom:1px solid var(--pk-border);}
+  .rh-card ul{list-style:none;padding:0;}
+  .rh-card ul li{font-size:12px;padding:4px 0 4px 14px;position:relative;line-height:1.4;color:var(--pk-ink);}
+  .rh-card ul li::before{content:'→';position:absolute;left:0;color:var(--pk-muted);font-size:10px;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:150px;}
+  .lvl-err{color:var(--pk-rust);font-weight:700;}
+  .lvl-warn{color:#8b6914;font-weight:700;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.an{background:var(--an-light);border-color:var(--an);}
+  .alert.sage{background:var(--pk-sage-light);border-color:var(--pk-sage);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.an h4{color:var(--an);}
+  .alert.sage h4{color:var(--pk-sage);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.an ul li::before{content:'→';position:absolute;left:0;color:var(--an);}
+  .alert.sage ul li::before{content:'✓';position:absolute;left:0;color:var(--pk-sage);font-weight:700;}
+
+  /* КРОКИ */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--an);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0 0 4px;max-width:100%;}
+  .step-body p:last-child{margin-bottom:0;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* ЦИТАТА-ДУМКА */
+  .insight{background:var(--pk-ink);border-radius:6px;padding:22px 26px;margin:16px 0;}
+  .insight .in-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--pk-gold);margin-bottom:10px;}
+  .insight p{font-size:13.5px;color:rgba(247,243,236,0.75);line-height:1.7;margin-bottom:8px;max-width:100%;}
+  .insight p:last-child{margin:0;}
+  .insight strong{color:#fff;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#rhythm" class="active">Ритм перевірок</a>
+  <a href="#demand">Попит</a>
+  <a href="#integrity">Цілісність</a>
+  <a href="#dupes">Дублети</a>
+  <a href="#bulk">Масова обробка</a>
+  <a href="#raw">Сирі назви</a>
+  <a href="#privacy">Приватність</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Адміністратор і контент-менеджер зі службовим доступом</div>
+  <h1>Меню «Аналітика»:<br><em>якість даних і звітність</em></h1>
+  <p class="lead">Розділ адмінки, який не створює контент, а перевіряє його стан і показує як ним користуються. Звіти про помилки, пошук дублікатів, масові правки, журнали завантажень. Доступ лише для співробітників зі службовим статусом.</p>
+
+  <!-- РИТМ -->
+  <div id="rhythm">
+    <h2>З чого почати: ритм перевірок</h2>
+    <p>Не всі інструменти потрібні щодня. Ось природний ритм, до якого варто звикнути:</p>
+
+    <div class="rhythm">
+      <div class="rh-card">
+        <span class="rh-freq">Раз на 1–2 тижні</span>
+        <ul>
+          <li><strong>Цілісність даних</strong> — перелік конкретних недоліків з посиланням «виправити»</li>
+        </ul>
+      </div>
+      <div class="rh-card">
+        <span class="rh-freq">Раз на місяць</span>
+        <ul>
+          <li><strong>Аналітика методиста</strong> — цифри для звіту, попит на матеріали</li>
+        </ul>
+      </div>
+      <div class="rh-card">
+        <span class="rh-freq">Після міграції чи імпорту</span>
+        <ul>
+          <li><strong>Дублети</strong> — схожі картки, що могли з'явитись</li>
+          <li><strong>Масова обробка</strong> — проставити вік книгам без категорії</li>
+        </ul>
+      </div>
+      <div class="rh-card">
+        <span class="rh-freq">Перед створенням картки</span>
+        <ul>
+          <li><strong>Пошук сирих назв</strong> — чи не згадується ця людина вже десять разів</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПОПИТ -->
+  <div id="demand">
+    <h2>Аналітика методиста — що реально забирають з порталу</h2>
+    <p>Головне джерело цифр для звітів. Показує загальні лічильники завантажень PDF, топ-10 авторів і книг, активність у конструкторі, динаміку за 30 днів, статистику цитувань.</p>
+
+    <div class="insight">
+      <div class="in-label">Як це читати</div>
+      <p>Топ авторів — це <strong>не «найкращі письменники»</strong>, а на кого є методичний запит. Якщо автор стабільно вгорі, а матеріалів про нього мало — це підказка, що готувати далі.</p>
+      <p>Порожнє місце в топі теж інформативне: ювіляр року, якого ніхто не завантажує, означає що про нього не знають.</p>
+    </div>
+
+    <h3 class="sub">Поведінкові події — побіжна увага читача</h3>
+    <p>На відміну від завантажень (там людина свідомо щось забрала), тут фіксується мимохідь: обкладинка потрапила на екран — <strong>показ</strong>, читач клікнув — <strong>клік</strong>.</p>
+
+    <div class="alert an">
+      <h4>Найкорисніше зараз — фільтр «Розділ: Машина Часу»</h4>
+      <p>Там кожна обкладинка на екрані дає показ, а клік означає що читач впізнав книжку зі свого дитинства. Співвідношення показів до кліків показує <strong>які саме книжки люди справді пам'ятають</strong>.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>Чого тут немає — і це не помилка</h4>
+      <p>Журнал прив'язаний до об'єкта каталогу, тому фіксує лише взаємодію з книжками й діячами. Дії із самим сервісом — запуск мандрівки, збереження полиці, поширення посилання — сюди не потрапляють у принципі. Їх покриває окремий набір подій Google Analytics.</p>
+    </div>
+  </div>
+
+  <!-- ЦІЛІСНІСТЬ -->
+  <div id="integrity">
+    <h2>Цілісність даних — не підозри, а факти</h2>
+    <p>Перелік конкретних недоліків із посиланням «редагувати» біля кожного. Поле справді порожнє — це не здогад.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Що перевіряється</th><th>Рівень</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Особи без прізвища</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Сліди зламаної міграції в полі джерела</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Згадка в опитуванні без книги, особи й тексту</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Вибір читачів: опублікований запис без назви і прив'язки</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Адреса сторінки не відповідає slug</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Машина Часу: полиці без службового ключа</td><td class="lvl-err">🔴 помилка</td></tr>
+          <tr><td class="lbl">Опубліковані книги без жодного видання</td><td class="lvl-warn">🟡 попередження</td></tr>
+          <tr><td class="lbl">Багатотомні книги без номерів томів</td><td class="lvl-warn">🟡 попередження</td></tr>
+          <tr><td class="lbl">Особи без першої літери (не в абетковому покажчику)</td><td class="lvl-warn">🟡 попередження</td></tr>
+          <tr><td class="lbl">Публікації без жодного автора</td><td class="lvl-warn">🟡 попередження</td></tr>
+          <tr><td class="lbl">Ювілейні есе без вказаного ювіляра</td><td class="lvl-warn">🟡 попередження</td></tr>
+          <tr><td class="lbl">Навчальна програма без назви книги і прив'язки</td><td class="lvl-warn">🟡 попередження</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Дві найдорожчі помилки — виправляти першими</h4>
+      <ul>
+        <li><strong>Ювілейне есе без ювіляра</strong> — есе не з'явиться на сторінці людини, якій присвячене. Виправляється в картці публікації, поле «Діячі, про яких йдеться»</li>
+        <li><strong>Адреса не відповідає slug</strong> — з'являється після перейменування сторінки. Це видно читачам: старі посилання ламаються</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ДУБЛЕТИ -->
+  <div id="dupes">
+    <h2>Дублети — звіт лише показує підозри</h2>
+    <p>Нічого не змінює й не об'єднує. Рішення завжди за людиною. Чотири групи підозр: однакове видиме ім'я, схоже ім'я (прізвище + перші три літери), однакова назва книги, однаковий початок назви до двокрапки.</p>
+
+    <div class="alert sage">
+      <h4>Головна підказка — скільки на картці тримається</h4>
+      <p>Для кожної картки діяча звіт показує: скільки книг як автор, як ілюстратор, як перекладач, скільки публікацій — і назви цих книг. Якщо на одній картці 12 книг, а на другій жодної, зрозуміло яка зайва.</p>
+      <p>Звіт сам позначає групи, які схоже є <strong>однофамільцями, а не дублікатом</strong> — коли в усіх карток є роки народження і всі різні. Такі не чіпайте.</p>
+    </div>
+
+    <div class="alert rust">
+      <h4>Ніколи не «прибирайте» дублікат видаленням картки діяча</h4>
+      <p>Видалення картки безповоротно знищує все прив'язане: нагороди, події життя, пам'ятні місця, кар'єру, медіа, фото, рекомендації.</p>
+      <p style="margin-top:8px">Об'єднання двох карток — <strong>не робота контент-менеджера</strong>: окремого інструменту в адмінці немає, злиття виконує розробник спеціальним скриптом.</p>
+      <p style="margin-top:8px"><strong>Що робити:</strong> нічого не видаляйте, запишіть у службову примітку однієї з карток що це дублікат другої (з номером), і передайте список розробнику.</p>
+    </div>
+
+    <div class="alert an">
+      <h4>Підказка просто у формі</h4>
+      <p>Окремо від звіту: коли ви створюєте картку діяча і вписуєте прізвище, система сама перевіряє чи немає вже картки з таким прізвищем і такою першою літерою імені. Підказка <strong>не блокує</strong> збереження — однофамільці нормальна річ, вирішує людина.</p>
+    </div>
+  </div>
+
+  <!-- МАСОВА ОБРОБКА -->
+  <div id="bulk">
+    <h2>Масова обробка книг</h2>
+    <p>Проставляє вікову категорію або спецпроєкт одразу багатьом книгам. Незамінна після імпорту з каталогу, коли з'явилась пачка книг без віку.</p>
+
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-body"><h4>Відфільтруйте</h4><p>За віковою категорією, жанром, спецпроєктом або пошуком. Особливо корисні фільтри <strong>«без вікової категорії»</strong> і <strong>«без проєкту»</strong> — показують саме нерозібране.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-body"><h4>Позначте галочками</h4><p>Перечитайте список позначеного перед наступним кроком.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-body"><h4>Оберіть категорію або проєкт → кнопка</h4><p>Прочитайте зелене повідомлення: «Вікову категорію … встановлено для N книг».</p></div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Дія</th><th>Що робить</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Встановити вікову категорію</td><td><strong>Замінює</strong> наявну обраною. Книга має рівно одну вікову категорію</td></tr>
+          <tr><td class="lbl">Додати до проєкту</td><td><strong>Додає</strong> до наявних. Старі не зникають — книга може бути в кількох проєктах</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Зміни публікуються одразу, скасувати одним рухом не можна</h4>
+      <p>Кожна позначена книга зберігається й публікується негайно. Кнопки «відкотити» немає — доведеться так само масово повертати назад.</p>
+      <p style="margin-top:8px">На великих пачках краще зробити дві-три менші порції, ніж одну на двісті книг.</p>
+    </div>
+  </div>
+
+  <!-- СИРІ НАЗВИ -->
+  <div id="raw">
+    <h2>Пошук сирих назв</h2>
+    <p>Відповідає на питання: <strong>«Ця людина вже десь згадується в базі, хоч картки в неї ще немає?»</strong></p>
+
+    <p>У КЛЮЧІ багато місць, де ім'я зберігається просто текстом — так, як його записало першоджерело: анкета опитування, документ МОН, список нагород. Це навмисно: архівні поля не змінюють. Але через це людина може бути згадана десять разів і не мати картки.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Де шукає</th><th>Що саме</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Нагороди</td><td>Ім'я переможця текстом</td></tr>
+          <tr><td class="lbl">Публікації</td><td>Ім'я автора статті, якого немає в базі</td></tr>
+          <tr><td class="lbl">Опитування</td><td>Згадки, респонденти, відповіді на виклики</td></tr>
+          <tr><td class="lbl">Навчальні програми МОН</td><td>Автори програми, назви книг і авторів у переліку</td></tr>
+          <tr><td class="lbl">Вибір читачів</td><td>Назви книг і авторів, як їх подали бібліотеки</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert an">
+      <h4>Три сценарії використання</h4>
+      <ul>
+        <li><strong>Перед створенням картки</strong> — перевірити чи не назвали цю людину вже десятеро учасників опитувань. Якщо назвали — картка потрібна тим більше</li>
+        <li><strong>Коли створили картку</strong> — пройтись пошуком і прив'язати старі текстові згадки до нової картки</li>
+        <li><strong>Щоб знайти прогалину</strong> — хто згадується часто, а картки не має</li>
+      </ul>
+    </div>
+
+    <div class="alert gold">
+      <h4>Сирий текст не замінюють прив'язкою</h4>
+      <p>Архівне поле лишається як було — прив'язка додається <strong>поруч</strong>. Так зберігається і те, як записало першоджерело, і зв'язок із каталогом.</p>
+    </div>
+  </div>
+
+  <!-- ПРИВАТНІСТЬ -->
+  <div id="privacy">
+    <h2>Приватність — що варто пам'ятати</h2>
+
+    <div class="alert rust">
+      <h4>Персональні дані в журналі завантажень PDF</h4>
+      <p>У журналі й у файлі експорту є <strong>IP-адреса</strong> і технічний рядок браузера. IP-адреси автоматично стираються через 90 днів — про це дбає система.</p>
+      <p style="margin-top:8px">Але <strong>вивантажений CSV із цієї автоматики випадає</strong>: він живе на вашому комп'ютері стільки, скільки ви його там тримаєте.</p>
+      <ul style="margin-top:8px">
+        <li>для звіту беріть зведені цифри з «Аналітики методиста», а не сирий журнал</li>
+        <li>якщо вивантажили CSV — видаліть файл коли звіт зданий</li>
+        <li>не надсилайте сирий журнал поштою і не кладіть у спільні теки</li>
+      </ul>
+    </div>
+
+    <div class="alert steel">
+      <h4>Що система захищає сама</h4>
+      <ul>
+        <li>Доступ лише для staff — редактор без службового статусу сюди не потрапить</li>
+        <li>Записи не редагуються й не видаляються — це журнал, а не картотека</li>
+        <li>Адреса сторінки, з якої прийшла подія, не показується: у ній міститься рік народження відвідувача Машини Часу</li>
+        <li>Ключ сесії знеособлюється через 90 днів автоматично</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Аналітика і якість даних» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Культова обкладинка — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --ic:#6b1a3a;--ic-light:#fdeaf1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:860px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--ic);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:640px;line-height:1.6;margin-bottom:24px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* СУТЬ */
+  .essence{background:var(--pk-ink);border-radius:6px;padding:26px 30px;margin-bottom:32px;position:relative;overflow:hidden;}
+  .essence::before{content:'★';position:absolute;right:26px;top:16px;font-size:64px;color:rgba(184,134,11,0.1);line-height:1;}
+  .essence p{font-size:14px;color:rgba(247,243,236,0.72);line-height:1.7;margin-bottom:10px;max-width:660px;}
+  .essence p:last-child{margin:0;}
+  .essence strong{color:#fff;}
+  .essence em{color:var(--pk-gold);font-style:normal;}
+
+  /* ГОЛОВНЕ ПИТАННЯ */
+  .key-q{background:var(--ic-light);border:2px solid var(--ic);border-radius:6px;padding:22px 26px;margin:20px 0;}
+  .key-q .kq-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--ic);margin-bottom:10px;}
+  .key-q .kq-text{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--pk-ink);line-height:1.35;}
+
+  /* КРИТЕРІЇ */
+  .criterion{border:1px solid var(--pk-border);border-radius:6px;margin-bottom:14px;overflow:hidden;}
+  .cr-head{display:flex;align-items:center;gap:14px;padding:16px 20px;background:var(--pk-paper-dark);border-bottom:1px solid var(--pk-border);}
+  .cr-num{width:34px;height:34px;border-radius:50%;background:var(--ic);color:#fff;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cr-head h3{font-size:15px;font-weight:600;margin:0;flex:1;}
+  .cr-body{padding:16px 20px;}
+  .cr-body p{font-size:13px;margin-bottom:8px;max-width:100%;}
+  .cr-body p:last-child{margin-bottom:0;}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+  .comp-box{border-radius:4px;padding:12px 14px;font-size:12.5px;line-height:1.5;}
+  .comp-yes{background:var(--pk-sage-light);border:1px solid var(--pk-sage);}
+  .comp-no{background:var(--pk-rust-light);border:1px solid var(--pk-rust);}
+  .comp-box .cb-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px;display:block;}
+  .comp-yes .cb-label{color:var(--pk-sage);}
+  .comp-no .cb-label{color:var(--pk-rust);}
+
+  /* ЧОМУ НІ — розгорнуте пояснення */
+  .why-not{background:var(--pk-paper-dark);border-left:3px solid var(--pk-rust);border-radius:0 4px 4px 0;padding:14px 18px;margin:10px 0;}
+  .why-not .wn-num{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-rust);margin-bottom:5px;}
+  .why-not p{font-size:12.5px;margin:0;max-width:100%;line-height:1.55;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:150px;}
+  td.err{color:var(--pk-rust);}
+  td.ok{color:var(--pk-sage);}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.ic{background:var(--ic-light);border-color:var(--ic);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.ic h4{color:var(--ic);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.ic ul li::before{content:'→';position:absolute;left:0;color:var(--ic);}
+
+  /* ЧЕКЛИСТ */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#what" class="active">Що це</a>
+  <a href="#criteria">Два критерії</a>
+  <a href="#not">Що НЕ підстава</a>
+  <a href="#multiple">Кілька видань</a>
+  <a href="#checklist">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Редактор, контент-менеджер · Редакційний стандарт</div>
+  <h1>Культова обкладинка:<br><em>вузький прапорець, який має лишитись вузьким</em></h1>
+  <p class="lead">Позначка на рівні конкретного видання, не твору. На весь каталог її мають лише десять-одинадцять видань — і саме в цьому її цінність.</p>
+
+  <div class="essence">
+    <p><strong>Машина Часу працює на впізнаванні зображення</strong>, не тексту. Людина бачить стрічку обкладинок свого дитинства і клікає на ту, яку пам'ятає. Для вірусного ефекту достатньо <em>одного</em> щирого «о, я пам'ятаю цю книжку!»</p>
+    <p>Тому вузький, чесний набір культових видань, які справді спрацьовують, цінніший за широкий набір «можливо десь колись впізнається». Розширення критерію заради охоплення не наближає до мети, а віддаляє.</p>
+  </div>
+
+  <!-- ЩО ЦЕ -->
+  <div id="what">
+    <h2>Де це працює</h2>
+    <p>Прапорець ставиться на конкретне видання (обкладинку) при його внесенні. Один твір може мати кілька видань — кожне позначається окремо.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Де</th><th>Що робить</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Машина Часу — перший екран</td><td>До 15 культових обкладинок завжди йдуть першими в стрічці кожної вікової страти</td></tr>
+          <tr><td class="lbl">Головна сторінка</td><td>Тизер Машини Часу — випадкові культові обкладинки як прев'ю сервісу</td></tr>
+          <tr><td class="lbl">Читальня</td><td>Якщо в аудіозапису немає власного видання із зображенням — резервна обкладинка обирається з пріоритетом культової</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:12.5px;color:var(--pk-muted)">Третє застосування — побічний ефект сортування, але він реально працює й видимий користувачам. Прапорець впливає на сайт ширше, ніж «тільки Машина Часу» — це варто тримати в голові при спірних випадках.</p>
+  </div>
+
+  <!-- КРИТЕРІЇ -->
+  <div id="criteria">
+    <h2>Два критерії — обидва мають виконуватись</h2>
+
+    <div class="criterion">
+      <div class="cr-head"><div class="cr-num">1</div><h3>Масовість накладу — відносно своєї епохи</h3></div>
+      <div class="cr-body">
+        <p>Порогу у вигляді фіксованого числа <strong>немає</strong>. Він відносний до періоду видання.</p>
+        <div class="compare">
+          <div class="comp-box comp-yes">
+            <span class="cb-label">Правильно</span>
+            Порівнювати наклад з іншими накладами <strong>того самого періоду</strong>. Радянський період: сотні тисяч — типова масовість. Сучасний: кілька тисяч уже може бути помітним для покоління.
+          </div>
+          <div class="comp-box comp-no">
+            <span class="cb-label">Неправильно</span>
+            Порівнювати з абсолютним числом або з накладами інших епох. «Всього 5 тисяч — не культова» для 2015 року хибний висновок.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="criterion">
+      <div class="cr-head"><div class="cr-num">2</div><h3>Впізнаваність саме обкладинки</h3></div>
+      <div class="cr-body">
+        <p>Питання не «чи це хороший або важливий твір», а: <strong>чи людина, що виросла в цей період, з високою ймовірністю впізнає цю конкретну обкладинку на екрані</strong>.</p>
+        <div class="compare">
+          <div class="comp-box comp-yes">
+            <span class="cb-label">Це критерій</span>
+            Впізнаваність зображення. Обкладинка, яку тримало в руках майже все покоління в приблизно один віковий момент.
+          </div>
+          <div class="comp-box comp-no">
+            <span class="cb-label">Це інше питання</span>
+            Літературна значущість твору. Для неї є окремі механізми — не цей прапорець.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЩО НЕ ПІДСТАВА -->
+  <div id="not">
+    <h2>Що НЕ є підставою</h2>
+
+    <div class="key-q">
+      <div class="kq-label">Найпоширеніша спокуса</div>
+      <div class="kq-text">«Книжку перевидають щороку двадцять років поспіль — сумарно вийшло більше, ніж один масовий тираж. Отже і масовість, і впізнаваність дотримані.»</div>
+    </div>
+
+    <p>Ця інтуїція правильна за арифметикою — і водночас небезпечна за наслідками. П'ять причин чому вона не працює як критерій:</p>
+
+    <div class="why-not">
+      <div class="wn-num">Причина 1</div>
+      <p><strong>Сукупний наклад ніде не порахований — і порахувати його неможливо.</strong> Ми свідомо не каталогізуємо кожне щорічне перевидання, тому проміжні тиражі просто не існують як дані. «Сукупний наклад» — не факт, який можна звірити, а припущення в голові каталогізатора. Інший каталогізатор за два роки оцінить те саме видання геть інакше.</p>
+    </div>
+
+    <div class="why-not">
+      <div class="wn-num">Причина 2</div>
+      <p><strong>Прапорець прив'язаний до одного видання з одним роком, а «сукупність» — це процес у часі.</strong> Машина Часу перевіряє чи існувало видання на момент конкретного року. Якщо позначити видання 2004 року через тиражі 2004–2023 — на яку точку спиратиметься запит? Це спроба заповнити відсутнє поле «безперервна присутність у продажу» прапорцем, який про інше.</p>
+    </div>
+
+    <div class="why-not">
+      <div class="wn-num">Причина 3</div>
+      <p><strong>Масовість і впізнаваність — не одне й те саме, коли наклад розтягнутий у часі.</strong> Один тираж 100 тисяч за рік-два створює <em>синхронний</em> візуальний спогад: майже все покоління тримало ту саму обкладинку в той самий віковий момент. 20 тиражів по 5 тисяч за 20 років — інший патерн: дитина 2005 року і дитина 2020 року бачили одну обкладинку, але в різні календарні роки. Немає ефекту «всі бачили це одночасно».</p>
+    </div>
+
+    <div class="why-not">
+      <div class="wn-num">Причина 4</div>
+      <p><strong>Якщо дозволити цей критерій — прапорець перестає щось відсіювати.</strong> Практично будь-яка дитяча книжка, що лишається в каталозі довше 5–7 років, отримує перевидання. Якщо «регулярно перевидається» стає підставою — майже весь стабільний бек-лист кваліфікується, і культові слоти в кожній страті заповняться однаковим невеликим набором «завжди присутніх» видань, витісняючи справді відмінні для покоління твори.</p>
+    </div>
+
+    <div class="why-not">
+      <div class="wn-num">Причина 5</div>
+      <p><strong>Мета — не максимальне покриття, а достатність одного впізнавання.</strong> Продукт не вимагає, щоб людина впізнала якнайбільше з усього масиву. Для поширення достатньо одного щирого «я пам'ятаю цю книжку!» на екрані.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>Якщо колись з'явиться поле «в активному друці з року X»</h4>
+      <p>Воно буде <strong>окремим</strong> від культової обкладинки, не заміною. Два різні питання — «наскільки масштабне це видання» і «як довго воно лишається доступним» — не можна відповісти одним прапорцем без втрати сенсу принаймні одного з них.</p>
+    </div>
+  </div>
+
+  <!-- КІЛЬКА ВИДАНЬ -->
+  <div id="multiple">
+    <h2>Кілька культових видань одного твору</h2>
+    <p>Це <strong>не помилка</strong> — якщо вони культові для різних поколінь. Видання 1972 року культове для тих, хто ріс у 70-х; видання 2004 року — для покоління 2000-х.</p>
+
+    <div class="alert rust">
+      <h4>Але перевірте вікову страту</h4>
+      <p>Уникайте ситуації, коли кілька культових видань одного твору потрапляють в <strong>одну й ту саму вікову страту</strong> для одного покоління — це витісняє інші твори з обмежених 15 слотів.</p>
+      <p style="margin-top:8px">Перш ніж позначати друге видання того самого твору — перевірте: чи не потрапляють обидва в один віковий діапазон для одного й того самого приблизного року народження.</p>
+    </div>
+  </div>
+
+  <!-- ЧЕКЛИСТ -->
+  <div id="checklist">
+    <h2>Чотири питання перед тим, як поставити прапорець</h2>
+
+    <div class="checklist">
+      <h3>Якщо хоч на одне «ні» — не ставте</h3>
+      <div class="chk"><div class="box"></div><span>Це видання дійсно виділяється накладом <strong>порівняно з іншими виданнями того ж періоду</strong> (не абсолютним числом)?</span></div>
+      <div class="chk"><div class="box"></div><span>Людина, що росла в цей період, впізнає <strong>саме цю обкладинку</strong>, а не просто пам'ятає твір?</span></div>
+      <div class="chk"><div class="box"></div><span>Причина — <strong>не</strong> «це видання постійно перевидають» саме по собі?</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо у твору вже є культове видання для цього ж покоління — чи справді потрібне друге, чи це витіснить інші твори?</span></div>
+    </div>
+
+    <h3 class="sub">Типові помилки</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Помилка</th><th>Правильно</th></tr></thead>
+        <tbody>
+          <tr><td class="err">Позначати через «книжку часто перевидають»</td><td class="ok">Перевидання — не критерій; дивитись на масовість і впізнаваність конкретного накладу</td></tr>
+          <tr><td class="err">Порівнювати наклад з абсолютним числом</td><td class="ok">Порівнювати з накладами того самого періоду</td></tr>
+          <tr><td class="err">Кілька культових видань одного твору в одній страті</td><td class="ok">Максимум одне культове видання твору на страту/покоління</td></tr>
+          <tr><td class="err">Плутати культовість обкладинки з літературною значущістю твору</td><td class="ok">Це різні питання; культовість — тільки про впізнаваність зображення</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert ic">
+    <h4>Статус документа</h4>
+    <p>Це робочий стандарт КЛЮЧ. На відміну від вікового словника чи питання безперервного перевидання, це рішення портал формулює самостійно — і надалі пропонує його як зразок для галузі.</p>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Культова обкладинка» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

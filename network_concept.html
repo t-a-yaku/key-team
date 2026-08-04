@@ -573,20 +573,135 @@
     .tl-date { width: 64px; }
     footer { padding: 24px; }
   }
+
+  /* GATE */
+  #pk-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--pk-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  #pk-gate-box {
+    background: var(--pk-paper);
+    border-radius: 6px;
+    padding: 36px 32px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #pk-gate-box p {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pk-muted);
+    margin: 0 0 18px;
+  }
+
+  #pk-gate-form { display: flex; gap: 8px; }
+
+  #pk-gate-input {
+    flex: 1;
+    font-family: 'Geologica', sans-serif;
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid var(--pk-border);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--pk-ink);
+    letter-spacing: 0.1em;
+  }
+
+  #pk-gate-input:focus { outline: none; border-color: var(--pk-gold); }
+
+  #pk-gate-form button {
+    font-family: 'Geologica', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background: var(--pk-gold);
+    color: var(--pk-ink);
+    cursor: pointer;
+  }
+
+  #pk-gate-form button:hover { background: var(--pk-gold-dim); }
+
+  #pk-gate-error {
+    font-size: 12px;
+    color: var(--pk-rust);
+    margin-top: 12px;
+    min-height: 14px;
+  }
+
+  #pk-content { display: none; }
 </style>
 </head>
 <body>
 
+<!-- ACCESS GATE -->
+<div id="pk-gate">
+  <div id="pk-gate-box">
+    <p>КЛЮЧ · Доступ для внутрішнього використання</p>
+    <form id="pk-gate-form" autocomplete="off">
+      <input id="pk-gate-input" type="password" inputmode="numeric" placeholder="Секретний ключ" autofocus>
+      <button type="submit">Увійти</button>
+    </form>
+    <div id="pk-gate-error"></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var KEY = '03190';
+    var gate = document.getElementById('pk-gate');
+    var content = document.getElementById('pk-content');
+    var form = document.getElementById('pk-gate-form');
+    var input = document.getElementById('pk-gate-input');
+    var error = document.getElementById('pk-gate-error');
+
+    function unlock() {
+      gate.style.display = 'none';
+      content.style.display = 'block';
+    }
+
+    if (sessionStorage.getItem('pk-network-unlocked') === '1') {
+      unlock();
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value.trim() === KEY) {
+        sessionStorage.setItem('pk-network-unlocked', '1');
+        unlock();
+      } else {
+        error.textContent = 'Невірний ключ доступу';
+        input.value = '';
+        input.focus();
+      }
+    });
+  })();
+</script>
+
+<div id="pk-content">
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-label">КЛЮЧ · Внутрішній робочий документ · Червень 2026</div>
+    <div class="hero-label">КЛЮЧ · Внутрішній робочий документ · Серпень 2026</div>
     <h1>Мережа як партнер:<br><em>верифікація, залучення,<br>ювілейний рік</em></h1>
     <p class="hero-sub">Концепт співпраці з бібліотеками-донаторами контенту на 2026–2027 роки. Для обговорення з заступницями директора.</p>
     <div class="hero-meta">
       <span><strong>Підготувала:</strong> Тетяна Якушко</span>
       <span><strong>Для обговорення:</strong> Наталя Дзюба, Людмила Полікарпова, Центр дослідження книги та читання</span>
-      <span><strong>Горизонт:</strong> Червень 2026 — 20 листопада 2027</span>
+      <span><strong>Горизонт:</strong> Серпень 2026 — 20 листопада 2027</span>
     </div>
   </div>
 </section>
@@ -687,6 +802,11 @@
     <div class="alert steel">
       <h4>Перспектива API — чому це важливо для бібліотеки</h4>
       <p>Коли КЛЮЧ відкриє програмний інтерфейс (API), читач на порталі зможе одразу перевірити чи є книга у фонді конкретної бібліотеки і замовити її. Бібліотека яка верифікувала свій регіональний шар отримає реального відвідувача — не випадкового, а того хто вже зацікавлений у конкретній книзі. Бібліотека вкладає знання сьогодні — отримує трафік завтра.</p>
+    </div>
+
+    <div class="map-box" style="margin-top:20px">
+      <h3>Чому кожна дрібниця <em>має вагу</em></h3>
+      <p style="margin-bottom:0">Кожна точно внесена обкладинка чи уточнена дата — видимий внесок у національний ресурс про українську дитячу книгу. Це рух в обидва боки: ви живите спільну базу знань — вона повертає вашій бібліотеці ресурсну опору і робить голоси ваших регіональних авторів чутнішими. І жодна обкладинка сама не знає, чиєю знахідкою вона стане.</p>
     </div>
   </div>
 
@@ -790,7 +910,7 @@
     <div class="timeline">
 
       <div class="tl-item">
-        <div class="tl-date"><span class="month">Червень–Серпень</span><span class="year">2026</span></div>
+        <div class="tl-date"><span class="month">Серпень</span><span class="year">2026</span></div>
         <div class="tl-dot steel"></div>
         <div class="tl-content">
           <span class="tag tag-test">Підготовка</span>
@@ -945,8 +1065,10 @@
 
 <footer>
   <span><strong>КЛЮЧ</strong> · key.chl.kiev.ua · Внутрішній робочий документ</span>
-  <span>Тетяна Якушко, НБУ для дітей · Червень 2026 · Для службового використання</span>
+  <span>Тетяна Якушко, НБУ для дітей · Серпень 2026 · Для службового використання</span>
 </footer>
+
+</div>
 
 </body>
 </html>

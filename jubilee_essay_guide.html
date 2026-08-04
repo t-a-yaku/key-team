@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ювілейне есе — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --ju:#6b2020;--ju-light:#fbeded;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:880px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--ju);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:20px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:22px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* ПРИКЛАДИ */
+  .examples-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+  .ex-chip{background:var(--ju-light);border:1px solid var(--ju);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--ju);}
+  .ex-chip strong{font-weight:600;}
+
+  /* КРОКИ */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--ju);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0 0 4px;max-width:100%;}
+  .step-body p:last-child{margin-bottom:0;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:170px;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.ju{background:var(--ju-light);border-color:var(--ju);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.ju h4{color:var(--ju);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.ju ul li::before{content:'→';position:absolute;left:0;color:var(--ju);}
+
+  /* ДВА ПОЛЯ — ПОРІВНЯННЯ */
+  .two-fields{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:16px 0;background:var(--pk-border);border:1px solid var(--pk-border);border-radius:6px;overflow:hidden;}
+  .tf-col{background:var(--pk-paper);padding:18px 20px;}
+  .tf-col h4{font-size:13px;font-weight:700;color:var(--ju);margin-bottom:8px;}
+  .tf-col .tf-what{font-size:12.5px;line-height:1.5;margin-bottom:10px;}
+  .tf-col .tf-vals{font-size:11.5px;color:var(--pk-muted);line-height:1.6;padding-top:10px;border-top:1px solid var(--pk-border);}
+
+  /* ЗОБРАЖЕННЯ — ВІЗУАЛЬНА СХЕМА */
+  .img-demo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+  .img-case{border:1px solid var(--pk-border);border-radius:6px;padding:12px;background:#fff;}
+  .img-case.correct{border-color:var(--pk-sage);border-width:2px;}
+  .img-case .ic-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;text-align:center;}
+  .img-case.correct .ic-label{color:var(--pk-sage);}
+  .img-case:not(.correct) .ic-label{color:var(--pk-muted);}
+  .img-mock{background:var(--pk-paper-dark);border-radius:3px;margin-bottom:6px;position:relative;}
+  .img-full{height:52px;width:100%;background:linear-gradient(135deg,#6b5a45,#4a3a2a);}
+  .img-center{height:48px;width:80%;margin:0 auto;background:linear-gradient(135deg,#6b5a45,#4a3a2a);}
+  .img-float{height:40px;width:48%;background:linear-gradient(135deg,#8b7355,#6b5a45);float:left;margin-right:6px;}
+  .img-lines{font-size:7px;color:var(--pk-border);line-height:1.6;overflow:hidden;}
+  .img-case .ic-note{font-size:10.5px;color:var(--pk-muted);text-align:center;line-height:1.4;clear:both;padding-top:6px;}
+
+  /* ЧЕКЛИСТ */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.two-fields{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#setup" class="active">Налаштування</a>
+  <a href="#counters">Лічильники</a>
+  <a href="#contribution">Одне привітання</a>
+  <a href="#images">Зображення</a>
+  <a href="#crash">Редактор впав</a>
+  <a href="#special">Особливі випадки</a>
+  <a href="#checklist">Чеклист</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Контент-менеджер</div>
+  <h1>Ювілейне есе:<br><em>як зібрати хор голосів</em></h1>
+  <p class="lead">Ювілейне есе — не одна стаття, а збірка з десятків окремих привітань: колеги-письменники, науковці, установи, бібліотекарі, родина, іноді читачі-школярі. На сторінці це виглядає як хор: зверху шапка з цифрами і портретами всіх, хто привітав, нижче — самі привітання з фільтром по вкладках.</p>
+
+  <div class="examples-bar">
+    <span class="ex-chip"><strong>Володимирові Рутківському — 80!</strong> · 29 привітань</span>
+    <span class="ex-chip"><strong>Марії Морозенко — 50!</strong> · 24 привітання</span>
+    <span class="ex-chip"><strong>Пам'яті Марії Морозенко</strong> · 23, з двох установ</span>
+  </div>
+
+  <!-- КРОК 1 -->
+  <div id="setup">
+    <h2>Крок 1. Налаштування сторінки — без цього хору не буде</h2>
+    <p>Перш ніж додавати привітання, перевірте два налаштування:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>«Тип публікації» = «Ювілейне есе»</h4>
+          <p>Якщо лишити, наприклад, «Стаття» — привітання все одно покажуться, але <strong>без шапки зі статистикою, без кружків-портретів і без вкладок-фільтрів</strong>. Просто список один під одним.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>У «Вміст публікації» — рівно один блок «Ювілейне Есе (Колективний журнал)»</h4>
+          <p>Усі привітання додаються <strong>всередину нього</strong>, а не як окремі блоки поруч.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12.5px;color:var(--pk-muted)">Шапка й вкладки також не з'являться, якщо привітання лише одне — і це нормально, для одиничного привітання навігація не потрібна.</p>
+  </div>
+
+  <!-- КРОК 2 -->
+  <div id="counters">
+    <h2>Крок 2. Лічильники в шапці — рахувати вручну</h2>
+
+    <div class="alert rust">
+      <h4>Це не автоматика — попри формулювання «якщо не авто»</h4>
+      <p>Система сама нічого не рахує. Порахуйте вручну і впишіть:</p>
+      <ul style="margin-top:8px">
+        <li><strong>Кількість міст</strong> — скільки <strong>різних</strong> міст названо серед усіх привітань. Якщо троє вітають з Києва — це одне місто, не три</li>
+        <li><strong>Кількість установ</strong> — скільки привітань подані від імені установи, тобто скільки внесків матимуть «Тип внеску» = «Установа / Колективне»</li>
+      </ul>
+    </div>
+
+    <div class="alert steel">
+      <h4>Що рахується саме</h4>
+      <p><strong>«Голосів»</strong> — скільки всього привітань — рахується автоматично, вписувати не треба.</p>
+      <p style="margin-top:8px"><strong>«Творчі подарунки»</strong> — якщо нижче реально щось додано, покаже точну кількість автоматично. Поле лічильника знадобиться лише як текст про запас, якщо подарунків узагалі не буде.</p>
+    </div>
+  </div>
+
+  <!-- КРОК 3 -->
+  <div id="contribution">
+    <h2>Крок 3. Одне привітання</h2>
+    <p>Кожне привітання — один елемент у списку «Внески». Натисніть «+», щоб додати новий.</p>
+
+    <h3 class="sub">Хто вітає — оберіть один із трьох способів</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Коли заповнювати</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Діяч (якщо є в каталозі)</td><td>Автор привітання вже має картку — почніть вводити прізвище, оберіть зі списку</td></tr>
+          <tr><td class="lbl">Установа (якщо колективне)</td><td>Вітає організація, і вона вже є в каталозі установ</td></tr>
+          <tr><td class="lbl">Ім'я / Назва (якщо немає в каталозі)</td><td>Ні особи, ні установи в каталозі немає — впишіть просто текстом</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Заповнюйте тільки одне</strong> з цих трьох полів, решта — порожні.</p>
+
+    <div class="alert gold">
+      <h4>Якщо вітає читач-школяр</h4>
+      <p>Не створюйте йому картку діяча в каталозі — це тимчасовий статус, той самий принцип, що й для дитячих авторів. Впишіть ім'я через «Ім'я / Назва», а не шукайте чи створюйте картку.</p>
+    </div>
+
+    <h3 class="sub">Два поля, які легко переплутати</h3>
+    <div class="two-fields">
+      <div class="tf-col">
+        <h4>Тип внеску</h4>
+        <div class="tf-what">Визначає, <strong>як виглядатиме</strong> панель привітання: кольорова смужка, фото-кружок чи печатка-монограма.</div>
+        <div class="tf-vals">Письменник / Діяч · Науковець / Академічне есе · Установа / Колективне</div>
+      </div>
+      <div class="tf-col">
+        <h4>Категорія (для фільтра-табів)</h4>
+        <div class="tf-what">Визначає, <strong>у яку вкладку</strong> потрапить привітання.</div>
+        <div class="tf-vals">Побратими · Спадкоємці · Читачі · Наукові есе · Архівне свідчення · Бібліотекарі · Родина · Установи</div>
+      </div>
+    </div>
+
+    <div class="alert ju">
+      <h4>Часто збігаються — але не завжди</h4>
+      <p><strong>Приклад розбіжності:</strong> вітає читачка-школярка. «Тип внеску» лишається <strong>«Письменник / Діяч»</strong> — вона показується як звичайна персональна картка з фото, окремого типу «Читач» для оформлення просто немає. А «Категорія» для неї — <strong>«Читачі»</strong>, щоб потрапила саме в цю вкладку.</p>
+      <p style="margin-top:8px">Для установи обидва поля зазвичай збігаються: тип «Установа / Колективне», категорія «Установи».</p>
+    </div>
+
+    <div class="alert rust">
+      <h4>Ніколи не залишайте «Категорію» порожньою</h4>
+      <p>Привітання з порожньою категорією і далі показується у вкладці «Всі», але <strong>зникає з усіх інших вкладок</strong> — жодна його не підхопить.</p>
+    </div>
+
+    <h3 class="sub">Шапка привітання</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що з ним</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Фото</td><td>Необов'язкове. Без нього візьметься фото з картки діяча; для установи — логотип або монограма з двох літер; якщо нічого немає — силует-заглушка.<br><strong>Заповнюйте лише якщо хочете показати інше фото</strong> — наприклад історичне, з моменту знайомства з ювіляром</td></tr>
+          <tr><td class="lbl">Ролі / Статус</td><td>Короткий текст: «Письменник · журналіст». Без нього візьмуться ролі з профілю діяча або тип установи</td></tr>
+          <tr><td class="lbl">Місто · Дата</td><td>Вільний текст, необов'язкові. Показуються разом через крапку, якщо заповнені обидва</td></tr>
+          <tr><td class="lbl">Заголовок есе</td><td>Заголовок конкретного привітання. Якщо порожній — покажеться ім'я автора</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert gold">
+      <h4>Pull-quote — єдине, що видно в режимі «Витяги»</h4>
+      <p>Одна виразна фраза з привітання, до 500 символів. Вона лишається видимою навіть коли читач перемикає сторінку в режим «Витяги» — короткий показ без розгортання повних текстів.</p>
+      <p style="margin-top:8px">Якщо хочете, щоб читач побачив хоч щось із привітання у згорнутому вигляді — <strong>обов'язково заповніть саме це поле</strong>, а не сподівайтесь що покажуться перші рядки тексту: вони якраз ховаються.</p>
+    </div>
+  </div>
+
+  <!-- ЗОБРАЖЕННЯ -->
+  <div id="images">
+    <h2>Крок 4. Зображення — тут найлегше помилитись</h2>
+    <p>У списку блоків є <strong>два</strong> варіанти для фото, і вони поводяться по-різному.</p>
+
+    <div class="alert steel">
+      <h4>«Зображення (без обтікання)» — найпростіший, але обмежений</h4>
+      <p>Просто обираєте фото, без налаштувань. <strong>У нього немає способу зробити фото великим</strong> — ширина завжди обмежена одним невеликим розміром. Тільки для дрібної ілюстрації всередині тексту.</p>
+    </div>
+
+    <h3 class="sub">«Зображення з обтіканням» — і тут ховається головна плутанина</h3>
+    <p>Поле <strong>«Вирівнювання та обтікання»</strong> визначає, чи буде фото великим чи маленьким:</p>
+
+    <div class="img-demo">
+      <div class="img-case correct">
+        <div class="ic-label">На всю ширину ✓</div>
+        <div class="img-mock img-full"></div>
+        <div class="ic-note">Велике фото на всю ширину колонки</div>
+      </div>
+      <div class="img-case">
+        <div class="ic-label">По центру</div>
+        <div class="img-mock img-center"></div>
+        <div class="ic-note">Трохи менше повної ширини</div>
+      </div>
+      <div class="img-case">
+        <div class="ic-label">Обтікання</div>
+        <div style="overflow:hidden;">
+          <div class="img-mock img-float"></div>
+          <div class="img-lines">▪▪▪▪▪▪▪▪<br>▪▪▪▪▪▪▪▪<br>▪▪▪▪▪▪▪▪</div>
+        </div>
+        <div class="ic-note">Звужується до половини, текст обтікає</div>
+      </div>
+    </div>
+
+    <div class="alert rust">
+      <h4>Найчастіша помилка</h4>
+      <p>Обрати «Обтікання ліворуч/праворуч», думаючи що це просто «версія з рамкою» — і дивуватись, чому фото маленьке. Обтікання <strong>навмисно звужує фото приблизно до половини</strong> ширини, щоб текст обтікав його збоку.</p>
+      <p style="margin-top:8px"><strong>Якщо потрібне велике фото на всю ширину — завжди обирайте «На всю ширину».</strong></p>
+    </div>
+
+    <div class="alert gold">
+      <h4>«Розмір на сторінці» — це про якість, не про розмір</h4>
+      <p>Окреме поле «Велике / Середнє / Маленьке» впливає лише на <strong>роздільність завантаженого файлу</strong>, а не на те скільки місця фото займе. «Велике» + «Обтікання ліворуч» однаково дасть вузьке фото збоку.</p>
+    </div>
+
+    <div class="alert ju">
+      <h4>Підсумок</h4>
+      <p>Велике фото на всю ширину = блок <strong>«Зображення з обтіканням»</strong> + «Вирівнювання та обтікання» = <strong>«На всю ширину»</strong>.</p>
+    </div>
+
+    <h3 class="sub">Інші блоки для особливих випадків</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Блок</th><th>Коли використовувати</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Вірш-присвята</td><td>Якщо у привітанні є вірш — окремим блоком, з опційною назвою</td></tr>
+          <tr><td class="lbl">Біографічна врізка</td><td>Виділена рамкою біографічна довідка всередині привітання</td></tr>
+          <tr><td class="lbl">Архів фото 2-3 у ряд</td><td>Кілька архівних фото поспіль, кожне з роком-плашкою і підписом</td></tr>
+          <tr><td class="lbl">Книжкова картка</td><td>Показати конкретну книжку з каталогу — обкладинка, назва, рік</td></tr>
+          <tr><td class="lbl">Цитата з бази</td><td>Цитата, яка вже є в базі цитат, із посиланням на джерело</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- РЕДАКТОР ВПАВ -->
+  <div id="crash">
+    <h2>Якщо з'явилось «Редактор щойно впав»</h2>
+    <p>Ювілейне есе — саме те місце, де це трапляється найчастіше: в одному внеску поруч стоять кілька полів з форматованим текстом, а це якраз умова виникнення помилки.</p>
+
+    <div class="alert steel">
+      <h4>Що це насправді</h4>
+      <p>Вбудований <strong>захисний механізм</strong> самого Wagtail — не помилка порталу і не щось, що можна зламати назавжди. Кожне поле з форматуванням обгорнуте захистом: якщо редактор у браузері спіткнувся, система не ламає всю сторінку, а скидає <strong>лише те одне поле</strong> до останньої збереженої версії.</p>
+      <p style="margin-top:8px"><strong>Втрачається лише те, що не було збережено від останнього «Зберегти чернетку»</strong> — і лише в тому одному полі. Сторінка в цілому і все, що вже в базі, у безпеці.</p>
+    </div>
+
+    <div class="alert rust">
+      <h4>Найчастіша причина — вставка форматованого тексту між полями</h4>
+      <p>Коли копіюєте текст із поля з форматуванням і вставляєте в інше — особливо в просте однорядкове — браузер приносить разом із текстом <strong>приховане HTML-форматування</strong> з буфера обміну. Звідси конфлікт і падіння.</p>
+    </div>
+
+    <div class="alert gold">
+      <h4>Як уникати</h4>
+      <ul>
+        <li>Не копіюйте текст з одного форматованого поля напряму в інше — краще передрукувати вручну</li>
+        <li>Якщо все-таки копіюєте — вставляйте через <code>Ctrl+Shift+V</code> (Mac: <code>Cmd+Shift+V</code>): ця команда прибирає приховане форматування ще до вставки</li>
+        <li>Зберігайте чернетку часто, поки заповнюєте великий внесок — тоді втратите лише останні хвилини, а не весь внесок</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ОСОБЛИВІ ВИПАДКИ -->
+  <div id="special">
+    <h2>Крок 5. Особливі випадки</h2>
+
+    <h3 class="sub">Довге академічне есе</h3>
+    <p>Якщо привітання — велике літературознавче есе:</p>
+    <ul style="list-style:none;padding:0;margin-bottom:10px">
+      <li style="font-size:13px;padding:3px 0 3px 16px;position:relative;">→ увімкніть <strong>«Довге есе (згорнути за замовчуванням)»</strong> — текст покажеться скорочено, з кнопкою «Читати повністю»</li>
+      <li style="font-size:13px;padding:3px 0 3px 16px;position:relative;">→ заповніть <strong>«Час читання»</strong> — наприклад «~9 хв»</li>
+      <li style="font-size:13px;padding:3px 0 3px 16px;position:relative;">→ заповніть <strong>«Аудіоверсія»</strong>, якщо є запис голосом</li>
+    </ul>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Це рідко використовуваний функціонал — після першого застосування обов'язково перегляньте опубліковану сторінку, щоб переконатись що згортання виглядає добре.</p>
+
+    <h3 class="sub">Привітання від установи — підписанти</h3>
+    <p>Якщо установа хоче перелічити конкретних людей, які підписались — це поле <strong>«Підписанти»</strong>.</p>
+
+    <div class="alert rust">
+      <h4>Не залишайте порожній рядок «про всяк випадок»</h4>
+      <p>Навіть один порожній рядок вважається непорожнім списком — і на сторінці з'явиться порожнє місце під підписом. Якщо підписантів немає — <strong>приберіть усі рядки повністю</strong>.</p>
+    </div>
+
+    <h3 class="sub">Творчі подарунки</h3>
+    <p>Окремий розділ під усіма привітаннями — не привітання, а творчі роботи: акровірш, буктрейлер, відео інсценізації, голосне читання, вірш-присвята. Додається окремо від списку внесків.</p>
+
+    <div class="alert rust">
+      <h4>Одразу заповнюйте вміст відповідно до типу</h4>
+      <p>Відео — для буктрейлера чи інсценізації, текст вірша — для вірша, рядки — для акровірша. Не залишайте картку з заголовком, але без самого відео чи тексту — вона покажеться на сторінці порожньою чи зламаною.</p>
+    </div>
+  </div>
+
+  <!-- ЧЕКЛИСТ -->
+  <div id="checklist">
+    <h2>Фінальний чеклист перед публікацією</h2>
+    <div class="checklist">
+      <h3>Перевірте кожен пункт</h3>
+      <div class="chk"><div class="box"></div><span>«Тип публікації» на сторінці = «Ювілейне есе»</span></div>
+      <div class="chk"><div class="box"></div><span>Порахувати вручну й вписати «Кількість міст» і «Кількість установ»</span></div>
+      <div class="chk"><div class="box"></div><span>Для читачів і школярів — ім'я текстом, не створювати картку діяча</span></div>
+      <div class="chk"><div class="box"></div><span>У кожному привітанні заповнена «Категорія» — не залишати порожньою</span></div>
+      <div class="chk"><div class="box"></div><span>Для привітань від читачів: «Категорія» = «Читачі», «Тип внеску» лишається «Письменник / Діяч»</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо хочете щоб щось було видно в режимі «Витяги» — заповнений Pull-quote</span></div>
+      <div class="chk"><div class="box"></div><span>Для великого фото — «Зображення з обтіканням» + «На всю ширину», не «обтікання»</span></div>
+      <div class="chk"><div class="box"></div><span>«Підписанти» — або реальний список, або жодного рядка</span></div>
+      <div class="chk"><div class="box"></div><span>Кожен «Творчий подарунок» має заповнений контент відповідно до свого типу</span></div>
+      <div class="chk"><div class="box"></div><span>При переносі тексту між полями — не копіювати з форматованого поля напряму; зберігати чернетку часто</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Ювілейне есе» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

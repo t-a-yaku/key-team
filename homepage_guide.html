@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Головна сторінка — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --hp:#1a5c6b;--hp-light:#e6f2f5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:880px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--hp);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:32px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:22px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* КАРТА */
+  .map{display:flex;flex-direction:column;gap:2px;margin:16px 0;background:var(--pk-border);border:1px solid var(--pk-border);border-radius:6px;overflow:hidden;}
+  .map-row{display:grid;grid-template-columns:1fr 1fr;background:var(--pk-paper);}
+  .map-what{padding:14px 18px;border-right:1px solid var(--pk-border);font-size:13px;}
+  .map-where{padding:14px 18px;background:var(--hp-light);font-size:12.5px;font-weight:600;color:var(--hp);display:flex;align-items:center;}
+
+  /* БЛОКИ */
+  .group-label{display:flex;align-items:center;gap:10px;margin:20px 0 10px;}
+  .group-label .gl-tag{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:3px 10px;border-radius:2px;color:#fff;flex-shrink:0;}
+  .gl-vanish{background:var(--pk-rust);}
+  .gl-always{background:var(--pk-sage);}
+  .group-label .gl-text{font-size:12.5px;color:var(--pk-muted);}
+
+  .table-wrap{overflow-x:auto;margin:12px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:140px;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.hp{background:var(--hp-light);border-color:var(--hp);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.hp h4{color:var(--hp);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.hp ul li::before{content:'→';position:absolute;left:0;color:var(--hp);}
+
+  /* ЧЕКЛИСТ */
+  .checklist{background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;padding:20px 24px;margin:16px 0;}
+  .checklist h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--pk-border);}
+  .chk{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--pk-border);}
+  .chk:last-child{border-bottom:none;}
+  .box{width:16px;height:16px;border:1.5px solid var(--pk-border);border-radius:2px;background:#fff;flex-shrink:0;margin-top:2px;}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--pk-border);padding:14px 0;}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-item .q{font-size:13.5px;font-weight:600;margin-bottom:5px;color:var(--hp);}
+  .faq-item .a{font-size:13px;color:var(--pk-ink);line-height:1.6;}
+
+  /* МЕНЮ-ПРИКЛАД */
+  .menu-mock{background:#fff;border:1px solid var(--pk-border);border-radius:4px;padding:14px 18px;margin:12px 0;max-width:420px;font-size:12.5px;}
+  .menu-mock .mm-item{padding:6px 0;display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid var(--pk-paper-dark);}
+  .menu-mock .mm-item:last-child{border-bottom:none;}
+  .menu-mock .mm-name{font-weight:500;}
+  .menu-mock .mm-rule{color:var(--pk-muted);font-size:11px;font-family:monospace;}
+  .menu-mock .mm-sep{border-top:2px solid var(--pk-border);margin:6px 0;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.map-row{grid-template-columns:1fr}.map-what{border-right:none;border-bottom:1px solid var(--pk-border)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#map" class="active">Де що редагується</a>
+  <a href="#blocks">Вісім блоків</a>
+  <a href="#behavior">Поведінка</a>
+  <a href="#promo">Промо-блок</a>
+  <a href="#menu">Меню публікацій</a>
+  <a href="#faq">Питання</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Контент-менеджер</div>
+  <h1>Головна сторінка:<br><em>що бачить людина, яка зайшла вперше</em></h1>
+  <p class="lead">Банер, порядок блоків, промо-оголошення, меню «Публікації». Головна складається з трьох незалежних частин — і вони живуть у різних місцях адмінки.</p>
+
+  <!-- КАРТА -->
+  <div id="map">
+    <h2>Де що редагується</h2>
+    <p>Це найчастіша причина «не можу знайти, де це змінити».</p>
+
+    <div class="map">
+      <div class="map-row">
+        <div class="map-what">Банер угорі, порядок і налаштування блоків</div>
+        <div class="map-where">Сторінки → «Головна» → Редагувати</div>
+      </div>
+      <div class="map-row">
+        <div class="map-what">Кольорова смужка-оголошення під банером</div>
+        <div class="map-where">Уривки → Промо-блоки</div>
+      </div>
+      <div class="map-row">
+        <div class="map-what">Випадайка «Публікації» у верхньому меню сайту</div>
+        <div class="map-where">Уривки → Меню публікацій</div>
+      </div>
+    </div>
+
+    <h3 class="sub">Вкладка «Вміст» — банер</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що це</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Заголовок банера</td><td>Велика назва на першому екрані</td></tr>
+          <tr><td class="lbl">Підзаголовок</td><td>Рядок під назвою</td></tr>
+          <tr><td class="lbl">Текст кнопки</td><td>Напис на головній кнопці банера</td></tr>
+          <tr><td class="lbl">Вступний текст</td><td>Форматований текст під банером</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Цифри в банері (скільки книг, діячів, публікацій) рахуються автоматично і не редагуються — вони завжди показують реальний стан бази.</p>
+  </div>
+
+  <!-- БЛОКИ -->
+  <div id="blocks">
+    <h2>Вісім блоків — і чому блок може бути порожнім</h2>
+    <p>Вкладка <strong>«Віджети»</strong>. Угорі — список блоків з перетягуванням, нижче — налаштування кожного. Блоки поводяться <strong>по-різному</strong>, коли даних немає.</p>
+
+    <div class="alert rust">
+      <h4>Рядок блоку не можна видалити — і це навмисно</h4>
+      <p>Кнопки видалення немає. Якщо блок не потрібен — <strong>зніміть перемикач «Показувати»</strong>: він зникне з сайту, але лишиться в списку, щоб його можна було повернути.</p>
+      <p style="margin-top:8px">Причина: відновити видалений рядок можна тільки знаючи внутрішній технічний ключ блоку, а це не робота контент-менеджера.</p>
+    </div>
+
+    <div class="group-label">
+      <span class="gl-tag gl-vanish">Група 1</span>
+      <span class="gl-text">Зникають без сліду — немає даних, блок просто не показується, без заглушки</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Блок</th><th>Звідки бере дані</th><th>Коли зникне</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Фокус тижня</td><td>Книги з тегом із поля «Тег для Фокусу тижня»</td><td>Практично ніколи: якщо тег не заданий або порожній, підставляє 4 останні додані книги</td></tr>
+          <tr><td class="lbl">Спецпроект</td><td>Книги й новини з тегом із поля «Тег для спецпроекту»</td><td>Тег не заданий або за ним немає ні книг, ні новин</td></tr>
+          <tr><td class="lbl">Ювіляри місяця</td><td>Діячі з місяцем народження = поточний <strong>і</strong> ввімкненим «Показувати на головній» у картці</td><td>Таких діячів цього місяця немає</td></tr>
+          <tr><td class="lbl">Пульс життя</td><td>Останні публікації за датою першої публікації</td><td>Публікацій немає</td></tr>
+          <tr><td class="lbl">Золоте сузір'я</td><td>Діячі з позначкою «Золота колекція», випадкова вибірка</td><td>Жодного діяча не позначено</td></tr>
+          <tr><td class="lbl">Останні рецензії</td><td>Книги з публікацій типу «Рецензія» — <strong>тільки ті, що мають обкладинку</strong></td><td>У рецензій немає пов'язаних книг або в книг немає обкладинок</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-label">
+      <span class="gl-tag gl-always">Група 2</span>
+      <span class="gl-text">Показуються завжди, поки ввімкнені — дані впливають лише на вміст</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Блок</th><th>Що дає контент</th><th>Що буде без даних</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Машина часу</td><td>Видання з позначкою «Культова обкладинка», до 16 випадкових</td><td>Блок працює повністю. Обкладинки тут — лише напівпрозора мозаїка на тлі. Без культових обкладинок тло буде просто чистим</td></tr>
+          <tr><td class="lbl">Новини / Події / Нагороди</td><td>3 новини · 3 найближчі майбутні події · 3 останні нагороди</td><td>Три колонки лишаються, у порожніх — підпис «Новин поки немає». Якщо майбутніх подій немає — покаже 3 останні минулі</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert steel">
+      <h4>Єдиний блок із видимими заглушками — «Новини / Події / Нагороди»</h4>
+      <p>Якщо на сайті висить «Новин поки немає», прибрати можна двома шляхами: додати новину або вимкнути весь блок перемикачем «Показувати».</p>
+    </div>
+
+    <h3 class="sub">Налаштування окремих блоків</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Група полів</th><th>Що налаштовується</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Фокус (за тегом)</td><td>Заголовок блоку · Тег для Фокусу тижня</td></tr>
+          <tr><td class="lbl">Спецпроект</td><td>Заголовок блоку · Тег для спецпроекту</td></tr>
+          <tr><td class="lbl">Ювіляри</td><td>Заголовок · Скільки діячів (за замовч. 6) · Показувати тільки ювілеї кратні 5</td></tr>
+          <tr><td class="lbl">Пульс життя</td><td>Заголовок · Скільки публікацій (4)</td></tr>
+          <tr><td class="lbl">Золоті письменники</td><td>Заголовок · Скільки авторів (5)</td></tr>
+          <tr><td class="lbl">Рецензії на книги</td><td>Заголовок · Скільки книг (4)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--pk-muted)">«Показувати тільки ювілеї (кратні 5)» увімкнено за замовчуванням — у блок потрапляють лише діячі з круглою датою. Вимкніть, щоб показати всіх іменинників місяця.</p>
+  </div>
+
+  <!-- ПОВЕДІНКА -->
+  <div id="behavior">
+    <h2>Три речі про поведінку головної</h2>
+
+    <div class="alert gold">
+      <h4>1. Назва місяця в заголовку «Ювіляри» підставляється сама</h4>
+      <p>Напишіть «Вітаємо у червні!» — і в липні на сайті з'явиться «Вітаємо у липні!». Перемикати вручну щомісяця не треба. Працює для назви місяця в місцевому відмінку.</p>
+    </div>
+
+    <div class="alert rust">
+      <h4>2. Головна кешується на годину — публікація скидає кеш</h4>
+      <p>Списки книг, ювілярів, новин зберігаються в кеш на <strong>1 годину</strong>. Нова книга з'явиться на головній не миттєво.</p>
+      <p style="margin-top:8px"><strong>Щоб побачити зміни негайно</strong> — відкрийте «Головна» в адмінці і натисніть «Опублікувати» ще раз, навіть нічого не змінюючи.</p>
+      <p style="margin-top:8px">Виняток — порядок і видимість блоків: діють одразу, без публікації.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>3. «Останні рецензії» щоразу різні</h4>
+      <p>Цей блок навмисно не кешується: при кожному оновленні читач бачить іншу добірку. Так само випадкові «Золоте сузір'я» і «Машина часу» — але ці два оновлюються раз на годину, разом із кешем.</p>
+    </div>
+  </div>
+
+  <!-- ПРОМО -->
+  <div id="promo">
+    <h2>Промо-блок — оголошення під банером</h2>
+    <p><strong>Уривки → Промо-блоки.</strong> Кольорова смужка з іконкою, текстом і кнопкою — для анонсу кампанії, конкурсу, події.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Поле</th><th>Що вписувати</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Показувати на головній</td><td>Перемикач. За замовчуванням вимкнено</td></tr>
+          <tr><td class="lbl">Іконка (емодзі)</td><td>Один емодзі, за замовчуванням 🗺</td></tr>
+          <tr><td class="lbl">Заголовок</td><td>Головний рядок оголошення</td></tr>
+          <tr><td class="lbl">Підзаголовок</td><td>Уточнення, необов'язково</td></tr>
+          <tr><td class="lbl">Мітка дати</td><td>Напр. «до 30 вересня». Необов'язково</td></tr>
+          <tr><td class="lbl">Текст кнопки</td><td>За замовчуванням «Відкрити →»</td></tr>
+          <tr><td class="lbl">URL кнопки</td><td>Куди веде. Напр. <code>/vybir-chitachiv-2025/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Показується лише ОДИН промо-блок — перший із увімкнених</h4>
+      <p>Щоб показати інший — вимкніть «Показувати на головній» у чинного.</p>
+      <p style="margin-top:8px"><strong>Старі промо-блоки не видаляйте</strong> — просто вимикайте. Наступного року кампанія повториться, і блок можна ввімкнути знову, змінивши дати.</p>
+    </div>
+
+    <p style="font-size:12.5px;color:var(--pk-muted)">У списку уривків увімкнений блок позначений ✅, вимкнений — ⏸.</p>
+  </div>
+
+  <!-- МЕНЮ -->
+  <div id="menu">
+    <h2>Меню «Публікації» у шапці сайту</h2>
+    <p><strong>Уривки → Меню публікацій.</strong> Один уривок = одна гілка меню; усередині — список пунктів, які перетягуються в потрібному порядку.</p>
+
+    <h3 class="sub">Як вибрати між полями пункту</h3>
+    <div class="alert hp">
+      <h4>Чотири типові випадки</h4>
+      <ul>
+        <li><strong>Найпростіший</strong> — оберіть лише «Тип публікації». Пункт поведе на перелік публікацій цього типу</li>
+        <li><strong>Тематична добірка</strong> — впишіть «Тег (slug)» замість типу</li>
+        <li><strong>Особлива сторінка поза переліком</strong> — впишіть «Пряме посилання». Решту полів заповнювати не треба</li>
+        <li><strong>Візуально розділити групи</strong> — окремий рядок із увімкненим «Роздільник»</li>
+      </ul>
+    </div>
+
+    <div class="alert steel">
+      <h4>«Пряме посилання» ігнорує всі інші поля</h4>
+      <p>Якщо воно заповнене — тип публікації, тег і режим не спрацюють. Це навмисно: пряме посилання має найвищий пріоритет.</p>
+    </div>
+
+    <h3 class="sub">Як меню виглядає зараз</h3>
+    <div class="menu-mock">
+      <div class="mm-item"><span class="mm-name">Рецензії та критика</span><span class="mm-rule">тип: Рецензія</span></div>
+      <div class="mm-item"><span class="mm-name">Наукові дослідження</span><span class="mm-rule">тип: Дослідження</span></div>
+      <div class="mm-item"><span class="mm-name">Методика і практика</span><span class="mm-rule">тип: Методичний</span></div>
+      <div class="mm-item"><span class="mm-name">Письменник про письменника</span><span class="mm-rule">тип відповідний</span></div>
+      <div class="mm-item"><span class="mm-name">Ювілейні есе</span><span class="mm-rule">тип: Ювілейне есе</span></div>
+      <div class="mm-item"><span class="mm-name">Інтерв'ю та розмови</span><span class="mm-rule">тип: Інтерв'ю</span></div>
+      <div class="mm-item"><span class="mm-name">Огляди</span><span class="mm-rule">тип: Огляд</span></div>
+      <div class="mm-sep"></div>
+      <div class="mm-item"><span class="mm-name">Спецпроекти</span><span class="mm-rule">режим: Спецпроекти</span></div>
+      <div class="mm-item"><span class="mm-name">Усі публікації →</span><span class="mm-rule">режим: Стрічка</span></div>
+    </div>
+  </div>
+
+  <!-- ЧЕКЛИСТ -->
+  <div>
+    <h2>Змінили головну — перевірте</h2>
+    <div class="checklist">
+      <h3>Перед тим як закрити вкладку</h3>
+      <div class="chk"><div class="box"></div><span>Відкрив сайт в анонімному вікні — зміни видно?</span></div>
+      <div class="chk"><div class="box"></div><span>Якщо не видно: відкрив «Головна» в адмінці і натиснув «Опублікувати» (скидає кеш)</span></div>
+      <div class="chk"><div class="box"></div><span>Увімкнений блок не показується → перевірив у таблиці вище, звідки він бере дані</span></div>
+      <div class="chk"><div class="box"></div><span>Промо-блок один увімкнений, у решти «Показувати на головній» знято</span></div>
+      <div class="chk"><div class="box"></div><span>Перевірив головну на телефоні — блоки не ламають верстку</span></div>
+      <div class="chk"><div class="box"></div><span>Порядок блоків логічний: найважливіше вище</span></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq">
+    <h2>Часті питання</h2>
+
+    <div class="faq-item">
+      <div class="q">Увімкнув блок «Спецпроект», а його немає на сайті.</div>
+      <div class="a">Найімовірніше не заповнене поле «Тег для спецпроекту» — або за цим тегом ще немає жодної книги чи новини. Блок без даних просто не показується.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Блок «Останні рецензії» показує не всі рецензії.</div>
+      <div class="a">У блок потрапляють лише книги, у яких <strong>є обкладинка</strong>. Рецензія на книгу без завантаженої обкладинки в цей блок не потрапить — додайте обкладинку в картку книги.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Хочу тимчасово прибрати блок і повернути через місяць.</div>
+      <div class="a">Зніміть «Показувати» — рядок лишиться на місці з тим самим порядком. Не видаляйте (та й кнопки видалення тут немає).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Випадково зламав порядок блоків.</div>
+      <div class="a">Порядок не критичний — просто перетягніть рядки як треба. Якщо список блоків взагалі порожній, сайт покаже всі вісім блоків у стандартному порядку, тож головна не зникне.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Змінив заголовок блоку — на сайті старий.</div>
+      <div class="a">Це кеш. Натисніть «Опублікувати» на сторінці «Головна».</div>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Головна сторінка» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

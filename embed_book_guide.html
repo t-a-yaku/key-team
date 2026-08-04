@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Як показати книгу в тексті — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --emb:#4a2060;--emb-light:#f5eafa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:900px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--emb);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:36px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:20px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* ШВИДКА КАРТА ВИБОРУ */
+  .quick-map{display:flex;flex-direction:column;gap:2px;margin:20px 0;background:var(--pk-border);border-radius:6px;overflow:hidden;border:1px solid var(--pk-border);}
+  .qm-row{display:grid;grid-template-columns:1.3fr 1fr;background:var(--pk-paper);}
+  .qm-situation{padding:16px 20px;border-right:1px solid var(--pk-border);}
+  .qm-situation .qs-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);margin-bottom:4px;}
+  .qm-situation .qs-text{font-size:13px;line-height:1.5;}
+  .qm-choice{padding:16px 20px;display:flex;align-items:center;background:var(--emb-light);}
+  .qm-choice .qc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:14px;color:var(--emb);}
+
+  /* СЦЕНАРІЇ — картки */
+  .scenario{border:1px solid var(--pk-border);border-radius:6px;margin-bottom:16px;overflow:hidden;}
+  .sc-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:var(--pk-paper-dark);border-bottom:1px solid var(--pk-border);}
+  .sc-icon{font-size:20px;flex-shrink:0;}
+  .sc-header h3{font-size:15px;font-weight:600;flex:1;margin:0;}
+  .sc-tag{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;background:var(--emb);color:#fff;flex-shrink:0;}
+  .sc-body{padding:18px 20px;}
+  .sc-body p{font-size:13px;margin-bottom:8px;max-width:100%;}
+  .sc-body p:last-child{margin-bottom:0;}
+  .sc-visual{background:var(--pk-paper-dark);border:1px dashed var(--pk-border);border-radius:4px;padding:14px 16px;margin:10px 0;font-size:12px;color:var(--pk-muted);}
+
+  /* МОК ГАЛЕРЕЇ */
+  .mock-gallery{display:flex;gap:8px;margin:8px 0;}
+  .mock-cover{width:52px;height:76px;background:linear-gradient(135deg,#8b7355,#6b5a45);border-radius:2px;flex-shrink:0;position:relative;}
+  .mock-cover .mc-cap{position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:8px;color:var(--pk-muted);white-space:nowrap;}
+
+  .mock-slider{display:flex;gap:6px;overflow:hidden;margin:8px 0;}
+  .mock-slide{width:70px;height:50px;background:linear-gradient(135deg,#5a7a8b,#4a6070);border-radius:3px;flex-shrink:0;}
+
+  .mock-inline{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--pk-border);border-radius:4px;padding:8px 12px;margin:8px 0;max-width:340px;}
+  .mock-inline .mi-cover{width:32px;height:48px;background:linear-gradient(135deg,#7a5a8b,#5a4070);border-radius:2px;flex-shrink:0;}
+  .mock-inline .mi-text{font-size:11px;line-height:1.3;}
+  .mock-inline .mi-text strong{display:block;font-size:12px;}
+
+  .mock-embedded{background:#fff;border:1px solid var(--pk-border);border-radius:4px;padding:14px;margin:8px 0;display:flex;gap:14px;max-width:420px;}
+  .mock-embedded .me-cover{width:60px;height:88px;background:linear-gradient(135deg,#3a5a4a,#2a4535);border-radius:3px;flex-shrink:0;}
+  .mock-embedded .me-info{font-size:11px;line-height:1.4;}
+  .mock-embedded .me-info strong{display:block;font-size:13px;margin-bottom:3px;}
+  .mock-embedded .me-badges{display:flex;gap:4px;margin-top:6px;}
+  .mock-embedded .me-badge{font-size:8px;background:var(--pk-paper-dark);padding:2px 6px;border-radius:8px;color:var(--pk-muted);}
+
+  .mock-float{background:#fff;border:1px solid var(--pk-border);border-radius:4px;padding:14px;margin:8px 0;}
+  .mock-float .mf-cover{width:44px;height:64px;background:linear-gradient(135deg,#8b5a3a,#6b4530);border-radius:2px;float:left;margin:0 10px 6px 0;}
+  .mock-float p{font-size:10px;color:var(--pk-muted);line-height:1.5;margin:0;max-width:100%;}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.purple{background:var(--emb-light);border-color:var(--emb);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.purple h4{color:var(--emb);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.purple ul li::before{content:'→';position:absolute;left:0;color:var(--emb);}
+
+  /* ТАБЛИЦЯ ПОРІВНЯННЯ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  tbody tr{border-bottom:1px solid var(--pk-border);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);white-space:nowrap;min-width:140px;}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.qm-row{grid-template-columns:1fr}.qm-situation{border-right:none;border-bottom:1px solid var(--pk-border)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#map" class="active">Швидкий вибір</a>
+  <a href="#gallery">Галерея-поличка</a>
+  <a href="#slider">Слайдер ілюстрацій</a>
+  <a href="#embedded">Вбудований твір</a>
+  <a href="#inline">Книжка inline</a>
+  <a href="#simple">Просте зображення</a>
+  <a href="#one-way">Важливо: тільки в один бік</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Автори публікацій — вибір способу показу книги</div>
+  <h1>Як показати книгу<br><em>в тексті публікації</em></h1>
+  <p class="lead">У StreamField-редакторі публікації є кілька способів вставити зображення книги чи обкладинки. Цей довідник — не перелік технічних блоків, а підказка «який у мене матеріал → який блок брати».</p>
+
+  <!-- ШВИДКА КАРТА -->
+  <div id="map">
+    <h2>Швидкий вибір за ситуацією</h2>
+    <div class="quick-map">
+      <div class="qm-row">
+        <div class="qm-situation"><div class="qs-label">Ситуація</div><div class="qs-text">Огляд 5 книжок-малюток з конкурсу — потрібна акуратна «поличка» з підписом під кожною</div></div>
+        <div class="qm-choice"><span class="qc-name">Галерея / Слайдер (галерея)</span></div>
+      </div>
+      <div class="qm-row">
+        <div class="qm-situation"><div class="qs-label">Ситуація</div><div class="qs-text">Кілька ілюстрацій з книги в хорошій якості — текст їх не описує окремо, але читач захоче погортати</div></div>
+        <div class="qm-choice"><span class="qc-name">Галерея / Слайдер (слайдер)</span></div>
+      </div>
+      <div class="qm-row">
+        <div class="qm-situation"><div class="qs-label">Ситуація</div><div class="qs-text">Рецензія на багатотомне видання — не хочеться переносити список томів у текст</div></div>
+        <div class="qm-choice"><span class="qc-name">Вбудований твір</span></div>
+      </div>
+      <div class="qm-row">
+        <div class="qm-situation"><div class="qs-label">Ситуація</div><div class="qs-text">У тексті побіжно згадується книга, яка не є предметом розділу</div></div>
+        <div class="qm-choice"><span class="qc-name">Книжка inline</span></div>
+      </div>
+      <div class="qm-row">
+        <div class="qm-situation"><div class="qs-label">Ситуація</div><div class="qs-text">Швидкий первинний огляд, одна обкладинка поруч із абзацом</div></div>
+        <div class="qm-choice"><span class="qc-name">Просте зображення з обтіканням</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ГАЛЕРЕЯ -->
+  <div id="gallery" class="scenario">
+    <div class="sc-header"><span class="sc-icon">🖼️</span><h3>Галерея / Слайдер — режим «Галерея»</h3><span class="sc-tag">Поличка з підписами</span></div>
+    <div class="sc-body">
+      <p><strong>Ситуація:</strong> огляд п'яти книжок-малюток з роботами переможців регіонального конкурсу. Кожну обкладинку хочеться показати з власним підписом — номінацією або коротким бібліографічним описом.</p>
+      <div class="sc-visual">
+        <div class="mock-gallery">
+          <div class="mock-cover"><span class="mc-cap">1 місце</span></div>
+          <div class="mock-cover"><span class="mc-cap">2 місце</span></div>
+          <div class="mock-cover"><span class="mc-cap">3 місце</span></div>
+          <div class="mock-cover"><span class="mc-cap">Відзнака</span></div>
+          <div class="mock-cover"><span class="mc-cap">Відзнака</span></div>
+        </div>
+      </div>
+      <p>Оберіть режим «Галерея» — кожна обкладинка стає окремою карткою в рядок зі своїм підписом. Виходить акуратна «поличка». У наступному фрагменті тексту вже розповідайте про конкурс — блок галереї не заважає викладу.</p>
+    </div>
+  </div>
+
+  <!-- СЛАЙДЕР -->
+  <div id="slider" class="scenario">
+    <div class="sc-header"><span class="sc-icon">🎞️</span><h3>Галерея / Слайдер — режим «Слайдер»</h3><span class="sc-tag">Погортати ілюстрації</span></div>
+    <div class="sc-body">
+      <p><strong>Ситуація:</strong> у статті наведено кілька ілюстрацій з книги в хорошій роздільній здатності. Текст не розповідає про кожну окремо — але читач, найімовірніше, захоче їх розглянути одну за одною.</p>
+      <div class="sc-visual">
+        <div class="mock-slider">
+          <div class="mock-slide"></div>
+          <div class="mock-slide"></div>
+          <div class="mock-slide" style="opacity:0.4"></div>
+        </div>
+      </div>
+      <p>Оберіть режим «Слайдер» — читач прогортає ілюстрації після того як прочитає текст. Підходить коли автор надає зображення саме для розглядання, а не для ілюстрування конкретного абзацу.</p>
+    </div>
+  </div>
+
+  <!-- ВБУДОВАНИЙ ТВІР -->
+  <div id="embedded" class="scenario">
+    <div class="sc-header"><span class="sc-icon">📗</span><h3>Вбудований твір</h3><span class="sc-tag">Велика картка книги</span></div>
+    <div class="sc-body">
+      <p><strong>Ситуація:</strong> рецензія на багатотомне видання. Замість переносити перелік томів у текст — редактор вставляє блок, і зосереджується на самому описі, а список видань показує сам блок.</p>
+      <div class="sc-visual">
+        <div class="mock-embedded">
+          <div class="me-cover"></div>
+          <div class="me-info">
+            <strong>Сині води</strong>
+            Рутківський Володимир
+            <div class="me-badges"><span class="me-badge">2015</span><span class="me-badge">3 томи</span><span class="me-badge">пригодницька</span></div>
+          </div>
+        </div>
+      </div>
+      <p>Велика картка: обкладинка (для багатотомних — стрічка мініатюр томів), назва і автори з посиланнями, бейджі року й жанру. Можна додати авторський коментар і показати зміст збірки.</p>
+      <p style="font-size:12px;color:var(--pk-muted)">Бере поточний стан книги з каталогу в момент показу статті — не «фотографію» на дату написання.</p>
+    </div>
+  </div>
+
+  <!-- INLINE -->
+  <div id="inline" class="scenario">
+    <div class="sc-header"><span class="sc-icon">📄</span><h3>Книжка inline</h3><span class="sc-tag">Компактна згадка</span></div>
+    <div class="sc-body">
+      <p><strong>Ситуація:</strong> у тексті побіжно згадується книга, яка не є предметом цього розділу — наприклад, порівняння або відсилання до іншого твору автора.</p>
+      <div class="sc-visual">
+        <div class="mock-inline">
+          <div class="mi-cover"></div>
+          <div class="mi-text"><strong>Тореадори з Васюківки</strong>2004 · пригодницька, гумор</div>
+        </div>
+      </div>
+      <p>Компактний рядок: маленька обкладинка, назва з посиланням, рік і до двох жанрів. Можна додати коротку однорядкову примітку простим текстом.</p>
+    </div>
+  </div>
+
+  <!-- ПРОСТЕ ЗОБРАЖЕННЯ -->
+  <div id="simple" class="scenario">
+    <div class="sc-header"><span class="sc-icon">🖼️</span><h3>Просте зображення з обтіканням</h3><span class="sc-tag">Швидко і зручно</span></div>
+    <div class="sc-body">
+      <p><strong>Ситуація:</strong> потрібен швидкий первинний огляд — обкладинка поруч з абзацом тексту, без карток і бейджів.</p>
+      <div class="sc-visual">
+        <div class="mock-float">
+          <div class="mf-cover"></div>
+          <p>Це найпростіший і найшвидший спосіб — просто зображення з вирівнюванням, текст обтікає його з боку. Добре підходить коли треба швидко зверстати огляд і немає часу на складніші блоки.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert gold">
+    <h4>Незалежно від блоку — підпис обкладинки одразу у форматі Автор_Назва_Видавництво_Рік</h4>
+    <p>Яким би блоком ви не скористались, приділіть увагу назві файлу обкладинки одразу при завантаженні: <code>Прізвище_Назва_Видавництво_Рік</code>. Коли книгу пізніше заводитимуть у каталог — обкладинку легко знайти і прив'язати, не завантажуючи наново.</p>
+  </div>
+
+
+  <!-- ПОРІВНЯННЯ -->
+  <h2>Коротке порівняння</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Блок</th><th>Вага на сторінці</th><th>Найкраще для</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">Галерея (режим)</td><td>Середня — ряд карток з підписами</td><td>Кілька книг одного матеріалу — конкурс, добірка</td></tr>
+        <tr><td class="lbl">Слайдер (режим)</td><td>Легка — прогортати</td><td>Ілюстрації для розглядання, не для пояснення</td></tr>
+        <tr><td class="lbl">Вбудований твір</td><td>Велика — головна картка</td><td>Один твір у центрі уваги, особливо багатотомний</td></tr>
+        <tr><td class="lbl">Книжка inline</td><td>Мінімальна — рядок у тексті</td><td>Побіжна згадка книги не за темою розділу</td></tr>
+        <tr><td class="lbl">Просте зображення</td><td>Мінімальна — картинка з обтіканням</td><td>Швидкий огляд без карток</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ВАЖЛИВО: ОДИН БІК -->
+  <div id="one-way">
+    <h2>Важливо: жоден із цих блоків не створює зв'язок у графі</h2>
+    <p>«Вбудований твір» і «Книжка inline» показують книгу з каталогу — але це лише візуальне відображення, односторонній показ. Вставлена так книга <strong>не з'являється автоматично</strong> у зв'язках публікації чи на сторінці самої книги.</p>
+
+    <div class="alert rust">
+      <h4>Що не відбувається автоматично</h4>
+      <ul>
+        <li>Книга не потрапляє у список «Книги у статті» (той бере лише окремі поля зв'язків публікації)</li>
+        <li>Публікація не з'являється в сайдбарі «Рецензії/публікації» на сторінці книги</li>
+        <li>Публікація не потрапляє в PDF-конструктор книги</li>
+        <li>Текст блоку не впливає на прев'ю статті чи пошук</li>
+      </ul>
+    </div>
+
+    <div class="alert purple">
+      <h4>Якщо потрібен реальний зв'язок — окрема дія</h4>
+      <p>Якщо книга, вставлена через один з цих блоків, має також з'явитись у сайдбарі статті чи на сторінці/PDF книги — додайте її окремо через панель «Пов'язані твори» на сторінці публікації. Автоматичного зв'язку немає, це свідома дія редактора.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Як показати книгу в тексті» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Липень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Навчальні програми МОН — Майстерня КЛЮЧ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-paper:#f7f3ec;--pk-ink:#1a1410;--pk-gold:#b8860b;--pk-gold-light:#faf5e4;
+    --pk-rust:#8b3a1a;--pk-rust-light:#fdf3f0;--pk-steel:#2e4a6b;--pk-steel-light:#eef2f7;
+    --pk-sage:#3d5c3d;--pk-sage-light:#f0f5f0;--pk-muted:#6b5f52;
+    --pk-border:#d4c9b8;--pk-paper-dark:#ede8df;
+    --cur:#2a2a6b;--cur-light:#ebebf7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Geologica',sans-serif;font-weight:300;background:var(--pk-paper);color:var(--pk-ink);line-height:1.65;padding:0;}
+  nav{position:sticky;top:0;z-index:100;background:var(--pk-ink);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  nav .nav-logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--pk-gold);letter-spacing:0.05em;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:8px;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+  nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:14px 12px;white-space:nowrap;transition:color 0.2s;flex-shrink:0;}
+  nav a:hover{color:#fff;}
+  nav a.active{color:var(--pk-gold);}
+  .page{max-width:880px;margin:0 auto;padding:48px 24px 100px;}
+
+  .doc-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:12px;background:var(--cur);color:#fff;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;margin-bottom:10px;}
+  h1 em{font-style:italic;color:var(--pk-gold);}
+  .lead{font-size:14px;color:var(--pk-muted);max-width:660px;line-height:1.6;margin-bottom:24px;}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--pk-ink);margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--pk-border);}
+  h3.sub{font-size:14px;font-weight:600;margin:22px 0 8px;}
+  p{font-size:13.5px;line-height:1.65;margin-bottom:10px;max-width:700px;}
+  code{background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;}
+
+  /* СТРУКТУРА */
+  .tree{background:var(--pk-ink);border-radius:6px;padding:22px 26px;margin:16px 0;font-family:monospace;font-size:12.5px;line-height:2;color:rgba(247,243,236,0.7);}
+  .tree .t-root{color:var(--pk-gold);font-weight:700;}
+  .tree .t-page{color:#fff;}
+  .tree .t-note{color:rgba(247,243,236,0.4);font-family:'Geologica',sans-serif;font-size:11px;}
+
+  /* ГОЛОВНЕ ПИТАННЯ */
+  .fork{background:var(--cur-light);border:2px solid var(--cur);border-radius:6px;padding:20px 24px;margin:20px 0;}
+  .fork .fk-q{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--pk-ink);margin-bottom:14px;}
+  .fork .fk-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .fork .fk-box{background:#fff;border-radius:4px;padding:14px 16px;}
+  .fork .fk-box .fb-answer{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cur);margin-bottom:6px;}
+  .fork .fk-box .fb-do{font-size:12.5px;line-height:1.5;}
+
+  /* ФОРМИ */
+  .form-card{border:1px solid var(--pk-border);border-radius:6px;margin-bottom:12px;overflow:hidden;}
+  .fc-head{display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--pk-paper-dark);border-bottom:1px solid var(--pk-border);}
+  .fc-num{width:26px;height:26px;border-radius:50%;background:var(--cur);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .fc-head h4{font-size:13.5px;font-weight:600;margin:0;flex:1;}
+  .fc-tag{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;flex-shrink:0;}
+  .tag-simple{background:var(--pk-sage-light);color:var(--pk-sage);border:1px solid var(--pk-sage);}
+  .tag-group{background:var(--cur-light);color:var(--cur);border:1px solid var(--cur);}
+  .fc-body{padding:14px 18px;}
+  .fc-example{font-style:italic;font-size:12.5px;color:var(--pk-muted);padding-left:12px;border-left:3px solid var(--pk-border);margin-bottom:10px;}
+  .fc-body p{font-size:12.5px;margin:0;max-width:100%;}
+
+  /* МІНІ-ТАБЛИЦЯ */
+  .mini-table{width:100%;border-collapse:collapse;font-size:11.5px;margin:8px 0;}
+  .mini-table th{padding:6px 8px;text-align:left;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:1px solid var(--pk-border);}
+  .mini-table td{padding:6px 8px;border-bottom:1px solid var(--pk-border);}
+  .mini-table tr:last-child td{border-bottom:none;}
+  .mini-table code{font-size:10.5px;}
+
+  /* ТАБЛИЦІ */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table.full{width:100%;border-collapse:collapse;font-size:13px;}
+  table.full thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pk-muted);background:var(--pk-paper-dark);border-bottom:2px solid var(--pk-border);}
+  table.full tbody tr{border-bottom:1px solid var(--pk-border);}
+  table.full tbody tr:last-child{border-bottom:none;}
+  table.full td{padding:10px 14px;vertical-align:top;line-height:1.5;}
+  table.full td.lbl{font-weight:600;font-size:12px;background:var(--pk-paper-dark);border-right:1px solid var(--pk-border);min-width:150px;}
+  table.full td.req{color:var(--pk-sage);font-weight:700;white-space:nowrap;}
+  table.full td.err{color:var(--pk-rust);}
+  table.full td.ok{color:var(--pk-sage);}
+
+  /* ALERT */
+  .alert{border-radius:4px;padding:16px 20px;margin:16px 0;border:1px solid;}
+  .alert.gold{background:var(--pk-gold-light);border-color:var(--pk-gold);}
+  .alert.rust{background:var(--pk-rust-light);border-color:var(--pk-rust);}
+  .alert.steel{background:var(--pk-steel-light);border-color:var(--pk-steel);}
+  .alert.cur{background:var(--cur-light);border-color:var(--cur);}
+  .alert h4{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .alert.gold h4{color:#7a5900;}
+  .alert.rust h4{color:var(--pk-rust);}
+  .alert.steel h4{color:var(--pk-steel);}
+  .alert.cur h4{color:var(--cur);}
+  .alert p{font-size:13px;margin:0 0 6px;max-width:100%;}
+  .alert p:last-child{margin:0;}
+  .alert ul{list-style:none;padding:0;}
+  .alert ul li{font-size:13px;padding:3px 0 3px 16px;position:relative;line-height:1.5;}
+  .alert.gold ul li::before{content:'✦';position:absolute;left:0;color:var(--pk-gold);font-size:9px;top:5px;}
+  .alert.rust ul li::before{content:'!';position:absolute;left:0;color:var(--pk-rust);font-weight:700;}
+  .alert.steel ul li::before{content:'→';position:absolute;left:0;color:var(--pk-steel);}
+  .alert.cur ul li::before{content:'→';position:absolute;left:0;color:var(--cur);}
+
+  /* КРОКИ */
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;padding:14px 16px 14px 12px;background:var(--pk-paper-dark);border:1px solid var(--pk-border);border-radius:4px;}
+  .step-n{width:32px;height:32px;border-radius:50%;background:var(--cur);color:#fff;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .step-body p{font-size:12.5px;margin:0 0 4px;max-width:100%;}
+  .step-body p:last-child{margin-bottom:0;}
+  .step-body .tip{font-size:11px;color:var(--pk-muted);font-style:italic;margin-top:5px;}
+
+  /* ВЕРСІЇ */
+  .versions{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:16px 0;}
+  .ver-box{border-radius:6px;padding:16px 18px;border:1px solid var(--pk-border);}
+  .ver-old{background:var(--pk-paper-dark);}
+  .ver-new{background:var(--pk-sage-light);border-color:var(--pk-sage);}
+  .ver-box .vb-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;}
+  .ver-old .vb-label{color:var(--pk-muted);}
+  .ver-new .vb-label{color:var(--pk-sage);}
+  .ver-box .vb-text{font-size:12.5px;line-height:1.5;}
+  .ver-arrow{font-size:20px;color:var(--pk-gold);}
+
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--pk-border);font-size:11px;color:var(--pk-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  footer a{color:var(--pk-gold);text-decoration:none;}
+  @media(max-width:640px){.fork .fk-split{grid-template-columns:1fr}.versions{grid-template-columns:1fr}.ver-arrow{transform:rotate(90deg);text-align:center}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Майстерня КЛЮЧ</a>
+  <a href="#where" class="active">Де це</a>
+  <a href="#create">Створити програму</a>
+  <a href="#entries">Перелік творів</a>
+  <a href="#variants">Варіативні блоки</a>
+  <a href="#versions">Версійність</a>
+  <a href="#errors">Типові помилки</a>
+</nav>
+
+<div class="page">
+
+  <div class="doc-badge">Довідник · Контент-менеджер</div>
+  <h1>Навчальні програми МОН:<br><em>перелік творів і варіативні блоки</em></h1>
+  <p class="lead">Програми затверджені міністерством вносяться дослівно — з усіма формулюваннями, уточненнями обсягу і блоками «на вибір учителя». Головна складність тут одна: як вносити варіативність.</p>
+
+  <!-- ДЕ -->
+  <div id="where">
+    <h2>Де це в адмінці</h2>
+    <p>Програми — це <strong>Pages</strong>, не уривки. У бічному меню їх немає.</p>
+    <p><strong>Ліве меню → Pages → корінь сайту → «Навчальні програми МОН»</strong> (<code>/navchalni-prohramy/</code>) → список програм.</p>
+    <p style="font-size:12.5px;color:var(--pk-muted)">Щоб переглянути всі твори зі зручною фільтрацією по класу і предмету — ліве меню → <strong>«Твори у програмах (списком)»</strong>.</p>
+
+    <h3 class="sub">Три рівні структури</h3>
+    <div class="tree">
+      <span class="t-root">Навчальні програми МОН</span> <span class="t-note">матриця-таблиця всіх програм</span><br>
+      ├── <span class="t-page">Укр. літ. 8 кл. 2024</span> <span class="t-note">одна програма</span><br>
+      │&nbsp;&nbsp;&nbsp;├── Гомер «Іліада» <span class="t-note">рядок переліку</span><br>
+      │&nbsp;&nbsp;&nbsp;├── Данте «Божественна комедія»<br>
+      │&nbsp;&nbsp;&nbsp;└── …<br>
+      ├── <span class="t-page">Укр. літ. 8 кл. 2020</span> <span class="t-note">стара версія тієї ж програми</span><br>
+      └── <span class="t-page">Зар. літ. 8 кл. 2024</span>
+    </div>
+  </div>
+
+  <!-- СТВОРИТИ -->
+  <div id="create">
+    <h2>Створити програму</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Pages → «Навчальні програми МОН» → Додати дочірню сторінку → «Навчальна програма МОН»</h4>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Заголовок і класифікація</h4>
+          <p><strong>Title</strong> — повна назва як у документі МОН: <code>Модельна навчальна програма «Українська література. 8 кл.»</code><br>
+          <strong>Slug</strong> — можна скоротити: <code>ukrainska-literatura-8-klas-2024</code><br>
+          <strong>Предмет</strong> · <strong>Клас</strong> — зі списків<br>
+          <strong>Рік затвердження</strong> — рік коли МОН затвердило цю версію, не рік початку дії</p>
+          <p class="tip">«Можливо застаріла» — залиште знятим. Про цей прапорець — розділ «Версійність».</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h4>Укладачі — два різних поля</h4>
+          <p><strong>Повний список (як у джерелі МОН)</strong> — обов'язкове. Вставте дослівно: <code>Архипова В. П., Січкар С. І., Шевченко З. О.</code> Це архівний рядок, він фіксує джерело і не змінюється.</p>
+          <p style="margin-top:6px"><strong>Прив'язані до графу КЛЮЧ</strong> — необов'язкове. Якщо хтось із укладачів є в базі діячів — додайте через автокомпліт, їхні імена стануть посиланнями.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <h4>Внести перелік творів</h4>
+          <p>Блок «ПЕРЕЛІК ТВОРІВ» → «+ Додати Твір» для кожної позиції. Детально нижче.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПЕРЕЛІК -->
+  <div id="entries">
+    <h2>Поля одного рядка переліку</h2>
+    <div class="table-wrap">
+      <table class="full">
+        <thead><tr><th>Поле</th><th>Що вносити</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Назва твору (текст програми)</td><td>Дослівно з програми МОН, включно з уточненням («пісня 22», «розділи…»). Не скорочувати</td><td class="req">обов'язково</td></tr>
+          <tr><td class="lbl">Автор (текст програми)</td><td>Дослівно з програми. Залишити порожнім якщо в програмі автор не вказаний</td><td>якщо є</td></tr>
+          <tr><td class="lbl">Книга (КЛЮЧ)</td><td>Прив'язка до картки книги в каталозі. Дає посилання і QR-код</td><td>необов'язково</td></tr>
+          <tr><td class="lbl">Автор (КЛЮЧ)</td><td>Прив'язка до картки діяча. Дає посилання на профіль</td><td>необов'язково</td></tr>
+          <tr><td class="lbl">Група вибору</td><td>Тільки для варіативних блоків — розділ нижче</td><td>рідко</td></tr>
+          <tr><td class="lbl">Правило вибору</td><td>Тільки для варіативних блоків — розділ нижче</td><td>рідко</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert rust">
+      <h4>Текстові поля заповнювати завжди — навіть якщо є прив'язка до каталогу</h4>
+      <p>«Назва» і «Автор» фіксують формулювання МОН і <strong>не замінюються</strong> даними з каталогу. Прив'язка лише збагачує відображення.</p>
+    </div>
+
+    <div class="alert steel">
+      <h4>Коли прив'язку залишати порожньою — це нормально</h4>
+      <ul>
+        <li>Книги ще немає в каталозі — рядок відобразиться як текст</li>
+        <li>Текст програми нечіткий: «вірші Лі Бо» без конкретної збірки</li>
+        <li>Антологія чи збірка без однозначного збігу в каталозі</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ВАРІАТИВНІ -->
+  <div id="variants">
+    <h2>Варіативні блоки — головна складність</h2>
+    <p>Деякі позиції програми не обов'язкові, а альтернативні: «1 на вибір», «2-3 за вибором учителя», «або». Перед кожною позицією ставте собі одне питання:</p>
+
+    <div class="fork">
+      <div class="fk-q">Чи ця позиція пропонує вибір між кількома творами?</div>
+      <div class="fk-split">
+        <div class="fk-box">
+          <div class="fb-answer">Ні — звичайна позиція</div>
+          <div class="fb-do">Заповніть назву й автора. «Група вибору» і «Правило вибору» лишіть порожніми.</div>
+        </div>
+        <div class="fk-box">
+          <div class="fb-answer">Так — варіативний блок</div>
+          <div class="fb-do">Кожен варіант — <strong>окремий рядок</strong> зі спільною «Групою вибору» і однаковим «Правилом».</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert cur">
+      <h4>Два поля, що керують варіативністю</h4>
+      <ul>
+        <li><strong>Група вибору</strong> — короткий ідентифікатор латиницею, <strong>однаковий</strong> для всіх позицій одного блоку: <code>blok-1</code>, <code>mify-troyi</code>, <code>bibl-motyvy</code></li>
+        <li><strong>Правило вибору</strong> — дослівно з програми МОН: <code>1 на вибір</code>, <code>2-3 за вибором учителя</code>, <code>або</code>. Не перефразовувати</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">Сім форм, які трапляються в програмах</h3>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">1</div><h4>Звичайна позиція</h4><span class="fc-tag tag-simple">Без групи</span></div>
+      <div class="fc-body">
+        <div class="fc-example">Гомер «Іліада» (пісня 22)</div>
+        <p>Просто заповніть назву й автора. Обидва поля вибору — порожні.</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">2</div><h4>Уточнення обсягу</h4><span class="fc-tag tag-simple">Без групи</span></div>
+      <div class="fc-body">
+        <div class="fc-example">«Іліада», пісні 1, 18, 22 (скорочено)</div>
+        <p>Уточнення вносьте <strong>прямо в поле «Назва твору»</strong>: <code>«Іліада» (пісні 1, 18, 22 — скорочено)</code>. Окремого поля для фрагмента немає.</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">3</div><h4>Бінарний вибір — «або» між двома творами</h4><span class="fc-tag tag-group">Група</span></div>
+      <div class="fc-body">
+        <div class="fc-example">Mox Nox АБО Бердник «Зоряний корсар»</div>
+        <table class="mini-table">
+          <thead><tr><th>Назва</th><th>Автор</th><th>Група</th><th>Правило</th></tr></thead>
+          <tbody>
+            <tr><td>Mox Nox</td><td>Ле Гофф</td><td><code>vybir-mox-berd</code></td><td><code>або</code></td></tr>
+            <tr><td>Зоряний корсар</td><td>Бердник</td><td><code>vybir-mox-berd</code></td><td><code>або</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">4</div><h4>Один твір із кількох — «1 на вибір»</h4><span class="fc-tag tag-group">Група</span></div>
+      <div class="fc-body">
+        <div class="fc-example">Один твір: Жуль Верн «20 000 льє», Стівенсон «Острів скарбів», …</div>
+        <table class="mini-table">
+          <thead><tr><th>Назва</th><th>Автор</th><th>Група</th><th>Правило</th></tr></thead>
+          <tbody>
+            <tr><td>20 000 льє під водою</td><td>Верн</td><td><code>verne-vybir</code></td><td><code>1 на вибір</code></td></tr>
+            <tr><td>Острів скарбів</td><td>Стівенсон</td><td><code>verne-vybir</code></td><td><code>1 на вибір</code></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:6px;font-size:12px;color:var(--pk-muted)">Стільки рядків, скільки варіантів — усі з однаковою групою.</p>
+      </div>
+    </div>
+
+    <div class="form-card" style="border-color:var(--cur);border-width:2px">
+      <div class="fc-head" style="background:var(--cur-light)"><div class="fc-num">5</div><h4>Тематичний блок — найважливіша форма</h4><span class="fc-tag tag-group">Група</span></div>
+      <div class="fc-body">
+        <div class="fc-example">З творів біблійних мотивів — 1-3 за вибором учителя: Книга Буття, Псалом 90, Пісня над піснями…</div>
+        <p style="margin-bottom:8px;color:var(--pk-rust);font-weight:600;">Кожен твір — окремий запис. НЕ вносити всі назви в одне поле.</p>
+        <table class="mini-table">
+          <thead><tr><th>Назва</th><th>Автор</th><th>Група</th><th>Правило</th></tr></thead>
+          <tbody>
+            <tr><td>Книга Буття (уривки)</td><td>Біблія</td><td><code>bibl-motyvy</code></td><td><code>1-3 за вибором учителя</code></td></tr>
+            <tr><td>Псалом 90</td><td>Біблія</td><td><code>bibl-motyvy</code></td><td><code>1-3 за вибором учителя</code></td></tr>
+            <tr><td>Пісня над піснями</td><td>Біблія</td><td><code>bibl-motyvy</code></td><td><code>1-3 за вибором учителя</code></td></tr>
+            <tr><td>Нагірна проповідь</td><td>Біблія</td><td><code>bibl-motyvy</code></td><td><code>1-3 за вибором учителя</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">6</div><h4>«Або» між кількома авторами</h4><span class="fc-tag tag-group">Група</span></div>
+      <div class="fc-body">
+        <div class="fc-example">Лі Бо «Вірші» або Ду Фу «Вірші»</div>
+        <p>Та сама логіка що й форма 3, але для поетів. Правило = <code>або</code>.</p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="fc-head"><div class="fc-num">7</div><h4>Жанрова збірка чи антологія</h4><span class="fc-tag tag-simple">Без групи</span></div>
+      <div class="fc-body">
+        <div class="fc-example">Омар Хайям «Рубаї» — різні видання під різними назвами</div>
+        <p>Звичайна позиція без групи. У полі «Назва» — як у програмі. Поле «Книга (КЛЮЧ)» можна залишити порожнім якщо однозначного збігу немає, або прив'язати до найповнішого видання.</p>
+      </div>
+    </div>
+
+    <div class="alert gold">
+      <h4>Правило іменування групи вибору</h4>
+      <ul>
+        <li>Латиниця, дефіс, цифри: <code>blok-1</code>, <code>mify-troyi</code>, <code>bibl-motyvy</code></li>
+        <li>Унікальна в межах <strong>однієї програми</strong></li>
+        <li>Раз вибрана назва — не змінювати: від неї залежить порядок на сторінці</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ВЕРСІЙНІСТЬ -->
+  <div id="versions">
+    <h2>Версійність — коли МОН оновив програму</h2>
+    <p>Для того самого класу і предмета вийшла нова редакція. Стару програму <strong>не редагують</strong> — вона лишається архівною версією.</p>
+
+    <div class="versions">
+      <div class="ver-box ver-old">
+        <div class="vb-label">Стара сторінка</div>
+        <div class="vb-text">Не чіпати вміст. Одразу після створення нової — <strong>підняти прапорець «Можливо застаріла»</strong></div>
+      </div>
+      <div class="ver-arrow">→</div>
+      <div class="ver-box ver-new">
+        <div class="vb-label">Нова сторінка</div>
+        <div class="vb-text">Створити окремо, з новим роком затвердження. Прапорець «Можливо застаріла» <strong>не піднімати</strong></div>
+      </div>
+    </div>
+
+    <p>Матриця автоматично покаже новішу версію як активну — за роком затвердження. Стара лишиться доступною через бічну панель на сторінці програми.</p>
+
+    <div class="alert rust">
+      <h4>Прапорець «Можливо застаріла» — коли піднімати</h4>
+      <p>Вручну тільки в одному випадку: <strong>ви знаєте, що МОН вже видав нову версію, але вона ще не внесена в систему</strong>.</p>
+      <p style="margin-top:8px">Не знімайте цей прапорець коли вносите нову версію — нова сторінка буде без нього автоматично.</p>
+    </div>
+  </div>
+
+  <!-- ПОМИЛКИ -->
+  <div id="errors">
+    <h2>Типові помилки</h2>
+    <div class="table-wrap">
+      <table class="full">
+        <thead><tr><th>Помилка</th><th>Правильно</th></tr></thead>
+        <tbody>
+          <tr><td class="err">Кілька творів варіативного блоку в одному полі «Назва»</td><td class="ok">Кожен твір — окремий рядок зі спільною групою вибору</td></tr>
+          <tr><td class="err">Різні значення «Групи вибору» для позицій одного блоку</td><td class="ok">Однакове значення для всіх позицій блоку</td></tr>
+          <tr><td class="err">Редагування старої програми при появі нової версії</td><td class="ok">Нова версія = нова сторінка; стара лишається як архів</td></tr>
+          <tr><td class="err">Прапорець «Можливо застаріла» піднятий на новій версії</td><td class="ok">Прапорець підіймається тільки на СТАРІЙ сторінці</td></tr>
+          <tr><td class="err">Порожнє поле «Укладачі (повний список)»</td><td class="ok">Поле обов'язкове — вставте дослівно з документа МОН</td></tr>
+          <tr><td class="err">Скорочення назви твору «бо і так зрозуміло»</td><td class="ok">Дослівно з програми, з усіма уточненнями обсягу</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <span><a href="index.html">← Майстерня КЛЮЧ</a> · Довідник «Навчальні програми МОН» · v1.0</span>
+    <span>Тетяна Якушко, НБУ для дітей · Серпень 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
